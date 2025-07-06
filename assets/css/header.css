@@ -131,6 +131,18 @@ header {
     color: #0099CC;
 }
 
+.imagem-desktop {
+    width: 100vw;
+    height: 320px;
+    display: block;
+    margin: 0 auto;
+
+    background:
+        linear-gradient(to right, rgba(0, 0, 0, 0.6), transparent 20%, transparent 80%, rgba(0, 0, 0, 0.6)),
+        url('./assets/img/header-index.png') no-repeat center center;
+    background-size: cover;
+}
+
 /* Modal mobile */
 .hamburger {
     display: none;
@@ -150,7 +162,7 @@ header {
         display: block;
     }
 
-    /* Esconde menus do header no mobile */
+    /* Esconde menu do header no mobile */
     .nav-links,
     .top-right,
     .icons {
@@ -165,6 +177,9 @@ header {
         height: 100%;
     }
 
+    .imagem-desktop {
+        display: none;
+    }
 }
 
 /* Modal lateral */

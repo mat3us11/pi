@@ -22,7 +22,6 @@
     </div>
 </header>
 
-
 <!-- Modal mobile-->
 <button class="hamburger" id="hamburgerBtn" aria-label="Abrir menu">
     <i class="ph ph-list" id="hamburgerIcon"></i>
@@ -34,4 +33,5 @@
     </nav>
 </div>
 
+<img class="imagem-desktop" src="./assets/img/header-index.png" alt="">
 <script src="https://unpkg.com/@phosphor-icons/web"></script>
