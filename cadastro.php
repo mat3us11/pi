@@ -6,13 +6,16 @@
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <script defer src="./assets/js/modal.js"></script>
   <link rel="stylesheet" href="./assets/css/cadastro.css" />
+  <link rel="stylesheet" href="./assets/css/header.css" />
   <title>Cadastro</title>
 </head>
 <body>
-  <header class="cabecalho">
-    <p class="logo">CAMP<span>VIA</span></p>
-    <a href="#"><i class="ph ph-question"></i></a>
-  </header>
+   <?php
+    $ocultarImagemHeader = true;
+    $ocultarImagemHeader = true;
+    $ocultarBotoesHeader = true;
+    include 'includes/header.php';
+  ?>
   <div class="area-cadastro">
     <div class="cartao">
       <div class="lado-esquerdo">
@@ -28,6 +31,7 @@
         <h3>Crie uma conta ou faça login</h3>
         <input type="text" id="email" placeholder="Digite o endereço de e-mail" />
         <input type="password" id="senha" placeholder="Digite a senha" />
+        <a href="login.php"><p class="criar-conta">Fazer login</p></a>
         <button class="botao-continuar">Continuar</button>
         <p class="ou">ou continue com</p>
         <div class="botoes-sociais">
@@ -39,15 +43,6 @@
     </div>
   </div>
 
-   <!-- Modal mobile-->
-<button class="hamburger" id="hamburgerBtn" aria-label="Abrir menu">
-    <i class="ph ph-list" id="hamburgerIcon"></i>
-</button>
-<div class="mobile-modal" id="mobileModal" aria-hidden="true">
-    <nav class="modal-content">
-        <ul class="modal-nav">
-            <!-- FIQUEI COM PREGUICA MAS AQUI É ONDE BOTA OS LINKS -->
-    </nav>
-</div>
+ 
 </body>
 </html>

@@ -53,7 +53,7 @@ body {
   display: flex;
   flex-direction: row;
   width: 1100px;
-  height: 600px;
+  height: 500px;
   overflow: hidden;
 }
 
@@ -122,6 +122,18 @@ input[type="password"] {
   background-color: #005670;
 }
 
+.criar-conta {
+  text-align: center;
+  color: #2e2d2d;
+  font-size: 13px;
+  margin: 10px 0;
+}
+
+ a{
+  text-decoration: none;
+}
+
+
 .ou {
   text-align: center;
   color: #888;
@@ -155,79 +167,6 @@ input[type="password"] {
 
 /* Responsivo mobile */
 @media (max-width: 768px) {
-.hamburger {
-    display: none;
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: none;
-    border: none;
-    font-size: 28px;
-    color: white;
-    cursor: pointer;
-    z-index: 1101;
-}
-
-@media (max-width: 768px) {
-    .cabecalho a{
-        display: none;
-    }
-     .cabecalho {
-    padding: 0 20px;
-  }
-
-  .cabecalho .logo {
-    justify-content: flex-start;
-    text-align: left;
-  }
-    .hamburger {
-        display: block;
-    }
-
-    /* Esconde menu do header no mobile */
-    .nav-links,
-    .top-right,
-    .icons {
-        display: none;
-    }
-
-    header {
-        height: 60px;
-    }
-
-    .container {
-        height: 100%;
-    }
-
-    .imagem-desktop {
-        display: none;
-    }
-}
-
-/* Modal lateral */
-.mobile-modal {
-    position: fixed;
-    top: 0;
-    right: -50%;
-    /* começa escondido fora da tela */
-    width: 50%;
-    height: 100%;
-    background-color: #00678A;
-    color: white;
-    padding: 20px;
-    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
-    transition: right 0.3s ease;
-    z-index: 1100;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
-
-/* Ativa o modal*/
-.mobile-modal.active {
-    right: 0;
-}
-
   .cartao {
     flex-direction: column;
     width: 100%;
@@ -240,6 +179,8 @@ input[type="password"] {
     padding: 20px;
     border-right: none;
     width: 100%;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     text-align: center;
   }
@@ -254,8 +195,9 @@ input[type="password"] {
   }
 
   .lado-direito h3 {
-    font-size: 18px;
-    margin-bottom: 15px;
+    width: 100%;
+    text-align: left;
+    align-self: flex-start;
   }
 
   input[type="text"],
@@ -277,3 +219,4 @@ input[type="password"] {
     justify-content: center;
   }
 }
+

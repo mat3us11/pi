@@ -25,6 +25,10 @@ header {
     padding: 0 20px;
 }
 
+a{
+    color: white;
+    text-decoration: none;
+}
 /* lado esquerdo */
 .left {
     display: flex;
@@ -201,11 +205,77 @@ header {
     transition: right 0.3s ease;
     z-index: 1100;
     display: flex;
-    justify-content: center;
+   align-items: center;
     flex-direction: column;
 }
 
 /* Ativa o modal*/
 .mobile-modal.active {
     right: 0;
+}
+
+.modal-conteudo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 60px;
+    gap: 4rem;
+}
+
+.perfil{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    gap: 10px;
+}
+.foto-perfil{
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    background-color: white;
+}
+.cadastro-login{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.7rem;
+}
+
+.cadastro-login a{
+    text-decoration: none;
+}
+
+/* Lista de navegação */
+.modal-nav {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.nav-link {
+  background-color: #0f7b9f;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.modal-nav a{
+    text-decoration: none;
+}
+
+/* Ícones */
+.nav-link i {
+  font-size: 18px;
 }
