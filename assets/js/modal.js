@@ -15,7 +15,7 @@ hamburgerBtn.addEventListener('click', () => {
     } else {
         mobileModal.classList.remove('active');
         mobileModal.setAttribute('aria-hidden', 'true');
-        // Volta ícone pro hamburger
+        // Volta icone pro hamburger
         hamburgerIcon.className = 'ph ph-list';
         hamburgerBtn.setAttribute('aria-label', 'Abrir menu');
     }

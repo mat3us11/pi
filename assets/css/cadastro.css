@@ -1,0 +1,279 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+body {
+  background-color: #f5f5f5;
+}
+
+.cabecalho {
+  height: 68px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #00678A;
+  padding: 0 100px;
+}
+
+.cabecalho .logo {
+  font-size: 24px;
+  color: white;
+  font-weight: bold;
+}
+
+.cabecalho .logo span {
+  font-weight: lighter;
+}
+
+.cabecalho a {
+  text-decoration: none;
+  color: white;
+  font-size: 22px;
+}
+
+.cabecalho a:hover {
+  color: #00a6dd;
+}
+
+.area-cadastro {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 40px auto;
+}
+
+.cartao {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: row;
+  width: 1100px;
+  height: 600px;
+  overflow: hidden;
+}
+
+.lado-esquerdo,
+.lado-direito {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.lado-esquerdo {
+  border-right: 1px solid #eee;
+  text-align: left;
+}
+
+.lado-esquerdo img {
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto 20px auto;
+}
+
+.texto-beneficios p {
+  font-size: 14px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: #333;
+}
+
+.texto-beneficios i {
+  color: #00678A;
+  font-size: 16px;
+  margin-top: 2px;
+}
+
+.lado-direito h3 {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="password"] {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.botao-continuar {
+  padding: 12px;
+  background-color: #00678A;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.botao-continuar:hover {
+  background-color: #005670;
+}
+
+.ou {
+  text-align: center;
+  color: #888;
+  font-size: 13px;
+  margin: 10px 0;
+}
+
+.botoes-sociais {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.botoes-sociais button {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: white;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.botoes-sociais img {
+  width: 16px;
+}
+
+/* Responsivo mobile */
+@media (max-width: 768px) {
+.hamburger {
+    display: none;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: white;
+    cursor: pointer;
+    z-index: 1101;
+}
+
+@media (max-width: 768px) {
+    .cabecalho a{
+        display: none;
+    }
+     .cabecalho {
+    padding: 0 20px;
+  }
+
+  .cabecalho .logo {
+    justify-content: flex-start;
+    text-align: left;
+  }
+    .hamburger {
+        display: block;
+    }
+
+    /* Esconde menu do header no mobile */
+    .nav-links,
+    .top-right,
+    .icons {
+        display: none;
+    }
+
+    header {
+        height: 60px;
+    }
+
+    .container {
+        height: 100%;
+    }
+
+    .imagem-desktop {
+        display: none;
+    }
+}
+
+/* Modal lateral */
+.mobile-modal {
+    position: fixed;
+    top: 0;
+    right: -50%;
+    /* começa escondido fora da tela */
+    width: 50%;
+    height: 100%;
+    background-color: #00678A;
+    color: white;
+    padding: 20px;
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
+    transition: right 0.3s ease;
+    z-index: 1100;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+/* Ativa o modal*/
+.mobile-modal.active {
+    right: 0;
+}
+
+  .cartao {
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    margin: 20px;
+  }
+
+  .lado-esquerdo,
+  .lado-direito {
+    padding: 20px;
+    border-right: none;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+
+  .lado-esquerdo img {
+    max-width: 220px;
+  }
+
+  .texto-beneficios p {
+    font-size: 13px;
+    text-align: left;
+  }
+
+  .lado-direito h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .botao-continuar {
+    width: 100%;
+  }
+
+  .botoes-sociais {
+    flex-direction: row;
+  }
+
+  .botoes-sociais button {
+    width: 100%;
+    justify-content: center;
+  }
+}

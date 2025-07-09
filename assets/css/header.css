@@ -111,6 +111,10 @@ header {
     color: white;
 }
 
+.top-right a{
+    text-decoration: none;
+}
+
 /* Ícones la do historico e o outro eu nao lembro doq é*/
 .icons {
     margin-top: 10px;

@@ -11,8 +11,8 @@
         </div>
         <div class="right">
             <div class="top-right">
-                <button class="btn btn-outline">Cadastre-se</button>
-                <button class="btn btn-fill">Login</button>
+                <a href="cadastro.php"><button class="btn btn-outline">Cadastre-se</button></a>
+                <a href="login.php"><button class="btn btn-fill">Login</button></a>
             </div>
             <div class="icons">
                 <i class="ph ph-clock-counter-clockwise"></i>
