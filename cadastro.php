@@ -27,19 +27,26 @@
         </div>
       </div>
 
-      <div class="lado-direito">
-        <h3>Crie uma conta ou faça login</h3>
-        <input type="text" id="email" placeholder="Digite o endereço de e-mail" />
-        <input type="password" id="senha" placeholder="Digite a senha" />
-        <a href="login.php"><p class="criar-conta">Fazer login</p></a>
-        <button class="botao-continuar">Continuar</button>
-        <p class="ou">ou continue com</p>
-        <div class="botoes-sociais">
-          <button><img src="https://img.icons8.com/color/48/000000/google-logo.png"/>Google</button>
-          <button><img src="https://img.icons8.com/ios-filled/50/000000/mac-os.png"/>Apple</button>
-          <button><img src="https://img.icons8.com/ios-filled/50/1877f2/facebook-new.png"/>Facebook</button>
-        </div>
-      </div>
+<div class="lado-direito">
+  <h3>Crie uma conta ou faça login</h3>
+
+  <form action="cadastrar.php" method="POST" style="width: 100%;">
+    <input type="text" id="nome" name="nome" placeholder="Digite o seu nome" required />
+    <input type="text" id="email" name="email" placeholder="Digite o endereço de e-mail" required />
+    <input type="password" id="senha" name="senha" placeholder="Digite a senha" required />
+    <button class="botao-continuar" type="submit">Continuar</button>
+  </form>
+
+  <a href="login.php"><p class="criar-conta">Fazer login</p></a>
+  <p class="ou">ou continue com</p>
+  
+  <div class="botoes-sociais">
+    <button><img src="https://img.icons8.com/color/48/000000/google-logo.png"/>Google</button>
+    <button><img src="https://img.icons8.com/ios-filled/50/000000/mac-os.png"/>Apple</button>
+    <button><img src="https://img.icons8.com/ios-filled/50/1877f2/facebook-new.png"/>Facebook</button>
+  </div>
+</div>
+
     </div>
   </div>
 

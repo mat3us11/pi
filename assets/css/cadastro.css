@@ -116,7 +116,9 @@ input[type="password"] {
   font-size: 14px;
   cursor: pointer;
   margin-bottom: 10px;
+  width: 100%;
 }
+
 
 .botao-continuar:hover {
   background-color: #005670;

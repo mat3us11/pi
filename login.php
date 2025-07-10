@@ -1,3 +1,37 @@
+<?php
+session_start();
+require_once './includes/config.php';
+
+$erro = '';
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $email = $_POST["email"] ?? '';
+    $senha = $_POST["senha"] ?? '';
+
+    if (empty($email) || empty($senha)) {
+        $erro = "Preencha todos os campos.";
+    } else {
+        // Agora buscamos o nome também
+        $stmt = $conn->prepare("SELECT id, nome, senha FROM usuario WHERE email = ?");
+        $stmt->execute([$email]);
+
+        if ($stmt->rowCount() > 0) {
+            $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (password_verify($senha, $usuario["senha"])) {
+                $_SESSION["usuario_id"] = $usuario["id"];
+                $_SESSION["usuario_nome"] = $usuario["nome"]; // Armazena o nome
+                header("Location: index.php"); // Redireciona para a página inicial
+                exit;
+            } else {
+                $erro = "Senha incorreta.";
+            }
+        } else {
+            $erro = "Usuário não encontrado.";
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -8,12 +42,11 @@
   <script defer src="./assets/js/modal.js"></script>
   <link rel="stylesheet" href="./assets/css/login.css" />
   <link rel="stylesheet" href="./assets/css/header.css" />
-  <title>Cadastro</title>
+  <title>Login</title>
 </head>
 
 <body>
   <?php
-    $ocultarImagemHeader = true;
     $ocultarImagemHeader = true;
     $ocultarBotoesHeader = true;
     include 'includes/header.php';
@@ -31,12 +64,20 @@
 
       <div class="lado-direito">
         <h3>Faça login ou crie uma conta</h3>
-        <input type="text" id="email" placeholder="Digite o endereço de e-mail" />
-        <input type="password" id="senha" placeholder="Digite a senha" />
+
+        <?php if (!empty($erro)): ?>
+          <p style="color: red; margin-bottom: 10px;"><?php echo $erro; ?></p>
+        <?php endif; ?>
+
+        <form method="POST" action="">
+          <input type="email" name="email" id="email" placeholder="Digite o endereço de e-mail" required />
+          <input type="password" name="senha" id="senha" placeholder="Digite a senha" required />
+          <button class="botao-continuar" type="submit">Continuar</button>
+        </form>
+
         <a href="cadastro.php">
           <p class="criar-conta">Criar conta</p>
         </a>
-        <button class="botao-continuar">Continuar</button>
         <p class="ou">ou continue com</p>
         <div class="botoes-sociais">
           <button><img src="https://img.icons8.com/color/48/000000/google-logo.png" />Google</button>

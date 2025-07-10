@@ -97,8 +97,10 @@ body {
   margin-bottom: 20px;
 }
 
+/* Adicionado input[type="email"] aqui */
 input[type="text"],
-input[type="password"] {
+input[type="password"],
+input[type="email"] {
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -116,6 +118,7 @@ input[type="password"] {
   font-size: 14px;
   cursor: pointer;
   margin-bottom: 10px;
+  width: 100%;
 }
 
 .botao-continuar:hover {
@@ -129,10 +132,9 @@ input[type="password"] {
   margin: 10px 0;
 }
 
- a{
+a {
   text-decoration: none;
 }
-
 
 .ou {
   text-align: center;
@@ -201,7 +203,8 @@ input[type="password"] {
   }
 
   input[type="text"],
-  input[type="password"] {
+  input[type="password"],
+  input[type="email"] {
     font-size: 14px;
     padding: 10px;
   }
@@ -219,4 +222,3 @@ input[type="password"] {
     justify-content: center;
   }
 }
-
