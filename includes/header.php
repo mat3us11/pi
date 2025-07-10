@@ -15,16 +15,21 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
       <ul class="nav-links">
         <li><a href="#"><i class="ph ph-bicycle"></i> Passeios</a></li>
         <li><a href="#"><i class="ph ph-map-trifold"></i> Roteiros de Viagem</a></li>
+        <li><a href="perfil.php"><i class="ph ph-user"></i></i> Perfil</a></li>
       </ul>
     </div>
 
     <div class="right">
       <?php if (!isset($ocultarBotoesHeader) || !$ocultarBotoesHeader): ?>
         <div class="top-right">
-          <?php if (isset($_SESSION['usuario_nome'])): ?>
-            <span>Olá, <?php echo htmlspecialchars($_SESSION['usuario_nome']); ?></span>
-            <a href="perfil.php"><button class="btn btn-outline">Meu Perfil</button></a>
-            <a href="logout.php"><button class="btn btn-fill">Sair</button></a>
+          <?php if (isset($_SESSION['usuario_nome']) && isset($_SESSION['usuario_email'])): ?>
+            <div class="usuario-logado">
+              <div class="foto-perfil-header" style="background-image: url('./assets/img/imagem-padrao.png');"><a href="/.perfil.php"></a></div>
+              <div class="dados-usuario">
+                <p class="nome-usuario"><?php echo htmlspecialchars($_SESSION['usuario_nome']); ?></p>
+                <p class="email-usuario"><?php echo htmlspecialchars($_SESSION['usuario_email']); ?></p>
+              </div>
+            </div>
           <?php else: ?>
             <a href="cadastro.php"><button class="btn btn-outline">Cadastre-se</button></a>
             <a href="login.php"><button class="btn btn-fill">Login</button></a>
@@ -49,22 +54,19 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 <div class="mobile-modal" id="mobileModal" aria-hidden="true">
   <nav class="modal-conteudo">
     <div class="perfil">
-      <div class="foto-perfil"></div>
-      <div class="cadastro-login">
-        <?php if (isset($_SESSION['usuario_nome'])): ?>
-          <span style="color: white;">Olá, <?php echo htmlspecialchars($_SESSION['usuario_nome']); ?></span>
-          <a href="perfil.php"><button class="btn btn-outline">Meu Perfil</button></a>
-          <a href="logout.php"><button class="btn btn-fill">Sair</button></a>
-        <?php else: ?>
-          <a href="cadastro.php"><button class="btn btn-outline">Cadastre-se</button></a>
-          <a href="login.php"><button class="btn btn-fill">Login</button></a>
-        <?php endif; ?>
-      </div>
+      <div class="foto-perfil" style="background-image: url('./assets/img/imagem-padrao.png');"></div>
+      <?php if (isset($_SESSION['usuario_nome'])): ?>
+        <p class="saudacao">Olá, <?php echo htmlspecialchars($_SESSION['usuario_nome']); ?>!</p>
+      <?php else: ?>
+        <a href="cadastro.php"><button class="btn btn-outline">Cadastre-se</button></a>
+        <a href="login.php"><button class="btn btn-fill">Login</button></a>
+      <?php endif; ?>
     </div>
     <ul class="modal-nav">
-      <li><a href="#"><button class="nav-link"><i class="ph ph-map-trifold"></i> Passeios</button></a></li>
-      <li><a href="#"><button class="nav-link"><i class="ph ph-map-pin"></i> Roteiros</button></a></li>
-      <li><a href="#"><button class="nav-link"><i class="ph ph-clock-clockwise"></i> Histórico</button></a></li>
+      <li><a href="./perfil.php"><button class="nav-link"><i class="ph ph-user"></i> Perfil</button></a></li>
+      <li><a href="#"><button class="nav-link"><i class="ph ph-bicycle"></i> Passeios</button></a></li>
+      <li><a href="#"><button class="nav-link"><i class="ph ph-map-trifold"></i> Roteiros</button></a></li>
+      <li><a href="#"><button class="nav-link"><i class="ph ph-clock-counter-clockwise"></i> Histórico</button></a></li>
       <li><a href="#"><button class="nav-link"><i class="ph ph-question"></i> Dúvidas</button></a></li>
     </ul>
   </nav>

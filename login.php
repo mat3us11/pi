@@ -19,7 +19,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
             if (password_verify($senha, $usuario["senha"])) {
                 $_SESSION["usuario_id"] = $usuario["id"];
-                $_SESSION["usuario_nome"] = $usuario["nome"]; // Armazena o nome
+                $_SESSION["usuario_nome"] = $usuario["nome"]; // pega do banco
+                $_SESSION["usuario_email"] = $email;
                 header("Location: index.php"); // Redireciona para a página inicial
                 exit;
             } else {

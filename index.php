@@ -21,6 +21,6 @@
     </div> -->
 
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <?php include 'includes/footer.php'; ?>
+    <!-- <?php include 'includes/footer.php'; ?> -->
 </body>
 </html>
