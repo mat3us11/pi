@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Afacad:ital,wght@0,400..700;1,400..700&display=swap');
+footer {
+    display: flex;
+    width: 100%;
+    background-color: #00678A;
+    position: fixed;
+    bottom: 0;
+    font-family: 'Afacad';
+    color: white;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    gap: 50px;
+}
+
+.footerLeft {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    gap: 15px;
+    padding: 10px;
+}
+
+.footerLeft h1 {
+    font-size: 30px;
+}
+
+.footerLeft p {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.footerLeft i {
+    font-size: 25px;
+}
+
+.footerLeft h5 {
+    font-weight: 400;
+    font-size: 16px;         
+    line-height: 1.6; 
+    color: white;   
+}
+
+.point {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+}
+
+.midia {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.footerRight {
+    gap: 20px;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+}
+
+.footerRight h4{
+    font-weight: 500;
+}
+
+.footerRight .botao {
+    display: flex;
+    position: relative;
+    height: 30px;
+    color: #00678A;
+    gap: 10px;
+}
+
+.footerRight input {
+    background-color: #00678A;
+    border: none; 
+    border-bottom: 2px solid white; 
+    font-size: 18px;
+    font-weight: 500;
+    color: white;
+    padding: 18px;
+}
+
+.footerRight label:hover{
+    border: none;
+}
+.footerRight label {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.432);
+    padding: 12px 4px 4px 4px;
+}
+
+.footerRight button {
+    padding: 20px;
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0099CC;
+    color: white;
+    font-family: 'Afacad';
+    font-size: 20px;
+    border: none;
+    border-radius: 7px 7px 7px 7px;
+    cursor: pointer;
+}
