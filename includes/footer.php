@@ -7,7 +7,7 @@
         A proposta da plataforma é tornar o planejamento de viagens mais acessível, eficiente e personalizado, conectando pessoas a destinos de forma prática e segura.</h5>
 
         <div class="point">
-            <img src="" alt="POINTMEDIA">
+            <img src="assets/img/point.png">
             <div class="midia">
                 <i class="ph ph-instagram-logo"></i>
                 <i class="ph ph-whatsapp-logo"></i>
@@ -22,8 +22,8 @@
 
             <h4>Quer receber novidades e ideias exclusivas para a sua próxima viagem? Inscreva-se já!</h4>
             <div class="botao">
-                <input type="text">
-                <label for="text">Endereço de e-mail</label>
+                <label for="email"></label>
+                <input type="email" id="email" placeholder="Endereço de e-mail" />
                 <button>Inscrever-se</button>
             </div>
     </div>

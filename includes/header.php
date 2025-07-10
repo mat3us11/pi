@@ -9,7 +9,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
     <div class="left">
       <div class="top-left">
         <a href="./index.php">
-          <p class="logo">CAMP<span>VIA</span></p>
+          <p class="logo">CAMP<i class="ph ph-tipi" style="transform: rotate(180deg); display: inline-block;"></i><span>IA</span></p>
         </a>
       </div>
       <ul class="nav-links">
