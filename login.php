@@ -2,35 +2,62 @@
 session_start();
 require_once './includes/config.php';
 
+// === LOGIN MANUAL (MySQL) ===
 $erro = '';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $email = $_POST["email"] ?? '';
-    $senha = $_POST["senha"] ?? '';
+  $email = $_POST["email"] ?? '';
+  $senha = $_POST["senha"] ?? '';
 
-    if (empty($email) || empty($senha)) {
-        $erro = "Preencha todos os campos.";
+  if (empty($email) || empty($senha)) {
+    $erro = "Preencha todos os campos.";
+  } else {
+    $stmt = $conn->prepare("SELECT id, nome, senha FROM usuario WHERE email = ?");
+    $stmt->execute([$email]);
+
+    if ($stmt->rowCount() > 0) {
+      $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+      if (password_verify($senha, $usuario["senha"])) {
+        $_SESSION["usuario_id"] = $usuario["id"];
+        $_SESSION["usuario_nome"] = $usuario["nome"];
+        $_SESSION["usuario_email"] = $email;
+        header("Location: index.php");
+        exit;
+      } else {
+        $erro = "Senha incorreta.";
+      }
     } else {
-        // Agora buscamos o nome também
-        $stmt = $conn->prepare("SELECT id, nome, senha FROM usuario WHERE email = ?");
-        $stmt->execute([$email]);
-
-        if ($stmt->rowCount() > 0) {
-            $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-            if (password_verify($senha, $usuario["senha"])) {
-                $_SESSION["usuario_id"] = $usuario["id"];
-                $_SESSION["usuario_nome"] = $usuario["nome"]; // pega do banco
-                $_SESSION["usuario_email"] = $email;
-                header("Location: index.php"); // Redireciona para a página inicial
-                exit;
-            } else {
-                $erro = "Senha incorreta.";
-            }
-        } else {
-            $erro = "Usuário não encontrado.";
-        }
+      $erro = "Usuário não encontrado.";
     }
+  }
 }
+
+// === login com  google ===
+$client_id = "315485308526-c6g22elcoge3eukt5b8bb42vf47gmsjc.apps.googleusercontent.com"; // substitua aqui
+$redirect_uri = "http://localhost/pi/google-callback.php";
+
+$scope = "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email";
+
+$auth_url = "https://accounts.google.com/o/oauth2/v2/auth?" . http_build_query([
+  'client_id' => $client_id,
+  'redirect_uri' => $redirect_uri,
+  'response_type' => 'code',
+  'scope' => $scope,
+  'access_type' => 'offline',
+  'prompt' => 'consent'
+]);
+
+// === Login com facebook ===
+$fbAppId = 'SEU_APP_ID';
+$redirectUri = 'http://localhost/seu-projeto/facebook-callback.php';
+$scope = 'email';
+
+$fbLoginUrl = 'https://www.facebook.com/v18.0/dialog/oauth?' . http_build_query([
+  'client_id' => $fbAppId,
+  'redirect_uri' => $redirectUri,
+  'scope' => $scope,
+  'response_type' => 'code',
+]);
 ?>
 
 <!DOCTYPE html>
@@ -48,9 +75,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <body>
   <?php
-    $ocultarImagemHeader = true;
-    $ocultarBotoesHeader = true;
-    include 'includes/header.php';
+  $ocultarImagemHeader = true;
+  $ocultarBotoesHeader = true;
+  include 'includes/header.php';
   ?>
   <div class="area-cadastro">
     <div class="cartao">
@@ -73,23 +100,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <form method="POST" action="">
           <input type="email" name="email" id="email" placeholder="Digite o endereço de e-mail" required />
           <input type="password" name="senha" id="senha" placeholder="Digite a senha" required />
+          <a href="cadastro.php">
+            <p class="criar-conta">Criar conta</p>
+          </a>
           <button class="botao-continuar" type="submit">Continuar</button>
         </form>
 
-        <a href="cadastro.php">
-          <p class="criar-conta">Criar conta</p>
-        </a>
         <p class="ou">ou continue com</p>
+
         <div class="botoes-sociais">
-          <button><img src="https://img.icons8.com/color/48/000000/google-logo.png" />Google</button>
+          <a href="<?= $auth_url ?>" class="btn-social">
+            <img src="https://img.icons8.com/color/48/000000/google-logo.png" />Google
+          </a>
           <button><img src="https://img.icons8.com/ios-filled/50/000000/mac-os.png" />Apple</button>
-          <button><img src="https://img.icons8.com/ios-filled/50/1877f2/facebook-new.png" />Facebook</button>
+          <a href="<?= $fbLoginUrl ?>" class="btn-social">
+              <img src="https://img.icons8.com/ios-filled/50/1877f2/facebook-new.png" />Facebook
+          </a>
         </div>
+        
       </div>
     </div>
   </div>
-
-
 </body>
 
 </html>

@@ -142,14 +142,14 @@ a {
   font-size: 13px;
   margin: 10px 0;
 }
-
 .botoes-sociais {
   display: flex;
   justify-content: space-between;
   gap: 10px;
 }
 
-.botoes-sociais button {
+.botoes-sociais button,
+.botoes-sociais .btn-social {
   flex: 1;
   padding: 10px;
   border: 1px solid #ccc;
@@ -161,11 +161,14 @@ a {
   align-items: center;
   gap: 6px;
   font-size: 13px;
+  text-decoration: none;
+  color: black;
 }
 
 .botoes-sociais img {
   width: 16px;
 }
+
 
 /* Responsivo mobile */
 @media (max-width: 768px) {

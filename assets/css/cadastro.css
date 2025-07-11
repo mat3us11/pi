@@ -149,7 +149,8 @@ input[type="password"] {
   gap: 10px;
 }
 
-.botoes-sociais button {
+.botoes-sociais button,
+.botoes-sociais .btn-social {
   flex: 1;
   padding: 10px;
   border: 1px solid #ccc;
@@ -161,11 +162,14 @@ input[type="password"] {
   align-items: center;
   gap: 6px;
   font-size: 13px;
+  text-decoration: none;
+  color: black;
 }
 
 .botoes-sociais img {
   width: 16px;
 }
+
 
 /* Responsivo mobile */
 @media (max-width: 768px) {
