@@ -1,5 +1,5 @@
 <?php
-// === LINK DO GOOGLE LOGIN ===
+// === Cadastro com google ===
 $client_id = "315485308526-c6g22elcoge3eukt5b8bb42vf47gmsjc.apps.googleusercontent.com"; // substitua aqui
 $redirect_uri = "http://localhost/pi/google-callback.php";
 
@@ -12,6 +12,18 @@ $auth_url = "https://accounts.google.com/o/oauth2/v2/auth?" . http_build_query([
   'scope' => $scope,
   'access_type' => 'offline',
   'prompt' => 'consent'
+]);
+
+// === cadastro com facebook (ainda nao funciona) ===
+$fbAppId = 'SEU_APP_ID';
+$redirectUri = 'http://localhost/pi/facebook-callback.php';
+$scope = 'email';
+
+$fbLoginUrl = 'https://www.facebook.com/v18.0/dialog/oauth?' . http_build_query([
+  'client_id' => $fbAppId,
+  'redirect_uri' => $redirectUri,
+  'scope' => $scope,
+  'response_type' => 'code',
 ]);
 ?>
 
@@ -66,7 +78,9 @@ $auth_url = "https://accounts.google.com/o/oauth2/v2/auth?" . http_build_query([
             <img src="https://img.icons8.com/color/48/000000/google-logo.png" />Google
           </a>
           <button><img src="https://img.icons8.com/ios-filled/50/000000/mac-os.png" />Apple</button>
-          <button><img src="https://img.icons8.com/ios-filled/50/1877f2/facebook-new.png" />Facebook</button>
+          <a href="<?= $fbLoginUrl ?>" class="btn-social">
+              <img src="https://img.icons8.com/ios-filled/50/1877f2/facebook-new.png" />Facebook
+          </a>
         </div>
       </div>
 

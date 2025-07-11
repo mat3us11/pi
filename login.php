@@ -49,7 +49,7 @@ $auth_url = "https://accounts.google.com/o/oauth2/v2/auth?" . http_build_query([
 
 // === Login com facebook ===
 $fbAppId = 'SEU_APP_ID';
-$redirectUri = 'http://localhost/seu-projeto/facebook-callback.php';
+$redirectUri = 'http://localhost/pi/facebook-callback.php';
 $scope = 'email';
 
 $fbLoginUrl = 'https://www.facebook.com/v18.0/dialog/oauth?' . http_build_query([

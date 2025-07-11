@@ -4,7 +4,7 @@ require_once './includes/config.php';
 
 $fbAppId = 'SEU_APP_ID';
 $fbAppSecret = 'SEU_APP_SECRET';
-$redirectUri = 'http://localhost/seu-projeto/facebook-callback.php';
+$redirectUri = 'http://localhost/pi/facebook-callback.php';
 
 if (isset($_GET['code'])) {
     $code = $_GET['code'];
