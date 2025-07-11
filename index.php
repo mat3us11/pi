@@ -13,14 +13,14 @@
 <body>
     <?php include 'includes/header.php'; ?>
 
-    <!-- <div class="pesquisa-home">
+    <div class="pesquisa-home">
         <div><span class="icon"><i class="ph ph-house"></i></span>Para onde você vai?</div>
         <div><span class="icon"><i class="ph ph-calendar-dots"></i></span>Quando você vai?</div>
         <div><span class="icon"><i class="ph ph-magnifying-glass"></i></span>Quem vai com você?</div>
         <button>Pesquisar</button>
-    </div> -->
+    </div>
 
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <!-- <?php include 'includes/footer.php'; ?> -->
+    <?php include 'includes/footer.php'; ?>
 </body>
 </html>

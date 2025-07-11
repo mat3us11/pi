@@ -8,16 +8,18 @@
 
 footer {
     display: flex;
+    flex-direction: column;
     width: 100%;
     background-color: #00678A;
-    position: fixed;
     bottom: 0;
     font-family: 'Afacad';
     color: white;
-    justify-content: center;
-    align-items: center;
     margin: auto;
-    gap: 100px;
+}
+
+.footerUp{
+    display: flex;
+    justify-content:space-around;
 }
 
 .footerLeft {
@@ -48,27 +50,17 @@ footer {
     color: white;   
 }
 
-.point {
-    display: flex;
-    flex-direction: column;
-    width: 20%;
-}
-
-.midia {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-}
-
 .footerRight {
     gap: 20px;
-    width: 20%;
+    width: 35%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 .footerRight h4{
     font-weight: 500;
+    width: 70%;
 }
 
 .footerRight .botao {
@@ -102,12 +94,6 @@ footer {
     padding: 12px 4px 4px 4px;
 }
 
-
-.inputContainer input#placeholder {
-  opacity: 0; 
-  color: white;
-}
-
 .footerRight button {
     padding: 20px;
     width: 40%;
@@ -122,3 +108,81 @@ footer {
     border-radius: 7px 7px 7px 7px;
     cursor: pointer;
 }
+
+.footerDown {
+    display: flex;
+    padding: 10px;
+}
+
+.point {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+}
+
+.point img{
+    display: flex;
+    margin: auto;
+}
+
+.midia {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+
+.footerDown i {
+    font-size: 25px;
+}
+
+@media (max-width: 768px) {
+
+    footer {
+        display: flex;
+        gap: 20px;
+    }
+
+    .footerUp {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .footerLeft {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .footerRight {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footerRight h4 {
+        width: 90%;
+    }
+
+    .footerRight .botao {
+        width: 90%;
+    }
+
+    .point {
+        width: 70%;
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 30px;
+    }
+
+    .midia {
+        width: 55%;
+        display: flex;
+    }
+}
+
+
+
+
+
