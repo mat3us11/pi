@@ -1,12 +1,11 @@
 <?php
-require_once './includes/config.php'; // conexão com o banco
+require_once './includes/config.php'; 
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $nome  = $_POST['nome'] ?? '';
     $email = $_POST['email'] ?? '';
     $senha = $_POST['senha'] ?? '';
 
-    // Validação simples
     if (empty($nome) || empty($email) || empty($senha)) {
         echo "Preencha todos os campos.";
         exit;

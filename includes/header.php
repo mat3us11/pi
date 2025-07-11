@@ -15,7 +15,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
       <ul class="nav-links">
         <li><a href="#"><i class="ph ph-bicycle"></i> Passeios</a></li>
         <li><a href="#"><i class="ph ph-map-trifold"></i> Roteiros de Viagem</a></li>
-        <li><a href="perfil.php"><i class="ph ph-user"></i></i> Perfil</a></li>
+        <li><a href="perfil.php"><i class="ph ph-user"></i> Perfil</a></li>
       </ul>
     </div>
 
@@ -24,7 +24,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
         <div class="top-right">
           <?php if (isset($_SESSION['usuario_nome']) && isset($_SESSION['usuario_email'])): ?>
             <div class="usuario-logado">
-              <div class="foto-perfil-header" style="background-image: url('./assets/img/imagem-padrao.png');"><a href="/.perfil.php"></a></div>
+              <div class="foto-perfil-header" style="background-image: url('./assets/img/imagem-padrao.png');"><a href="/perfil.php"></a></div>
               <div class="dados-usuario">
                 <p class="nome-usuario"><?php echo htmlspecialchars($_SESSION['usuario_nome']); ?></p>
                 <p class="email-usuario"><?php echo htmlspecialchars($_SESSION['usuario_email']); ?></p>
@@ -62,12 +62,13 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
         <a href="login.php"><button class="btn btn-fill">Login</button></a>
       <?php endif; ?>
     </div>
+
     <ul class="modal-nav">
-      <li><a href="./perfil.php"><button class="nav-link"><i class="ph ph-user"></i> Perfil</button></a></li>
-      <li><a href="#"><button class="nav-link"><i class="ph ph-bicycle"></i> Passeios</button></a></li>
-      <li><a href="#"><button class="nav-link"><i class="ph ph-map-trifold"></i> Roteiros</button></a></li>
-      <li><a href="#"><button class="nav-link"><i class="ph ph-clock-counter-clockwise"></i> Histórico</button></a></li>
-      <li><a href="#"><button class="nav-link"><i class="ph ph-question"></i> Dúvidas</button></a></li>
+      <li><a href="./perfil.php" class="nav-link"><i class="ph ph-user"></i> Perfil</a></li>
+      <li><a href="#" class="nav-link"><i class="ph ph-bicycle"></i> Passeios</a></li>
+      <li><a href="#" class="nav-link"><i class="ph ph-map-trifold"></i> Roteiros</a></li>
+      <li><a href="#" class="nav-link"><i class="ph ph-clock-counter-clockwise"></i> Histórico</a></li>
+      <li><a href="#" class="nav-link"><i class="ph ph-question"></i> Dúvidas</a></li>
     </ul>
   </nav>
 </div>

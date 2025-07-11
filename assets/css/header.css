@@ -94,6 +94,7 @@ a {
     align-items: center;
     justify-content: flex-end;
     gap: 10px;
+    margin-bottom: 10px;
 }
 
 .btn {
@@ -111,14 +112,12 @@ a {
 .btn-outline {
     background-color: #0099CC;
     color: white;
-    margin-bottom: 10px;
 }
 
 
 .btn-fill {
     background-color: #0099CC;
     color: white;
-    margin-bottom: 10px;
 }
 
 .top-right a {
@@ -157,7 +156,7 @@ a {
     background-size: cover;
 }
 
-/* Modal mobile */
+/* Botão hamburguer */
 .hamburger {
     display: none;
     position: fixed;
@@ -171,12 +170,12 @@ a {
     z-index: 1101;
 }
 
+/* Layout responsivo */
 @media (max-width: 768px) {
     .hamburger {
         display: block;
     }
 
-    /* Esconde menu do header no mobile */
     .nav-links,
     .top-right,
     .icons {
@@ -196,12 +195,11 @@ a {
     }
 }
 
-/* Modal lateral */
+/* Modal lateral mobile */
 .mobile-modal {
     position: fixed;
     top: 0;
     right: -50%;
-    /* começa escondido fora da tela */
     width: 50%;
     height: 100%;
     background-color: #00678A;
@@ -215,7 +213,7 @@ a {
     flex-direction: column;
 }
 
-/* Ativa o modal*/
+/* Ativa o modal */
 .mobile-modal.active {
     right: 0;
 }
@@ -228,34 +226,33 @@ a {
     gap: 4rem;
 }
 
+/* Perfil no modal */
 .perfil {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
+    margin-top: 20px;
 }
 
 .foto-perfil {
-    height: 80px;
     width: 80px;
+    height: 80px;
     border-radius: 50%;
-    background-color: white;
+    background-color: #ccc;
+    background-size: cover;
+    background-position: center;
 }
 
-.cadastro-login {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 0.7rem;
+.saudacao {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
 }
 
-.cadastro-login a {
-    text-decoration: none;
-}
-
-/* Lista de navegação */
+/* Navegação lateral */
 .modal-nav {
     list-style: none;
     padding: 0;
@@ -263,32 +260,42 @@ a {
     display: flex;
     flex-direction: column;
     gap: 12px;
-}
-
-.nav-link {
-    background-color: #0f7b9f;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 10px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 14px;
-    cursor: pointer;
+    justify-content: center;
 }
 
 .modal-nav a {
     text-decoration: none;
 }
 
-/* Ícones */
-.nav-link i {
-    font-size: 18px;
+/* Link de navegação */
+.nav-link {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 16px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    line-height: 1;
 }
 
-/* Foto e dados no topo (desktop) */
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.nav-link i {
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Usuário logado no topo (desktop) */
 .usuario-logado {
     display: flex;
     align-items: center;
@@ -308,7 +315,6 @@ a {
 .dados-usuario {
     display: flex;
     flex-direction: column;
-    /* line-height: 1.1; */
 }
 
 .nome-usuario {
@@ -321,65 +327,20 @@ a {
     color: #e0e0e0;
 }
 
-/* Mobile - foto, saudação e menu lateral */
-.perfil {
+/* Botões de cadastro e login */
+.btn-outline,
+.btn-fill {
+    margin-bottom: 0;
+}
+
+.cadastro-login {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 12px;
-    margin-top: 20px;
+    gap: 0.7rem;
 }
 
-.foto-perfil {
-    width: 80px;
-    height: 80px;
-    background-color: #ccc;
-    border-radius: 50%;
-    background-size: cover;
-    background-position: center;
-}
-
-.saudacao {
-    font-size: 16px;
-    font-weight: bold;
-    color: white;
-    text-align: center;
-}
-
-.modal-nav {
-    list-style: none;
-    justify-content: center;
-    padding: 0;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.modal-nav a {
+.cadastro-login a {
     text-decoration: none;
-}
-
-.nav-link {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 10px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background 0.2s ease;
-}
-
-.nav-link:hover {
-    background-color: rgba(255, 255, 255, 0.3);
-}
-
-.nav-link i {
-    font-size: 18px;
 }
