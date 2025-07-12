@@ -1,7 +1,6 @@
 <?php
 session_start();
-require_once './includes/config.php';
-
+require_once './includes/config.php'; // Aqui deve ter sua conexão $conn PDO
 
 $client_id = "315485308526-c6g22elcoge3eukt5b8bb42vf47gmsjc.apps.googleusercontent.com";
 $client_secret = "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";
@@ -12,7 +11,6 @@ if (!isset($_GET['code'])) {
 }
 
 $code = $_GET['code'];
-
 
 $token_data = [
     'code' => $code,
@@ -44,30 +42,45 @@ $user = json_decode($user_info, true);
 
 $nome = $user['name'] ?? '';
 $email = $user['email'] ?? '';
+$foto = $user['picture'] ?? './assets/img/imagem-padrao.png';
 
 if (!$email) {
     die("Erro ao obter informações do usuário.");
 }
 
-
-$stmt = $conn->prepare("SELECT id, nome FROM usuario WHERE email = ?");
+// Verifica se o usuário já existe no banco
+$stmt = $conn->prepare("SELECT id, nome, foto_perfil FROM usuario WHERE email = ?");
 $stmt->execute([$email]);
+$dados = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if ($stmt->rowCount() > 0) {
-    $dados = $stmt->fetch(PDO::FETCH_ASSOC);
+if ($dados) {
+    // Atualiza a foto somente se for diferente da atual
+    if ($dados['foto_perfil'] !== $foto) {
+        $stmtUpdate = $conn->prepare("UPDATE usuario SET foto_perfil = ? WHERE email = ?");
+        $stmtUpdate->execute([$foto, $email]);
+        $dados['foto_perfil'] = $foto;
+    }
+
+    // Atualiza sessão com dados do usuário
     $_SESSION["usuario_id"] = $dados["id"];
     $_SESSION["usuario_nome"] = $dados["nome"];
     $_SESSION["usuario_email"] = $email;
+    $_SESSION["usuario_foto"] = $dados['foto_perfil'] ?? './assets/img/imagem-padrao.png';
+
 } else {
-    // Cria novo usuário (sem senha, pois é via Google)
-    $inserir = $conn->prepare("INSERT INTO usuario (nome, email) VALUES (?, ?)");
-    $inserir->execute([$nome, $email]);
+    // Insere novo usuário no banco
+    $inserir = $conn->prepare("INSERT INTO usuario (nome, email, foto_perfil) VALUES (?, ?, ?)");
+    $inserir->execute([$nome, $email, $foto]);
 
     $novo_id = $conn->lastInsertId();
 
+    // Salva na sessão os dados do novo usuário
     $_SESSION["usuario_id"] = $novo_id;
     $_SESSION["usuario_nome"] = $nome;
     $_SESSION["usuario_email"] = $email;
+    $_SESSION["usuario_foto"] = $foto ?? './assets/img/imagem-padrao.png';
 }
+
 header("Location: index.php");
 exit;
+?>
