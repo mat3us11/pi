@@ -2,24 +2,31 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Afacad';
 }
 
 .pesquisa-home {
     display: flex;
-    max-width: 800px;
+    width: 63%;
     margin: 20px auto;
     font-family: Arial, sans-serif;
+    background-color: #89CFF0;
+    border-radius: 5px;
+}
+
+.pesquisa-home .barra {
+    border-radius: 5px;
 }
 
 .pesquisa-home>div,
 .pesquisa-home button {
-    border: 1px solid #a7c4d9;
+    border: 2px solid #89CFF0;
     background-color: white;
     height: 42px;
+    font-size: 18px;
     display: flex;
     align-items: center;
-    padding: 0 12px;
-    font-size: 14px;
+    padding: 25px;
     color: #404040;
 }
 
@@ -30,10 +37,9 @@
 }
 
 .icon i {
-    width: 16px;
-    height: 16px;
     color: #404040;
     flex-shrink: 0;
+    font-size: 24px;
 }
 
 .pesquisa-home>div {
@@ -60,7 +66,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border: none;
     background-color: #009cff;
     color: white;
     font-weight: 600;
@@ -68,6 +73,7 @@
     cursor: pointer;
     border-radius: 0 6px 6px 0;
     transition: background-color 0.3s;
+    border-radius: 5px;
 }
 
 .pesquisa-home button:hover {
@@ -77,3 +83,160 @@
 .pesquisa-home>div:first-child {
     border-radius: 6px 0 0 6px;
 }
+
+.ofertas {
+    display: flex;
+    flex-direction: column;
+    width: 63%;
+    gap: 10px;
+    margin: auto;
+}
+
+.ofertas h3 {
+    font-family: "Afacad";
+    font-size: 25px;
+    font-weight: 200;
+    justify-content: start;
+    width: 100%;
+
+}
+
+.visualizer {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+    align-items: center;
+    width: 100%;
+}
+
+.left, .right {
+    position: relative;
+    display: flex;
+    width: 100%;
+}
+
+.ofertaL, .ofertaR {
+    width: 100%;
+    height: 180px;
+    background-color: #C9C9C9;
+    border-radius: 10px;
+}
+
+/* Seta esquerda */
+.visualizer .left i {
+    position: absolute;
+    background-color: #e0e0e0;
+    border-radius: 50%;
+    padding: 10px;
+    margin-left: -20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+/* Seta direita */
+.visualizer .right i {
+    position: absolute;
+    right: -20px;
+    background-color: #e0e0e0;
+    border-radius: 50%;
+    padding: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    top: 35%;
+}
+
+
+.destinos {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    margin-top: 60px;
+    width: 63%;
+    gap: 20px;
+}
+
+.destinos h3 {
+    font-family: "Afacad";
+    font-size: 25px;
+    font-weight: 200;
+    justify-content: start;
+    width: 100%;
+}
+
+.destinos .destinoUp {
+    width: 100%;
+    height: 240px;
+    background-color: #C9C9C9;
+    border-radius: 10px;
+}
+
+.destinoDown {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.destinoR, .destinoL {
+    width: 100%;
+    height: 360px;
+    background-color: #C9C9C9;
+    border-radius: 10px;
+}
+
+.Mais {
+    width: 63%;
+    margin: auto;
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.Mais h3 {
+    font-family: "Afacad";
+    font-size: 25px;
+    font-weight: 200;
+    justify-content: start;
+    width: 100%;
+}
+
+.MaisUp {
+    width: 100%;
+    display:flex;
+    gap: 10px;
+}
+
+.MaisUp .item {
+    border-radius: 10px;
+    height: 150px;
+    width: 100%;
+    background-color: #C9C9C9;
+}
+
+.MaisDown {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 60px;
+}
+
+.MaisDown .Mais1 {
+    width: 100%;
+    height: 220px;
+    background-color: #D9D9D9;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.MaisDown .Mais2 {
+    width: 100%;
+    height: 200px;
+    background-color: #C9C9C9;
+    border-radius: 10px;
+    border-radius: 0px 0px 10px 10px;
+}
+
+
+
