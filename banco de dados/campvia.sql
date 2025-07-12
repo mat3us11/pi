@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 10/07/2025 às 04:02
+-- Tempo de geração: 12/07/2025 às 22:06
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -33,17 +33,19 @@ CREATE TABLE `usuario` (
   `id` int(11) NOT NULL,
   `nome` varchar(200) NOT NULL,
   `email` varchar(200) NOT NULL,
-  `senha` varchar(200) NOT NULL
+  `senha` varchar(200) NOT NULL,
+  `foto_perfil` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `nome`, `email`, `senha`) VALUES
-(1, '', 'mateuschapad33@gamail.com', '$2y$10$Vq/6MpFUBbtZ9xYMmsR06./J6E2x4EE2nP6SEfURtkdMxOYsujhPq'),
-(2, 'Mateus Azevedo', 'mateusazevedo11.exe@gmail.com', '$2y$10$FeRJ0USLVCp1tiVsSIXbL.Kg2EcmrisS3HnhRM3FuE2K0K7GD0IwO'),
-(3, 'akazinho ', 'akaz1.exe@gmail.com', '$2y$10$JUtIjtvo39ct4Gi3z3J6WOXSsVJPzwu2QeO3YPpkJhbKh3GzmUH9y');
+INSERT INTO `usuario` (`id`, `nome`, `email`, `senha`, `foto_perfil`) VALUES
+(9, 'mateus azevedo', 'mateuschapad33@gmail.com', '', 'https://lh3.googleusercontent.com/a/ACg8ocKDFYWpGSp1inVstFITcrRpHVCdshQm8j2ajnR0gv3duvdEHzw=s96-c'),
+(10, 'Mateus Azevedo', 'mateusazevedo11.exe@gmail.com', '', 'https://lh3.googleusercontent.com/a/ACg8ocIx4oujtytswR-b2Ts1p01qzFb3o25T0wJMecsqXzKpBqG4DR4=s96-c'),
+(11, 'Mateus Azevedo', 'mateus.azevedop5@gmail.com', '', 'https://lh3.googleusercontent.com/a/ACg8ocKHjIUkFFlBMkxDiRzFqVbaplWyxdvjIz4wJP7e2vCCQ3eC4A=s96-c'),
+(12, 'akazinho ', 'aaa@gmail.com', '$2y$10$LiFdljExmm1Twd9sneyPtOaaIGgDqaK7hqPKtJAONiLbl6wXbc/wq', NULL);
 
 --
 -- Índices para tabelas despejadas
@@ -63,7 +65,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de tabela `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

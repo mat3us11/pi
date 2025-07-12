@@ -2,7 +2,12 @@
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
-?>
+
+// Se não tiver foto, usar a padrão
+$foto_perfil = (isset($_SESSION['usuario_foto']) && !empty($_SESSION['usuario_foto'])) 
+    ? $_SESSION['usuario_foto'] 
+    : './assets/img/imagem-padrao.png';
+?>  
 
 <header>
   <div class="container">
@@ -24,7 +29,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
         <div class="top-right">
           <?php if (isset($_SESSION['usuario_nome']) && isset($_SESSION['usuario_email'])): ?>
             <div class="usuario-logado">
-              <div class="foto-perfil-header" style="background-image: url('./assets/img/imagem-padrao.png');"><a href="/perfil.php"></a></div>
+              <div class="foto-perfil-header" style="background-image: url('<?php echo htmlspecialchars($foto_perfil); ?>');"><a href="/perfil.php"></a></div>
               <div class="dados-usuario">
                 <p class="nome-usuario"><?php echo htmlspecialchars($_SESSION['usuario_nome']); ?></p>
                 <p class="email-usuario"><?php echo htmlspecialchars($_SESSION['usuario_email']); ?></p>
@@ -54,7 +59,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 <div class="mobile-modal" id="mobileModal" aria-hidden="true">
   <nav class="modal-conteudo">
     <div class="perfil">
-      <div class="foto-perfil" style="background-image: url('./assets/img/imagem-padrao.png');"></div>
+     <div class="foto-perfil" style="background-image: url('<?php echo htmlspecialchars($foto_perfil); ?>');"></div>
       <?php if (isset($_SESSION['usuario_nome'])): ?>
         <p class="saudacao">Olá, <?php echo htmlspecialchars($_SESSION['usuario_nome']); ?>!</p>
       <?php else: ?>
