@@ -58,6 +58,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["nova_foto"])) {
 }
 ?>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="./assets/css/header_perfil.css">
+    <link rel="stylesheet" href="./assets/css/footer.css">
+    <link rel="stylesheet" href="./assets/css/perfil.css">
+    <script defer src="./assets/js/modal.js"></script>
+    <title>Perfil</title>
+</head>
+<body>
+    <?php include 'includes/header-perfil.php'; ?>
+    <a href="logout.php">Sair</a>
+
+</body>
+</html>
+
 <h3>Alterar foto de perfil</h3>
 
 <?php if (!empty($mensagem)) echo "<p style='color: green;'>$mensagem</p>"; ?>
@@ -69,4 +87,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["nova_foto"])) {
 </form>
 
 <br>
-<a href="logout.php">Sair</a>

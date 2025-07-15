@@ -2,8 +2,8 @@
 session_start();
 require_once './includes/config.php';
 
-$fbAppId = 'SEU_APP_ID';
-$fbAppSecret = 'SEU_APP_SECRET';
+$fbAppId = '1836102177316384';
+$fbAppSecret = '24f9e751a75142fb1cf770606a6720b2';
 $redirectUri = 'http://localhost/pi/facebook-callback.php';
 
 if (isset($_GET['code'])) {

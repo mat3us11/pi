@@ -1,0 +1,474 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+header {
+  background-color: #00678A;
+  font-family: Arial, sans-serif;
+  color: white;
+}
+
+/* HEADER DO PERFIL */
+.header-perfil {
+  width: 100%;
+  padding: 20px 0;
+}
+
+.header-container-perfil {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Parte de cima: voltar + logo */
+.perfil-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.perfil-top .logo {
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.perfil-top .logo span {
+  font-weight: normal;
+}
+
+.perfil-top .logo i {
+  font-size: 18px;
+}
+
+.voltar i {
+  font-size: 22px;
+  color: white;
+}
+
+/* CONTEÚDO PRINCIPAL DO PERFIL */
+.perfil-conteudo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Informações do usuário à esquerda */
+.perfil-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.foto-perfil-grande {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background-color: #ccc;
+  background-size: cover;
+  background-position: center;
+}
+
+.dados {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nome-usuario {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.botoes-perfil {
+  display: flex;
+  background-color: #00678A;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+
+
+.btn-perfil {
+  background-color: #004466; 
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-perfil:hover {
+  background-color: #6699cc; /* azul claro no hover */
+}
+
+
+/* LADO DIREITO */
+.right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.top-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.usuario-logado {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+}
+
+.foto-perfil-header {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  background-color: #ccc;
+}
+
+.dados-usuario {
+  display: flex;
+  flex-direction: column;
+}
+
+.dados-usuario .nome-usuario {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.dados-usuario .email-usuario {
+  font-size: 12px;
+  color: #e0e0e0;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.icons i {
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.icons i:hover {
+  color: #0099CC;
+}
+
+/* BOTÃO HAMBURGUER */
+.hamburger {
+  display: none;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+  z-index: 1101;
+}
+
+/* MODAL MOBILE */
+.mobile-modal {
+  position: fixed;
+  top: 0;
+  right: -50%;
+  width: 50%;
+  height: 100%;
+  background-color: #00678A;
+  color: white;
+  padding: 20px;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
+  transition: right 0.3s ease;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.mobile-modal.active {
+  right: 0;
+}
+
+.modal-conteudo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 60px;
+  gap: 4rem;
+}
+
+/* PERFIL NO MODAL */
+.perfil {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.foto-perfil {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #ccc;
+  background-size: cover;
+  background-position: center;
+}
+
+.saudacao {
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+}
+
+/* LINKS DO MODAL */
+.modal-nav {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+}
+
+.modal-nav a {
+  text-decoration: none;
+}
+
+.nav-link {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 16px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  line-height: 1;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.nav-link i {
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* BOTÕES DE CADASTRO/LOGIN */
+.btn {
+  height: 32px;
+  min-width: 90px;
+  font-size: 13px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-outline,
+.btn-fill {
+  background-color: #0099CC;
+  color: white;
+}
+
+.cadastro-login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
+  .perfil-conteudo {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .right {
+    width: 100%;
+  }
+
+  .top-right,
+  .icons {
+    display: none;
+  }
+}
+
+
+.perfil-header {
+  width: 100%;
+  font-family: Arial, sans-serif;
+  color: white;
+}
+
+.perfil-topo {
+  background-color: #00678A;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.perfil-topo .logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+  margin-bottom: 10px;
+}
+
+.perfil-topo .logo span {
+  font-weight: normal;
+}
+
+.perfil-topo .voltar {
+  font-size: 14px;
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Banner com imagem e conteúdo */
+.perfil-banner {
+  position: relative;
+  background: url('../img/perfil-banner.jpg') center center no-repeat;
+  background-size: cover;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.perfil-banner .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0, 103, 138, 0.8), rgba(0, 103, 138, 0.95));
+  z-index: 1;
+}
+
+.perfil-centro {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.foto-perfil-grande {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #ccc;
+  background-size: cover;
+  background-position: center;
+  border: 3px solid white;
+}
+
+.nome-usuario {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+}
+
+.botoes-perfil {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.btn-perfil {
+  background-color: #0099CC;
+  color: whitr;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-perfil:hover {
+  background-color: #6699cc;
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+  .perfil-topo {
+    padding: 15px;
+  }
+
+  .perfil-banner {
+    height: 350px;
+    padding: 20px;
+  }
+
+  .foto-perfil-grande {
+    width: 80px;
+    height: 80px;
+  }
+
+  .btn-perfil {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+}
