@@ -103,8 +103,9 @@ $email_usuario = $_SESSION['usuario_email'] ?? '';
 </button>
 
 <!-- Modal Mobile -->
+
 <div class="mobile-modal" id="mobileModal" aria-hidden="true">
-  <nav class="modal-conteudo">
+  <nav class="modal-conteudo-mobile">
     <div class="perfil">
       <div class="foto-perfil" style="background-image: url('<?php echo htmlspecialchars($foto_perfil); ?>');"></div>
       <?php if (isset($_SESSION['usuario_nome'])): ?>

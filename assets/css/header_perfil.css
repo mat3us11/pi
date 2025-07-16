@@ -248,13 +248,14 @@ header {
   right: 0;
 }
 
-.modal-conteudo {
+.modal-conteudo-mobile {
   display: flex;
   flex-direction: column;
   justify-content: center;
   margin-top: 60px;
   gap: 4rem;
 }
+
 
 /* PERFIL NO MODAL */
 .perfil {
@@ -362,7 +363,6 @@ header {
     align-items: flex-start;
     gap: 20px;
   }
-
   .right {
     width: 100%;
   }
