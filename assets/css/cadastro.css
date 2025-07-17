@@ -97,8 +97,7 @@ body {
   margin-bottom: 20px;
 }
 
-input[type="text"],
-input[type="password"] {
+input {
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 6px;

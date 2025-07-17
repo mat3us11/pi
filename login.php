@@ -2,6 +2,14 @@
 session_start();
 require_once './includes/config.php';
 
+
+
+// Impede que o usuário acese a página depois de logado
+if (isset($_SESSION["logado"]) && $_SESSION["logado"] === true) {
+    header("Location: index.php");
+}
+
+
 // === LOGIN MANUAL (MySQL) ===
 $erro = '';
 
@@ -21,13 +29,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION["usuario_id"] = $usuario["id"];
         $_SESSION["usuario_nome"] = $usuario["nome"];
         $_SESSION["usuario_email"] = $email;
+
+        $_SESSION["logado"] = true;
         header("Location: index.php");
         exit;
       } else {
-        $erro = "Senha incorreta.";
+        $erro = "Verifique se os campos foram preenchidos corretamente.";
       }
     } else {
-      $erro = "Usuário não encontrado.";
+      $erro = "Verifique se os campos foram preenchidos corretamente.";
     }
   }
 }
@@ -98,8 +108,8 @@ $fbLoginUrl = 'https://www.facebook.com/v18.0/dialog/oauth?' . http_build_query(
         <?php endif; ?>
 
         <form method="POST" action="">
-          <input type="email" name="email" id="email" placeholder="Digite o endereço de e-mail" required />
-          <input type="password" name="senha" id="senha" placeholder="Digite a senha" required />
+          <input type="email" name="email" id="email" placeholder="Digite o endereço de e-mail" autocomplete="off" required />
+          <input type="password" name="senha" id="senha" placeholder="Digite a senha" autocomplete="off" required />
           <a href="cadastro.php">
             <p class="criar-conta">Criar conta</p>
           </a>

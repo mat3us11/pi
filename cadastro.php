@@ -1,4 +1,15 @@
 <?php
+
+// Impede que o usuário acese a página depois de logado
+session_start();
+require_once './includes/config.php';
+
+
+if (isset($_SESSION["logado"]) && $_SESSION["logado"] === true) {
+    header("Location: index.php");
+}
+
+
 // === Cadastro com google ===
 $client_id = "315485308526-c6g22elcoge3eukt5b8bb42vf47gmsjc.apps.googleusercontent.com"; // substitua aqui
 $redirect_uri = "http://localhost/pi/google-callback.php";
@@ -62,9 +73,9 @@ $fbLoginUrl = 'https://www.facebook.com/v18.0/dialog/oauth?' . http_build_query(
         <h3>Crie uma conta ou faça login</h3>
 
         <form action="cadastrar.php" method="POST" style="width: 100%;">
-          <input type="text" id="nome" name="nome" placeholder="Digite o seu nome" required />
-          <input type="text" id="email" name="email" placeholder="Digite o endereço de e-mail" required />
-          <input type="password" id="senha" name="senha" placeholder="Digite a senha" required />
+          <input type="text" id="nome" name="nome" placeholder="Digite o seu nome" autocomplete="off" required />
+          <input type="email" id="email" name="email" placeholder="Digite o endereço de e-mail" autocomplete="off"  required />
+          <input type="password" id="senha" name="senha" placeholder="Digite a senha" autocomplete="off"  required />
           <a href="login.php">
             <p class="criar-conta">Fazer login</p>
           </a>
