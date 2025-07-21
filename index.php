@@ -14,10 +14,19 @@
     <?php include 'includes/header.php'; ?>
 
     <div class="pesquisa-home">
-        <div class="barra"><span class="icon"><i class="ph ph-house"></i></span>Para onde você vai?</div>
-        <div class="barra"><span class="icon"><i class="ph ph-calendar-dots"></i></span>Quando você vai?</div>
-        <div class="barra"><span class="icon"><i class="ph ph-magnifying-glass"></i></span>Quem vai com você?</div>
-        <button>Pesquisar</button>
+        <div class="coluna1">
+            <input class="input1" type="search" placeholder="Para onde você vai?">
+        </div>
+
+        <div class="coluna2">
+            <input class="input2" type="text" id="data" placeholder="Quando você vai?" onfocus="this.type='date'">
+
+            <input class="input3" type="search" placeholder="Quem vai com você?">
+        </div>
+
+        <div class="coluna3">
+            <button>Pesquisar</button>
+        </div>
     </div>
 
     <div class="ofertas">
@@ -84,6 +93,14 @@
 
 
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        document.getElementById('data').onblur = function() {
+            if (this.value == '') {
+                this.type = 'text';
+            }
+        }
+    </script>
     <?php include 'includes/footer.php'; ?>
 </body>
 </html>

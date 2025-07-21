@@ -12,77 +12,75 @@
     font-family: Arial, sans-serif;
     background-color: #89CFF0;
     border-radius: 5px;
+    height: 50px;
+    padding: 2px;
+    gap: 2px;
 }
 
-.pesquisa-home .barra {
+.pesquisa-home .coluna1 {
+    display: flex;
+    width: 30%;
+}
+
+.coluna1 .input1 {
+    width: 100%;
+    border: none;
     border-radius: 5px;
+    padding: 10px;
 }
 
-.pesquisa-home>div,
-.pesquisa-home button {
-    border: 2px solid #89CFF0;
-    background-color: white;
-    height: 42px;
-    font-size: 18px;
+.input1::placeholder {
+    font-size: 16px;
+    font-family: 'Afacad';
+    color: black;
+}
+
+.pesquisa-home .coluna2 {
     display: flex;
-    align-items: center;
-    padding: 25px;
-    color: #404040;
+    width: 60%;
+    gap: 2px;
 }
 
-.icon {
-    margin-right: 8px;
+.coluna2 .input2 {
+    width: 50%;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.input2::placeholder {
+    font-size: 16px;
+    font-family: 'Afacad';
+    color: black;
+}
+
+.coluna2 .input3 {
+    width: 50%;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.input3::placeholder {
+    font-size: 16px;
+    font-family: 'Afacad';
+    color: black;
+}
+
+.pesquisa-home .coluna3 {
     display: flex;
-    align-items: center;
+    width: 10%;
 }
 
-.icon i {
-    color: #404040;
-    flex-shrink: 0;
-    font-size: 24px;
-}
-
-.pesquisa-home>div {
-    flex: 1;
-    border-right: none;
-    cursor: pointer;
-}
-
-.pesquisa-home>div:last-child {
-    border-right: 1px solid #a7c4d9;
-    position: relative;
-}
-
-.pesquisa-home>div:last-child::after {
-    content: "▼";
-    position: absolute;
-    right: 10px;
-    font-size: 10px;
-    color: #999;
-    pointer-events: none;
-}
-
-.pesquisa-home button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #009cff;
+.coluna3 button {
+    width: 100%;
+    background-color: rgb(31, 106, 106);
+    border: none;
+    border-radius: 5px;
     color: white;
-    font-weight: 600;
-    width: 110px;
-    cursor: pointer;
-    border-radius: 0 6px 6px 0;
-    transition: background-color 0.3s;
-    border-radius: 5px;
 }
 
-.pesquisa-home button:hover {
-    background-color: #007acc;
-}
 
-.pesquisa-home>div:first-child {
-    border-radius: 6px 0 0 6px;
-}
 
 .ofertas {
     display: flex;
@@ -238,5 +236,48 @@
     border-radius: 0px 0px 10px 10px;
 }
 
+@media (max-width: 768px) {
+    .pesquisa-home {
+        display: flex;
+        flex-direction: column;
+        height: 100px;
+        gap: 5px;
+        background-color: #fff;
+    }
+
+    .pesquisa-home .coluna1 {
+        width: 100%;
+    }
+
+    .coluna1 .input1 {
+        border: 2px solid black;
+    }
+    
+    .pesquisa-home .coluna2 {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        gap: 10px   ;
+    }
+
+    .coluna2 .input2 {
+        border: 2px solid black;
+    }
+
+    .coluna2 .input3 {
+        border: 2px solid black;
+    }
+
+    .pesquisa-home .coluna3 {
+        width: 100%;
+    }
+
+    .coluna3 button {
+        padding: 5px;
+    }
+
+
+
+}
 
 
