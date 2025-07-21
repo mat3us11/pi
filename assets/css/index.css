@@ -10,7 +10,7 @@
     width: 63%;
     margin: 20px auto;
     font-family: Arial, sans-serif;
-    background-color: #89CFF0;
+    background-color: #0099CC;
     border-radius: 5px;
     height: 50px;
     padding: 2px;
@@ -27,6 +27,10 @@
     border: none;
     border-radius: 5px;
     padding: 10px;
+}
+
+.input1:focus {
+    outline: none;
 }
 
 .input1::placeholder {
@@ -48,6 +52,10 @@
     padding: 10px;
 }
 
+.input2:focus {
+    outline: none;
+}
+
 .input2::placeholder {
     font-size: 16px;
     font-family: 'Afacad';
@@ -59,6 +67,10 @@
     border: none;
     border-radius: 5px;
     padding: 10px;
+}
+
+.input3:focus {
+    outline: none;
 }
 
 .input3::placeholder {
@@ -73,11 +85,18 @@
 }
 
 .coluna3 button {
-    width: 100%;
-    background-color: rgb(31, 106, 106);
-    border: none;
-    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #009cff;
     color: white;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 0 6px 6px 0;
+    transition: background-color 0.3s;
+    border-radius: 5px;
+    border: none;
+    width: 100%;
 }
 
 
@@ -86,7 +105,7 @@
     display: flex;
     flex-direction: column;
     width: 63%;
-    gap: 10px;
+    gap: 5px;
     margin: auto;
 }
 
@@ -202,16 +221,37 @@
 }
 
 .MaisUp {
+    display: flex;
     width: 100%;
-    display:flex;
     gap: 10px;
 }
 
-.MaisUp .item {
+.up1 {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+}
+
+.up1 .item {
     border-radius: 10px;
-    height: 150px;
+    height: 130px;
     width: 100%;
     background-color: #C9C9C9;
+
+}
+
+.up2 {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+}
+
+.up2 .item {
+    border-radius: 10px;
+    height: 130px;
+    width: 100%;
+    background-color: #C9C9C9;
+
 }
 
 .MaisDown {
@@ -238,6 +278,7 @@
 
 @media (max-width: 768px) {
     .pesquisa-home {
+        width: 90%;
         display: flex;
         flex-direction: column;
         height: 100px;
@@ -276,8 +317,56 @@
         padding: 5px;
     }
 
+    .ofertas {
+        width: 90%;
+    }
 
+    .ofertas h3 {
+        margin-top: 10px;
+    }
 
+    .ofertaL, .ofertaR {
+        height: 120px;
+    }
+
+    .destinos {
+        width: 90%;
+    }
+
+    .destinos .destinoUp {
+        height: 180px;
+    }
+
+    .destinoR, .destinoL {
+        height: 160px;
+    }
+
+    .Mais {
+        width: 90%;
+    }
+
+    .MaisUp {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+    }
+
+    .MaisUp .up1 {
+        display: flex;
+
+    }
+
+    .up1 .item {
+        height: 110px;
+    }
+
+     .up2 .item {
+        height: 110px;
+    }
+
+    .MaisDown {
+        display: none;
+    }
 }
 
 

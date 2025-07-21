@@ -72,12 +72,18 @@
     <div class="Mais">
         <h3>Conheça o interior</h3>
         <div class="MaisUp">
-            <div class="item"></div>
-            <div class="item"></div>
-            <div class="item"></div>
-            <div class="item"></div>
-            <div class="item"></div>
-            <div class="item"></div>
+            <div class="up1">
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+            </div>
+
+            <div class="up2">
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+            </div>
+
         </div>
 
         <div class="MaisDown">
