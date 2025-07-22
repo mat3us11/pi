@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Afacad';
 }
 
 a {
@@ -21,7 +22,7 @@ header {
 /* HEADER DO PERFIL */
 .header-perfil {
   width: 100%;
-  padding: 20px 0;
+  padding: 40px 0px 150px 0px;
 }
 
 .header-container-perfil {
@@ -350,6 +351,50 @@ header {
   justify-content: center;
   align-items: center;
   gap: 0.7rem;
+}
+
+.quest {
+    margin: auto;
+    width: 73%;
+    height: 500px;
+    border-radius: 20px 20px 20px 20px;
+    background-color: #EBEBEB;
+    margin-top: -100px; 
+}
+
+.questDown {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: auto;
+}
+
+.questDown h4 {
+  margin-top: 10px;
+  font-size: 32px;
+}
+
+.questDown h5 {
+  font-size: 20px;
+  font-weight: 200;
+}
+
+.questDown button {
+  padding: 15px;
+  margin-top: 30px;
+  border-radius: 10px 10px 10px 10px;
+  background-color: #006994;
+  color: white;
+  border: none;
+  font-size: 24px
+}
+
+.quest img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    object-position: center 80%; /* '70%' mostra mais a parte inferior */
+    border-radius: 20px 20px 20px 20px;
 }
 
 /* RESPONSIVO */

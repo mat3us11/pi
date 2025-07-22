@@ -147,6 +147,17 @@ $email_usuario = $_SESSION['usuario_email'] ?? '';
   </div>
 </div>
 
+<div class="quest">
+        <img src="assets/img/moçadebraçoesabertosaoarlivre.jpg" alt="imagem">
+
+        <div class="questDown">
+          <h4>O que é importante na hora de viajar?</h4>
+
+          <h5>Responda a 5 perguntas simples sobre as suas preferências e nos ajude a personalizar a sua proxima viagem</h5>
+
+          <button>Começar</button>
+        </div>
+    </div>
 
 <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </script>

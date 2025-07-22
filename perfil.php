@@ -21,6 +21,7 @@ if (!isset($_SESSION['usuario_id'])) {
     <title>Perfil</title>
 </head>
 
+    
 <body>
     <?php include 'includes/header-perfil.php'; ?>
     <a href="logout.php">Sair</a>
