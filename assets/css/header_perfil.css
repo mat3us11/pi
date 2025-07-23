@@ -22,7 +22,7 @@ header {
 /* HEADER DO PERFIL */
 .header-perfil {
   width: 100%;
-  padding: 40px 0px 150px 0px;
+  padding: 20px 0px 120px 0px;
 }
 
 .header-container-perfil {
@@ -36,9 +36,10 @@ header {
 
 
 .perfil-top .logo {
-  font-size: 22px;
+  font-size: 32px;
   font-weight: bold;
   letter-spacing: 1px;
+  padding: 20;
 }
 
 .perfil-top .logo span {
@@ -46,7 +47,7 @@ header {
 }
 
 .perfil-top .logo i {
-  font-size: 18px;
+  font-size: 24px;
 }
 /* Modal padrão */
 .modal {
@@ -61,18 +62,94 @@ header {
 }
 
 .modal-conteudo {
+  gap: 30px;
+  display: flex;
+  flex-direction: column;
   background-color: #fff;
-  margin: auto;
   padding: 20px;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 500px;
+  border-radius: 10px;
+  width: 50%;
   position: relative;
+  margin: auto;
 }
 
 .modal-conteudo h3{
   display: flex;
   justify-content: center;
+}
+
+.editar {
+  justify-content: space-around;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.foto {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.foto form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-conteudo .botao{
+  display: flex;
+  background-color: #006994;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 20px;
+  margin: auto;
+  font-size: 16px;
+}
+
+input[name="nova_foto"] {
+  color: white;
+  width: 100%;
+  display: flex;
+}
+
+.modal-conteudo .confirmar {
+  margin: auto;
+  width: 60%;
+  padding: 5px;
+  background-color: #006994;
+  color: white;
+  font-size: 20px;
+  border-radius: 10px;
+  border: none;
+}
+
+.custom-file-label {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: #ddd;
+    border: 1px solid #aaa;
+    cursor: pointer;
+  }
+  
+.editarleft {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 25%;
+}
+
+
+.editarright {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 25%;
 }
 
 .fechar {
@@ -118,6 +195,9 @@ header {
   gap: 10px;
 }
 
+.dados p {
+  font-size: 28px;
+}
 .nome-usuario {
   font-weight: bold;
   font-size: 18px;
@@ -131,6 +211,10 @@ header {
   gap: 10px;
   margin-top: 5px;
   justify-content: center;
+}
+
+.botoes-perfil a {
+  font-size: 18px;
 }
 
 .btn-perfil {
@@ -353,9 +437,11 @@ header {
   gap: 0.7rem;
 }
 
+
+
 .quest {
     margin: auto;
-    width: 73%;
+    width: 63%;
     height: 500px;
     border-radius: 20px 20px 20px 20px;
     background-color: #EBEBEB;
@@ -386,14 +472,15 @@ header {
   background-color: #006994;
   color: white;
   border: none;
-  font-size: 24px
+  font-size: 24px;
+  cursor: pointer;
 }
 
 .quest img {
     width: 100%;
     height: 300px;
     object-fit: cover;
-    object-position: center 80%; /* '70%' mostra mais a parte inferior */
+    object-position: center 80%; 
     border-radius: 20px 20px 20px 20px;
 }
 
@@ -408,6 +495,11 @@ header {
     align-items: flex-start;
     gap: 20px;
   }
+
+  .dados p {
+  font-size: 24px;
+}
+
   .right {
     width: 100%;
   }
@@ -440,7 +532,35 @@ header {
     display: none;
   }
 
+  .botoes-perfil a {
+  font-size: 12px;
+  }
+
   .botoes-perfil{
     width: 100px;
   }
+
+
+  .quest {
+    width: 95%;
+    height: 300px;
+  }
+
+  .quest img {
+    height: 150px;
+  }
+
+  .questDown h4 {
+    font-size: 14px;
+  }
+
+  .questDown h5 {
+    font-size: 12px;
+  }
+
+  .questDown button {
+    padding: 5px;
+    font-size: 15px;
+  }
+
 }

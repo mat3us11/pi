@@ -44,7 +44,7 @@ a {
 }
 
 .logo {
-    font-size: 22px;
+    font-size: 32px;
     font-weight: bold;
     letter-spacing: 1px;
 }
@@ -54,7 +54,7 @@ a {
 }
 
 .logo i {
-    font-size: 18px;
+    font-size: 24px;
 }
 .nav-links {
     margin-top: 10px;
@@ -67,18 +67,18 @@ a {
 .nav-links li a {
     display: flex;
     align-items: center;
-    font-size: 13px;
+    font-size: 20px;
     background-color: #0B7CA5;
     height: 30px;
     padding: 0 12px;
     border-radius: 20px;
-    color: #d9d9d9;
+    color: #ffffff;
     text-decoration: none;
 }
 
 .nav-links li a i {
     margin-right: 5px;
-    font-size: 16px;
+    font-size: 20px;
 }
 
 /* lado direito */
@@ -134,7 +134,7 @@ a {
 }
 
 .icons i {
-    font-size: 18px;
+    font-size: 24px;
     cursor: pointer;
 }
 
@@ -321,11 +321,11 @@ a {
 
 .nome-usuario {
     font-weight: bold;
-    font-size: 14px;
+    font-size: 24px;
 }
 
 .email-usuario {
-    font-size: 12px;
+    font-size: 18px;
     color: #e0e0e0;
 }
 

@@ -132,17 +132,55 @@ $email_usuario = $_SESSION['usuario_email'] ?? '';
 <!-- Modal de Edição de Perfil -->
 <div id="modal-editar" class="modal">
   <div class="modal-conteudo">
+    <h3>Editar Perfil</h3>
+
+    <div class="editar">
     <span class="fechar" id="fechar-modal">&times;</span>
-      <h3>EDITAR PERFIL</h3>
 
-      <div class="foto-perfil-grande" style="background-image: url('<?php echo htmlspecialchars($foto_perfil); ?>');"></div>
+      <div class="foto">
+        <div class="foto-perfil-grande" style="background-image: url('<?php echo htmlspecialchars($foto_perfil); ?>');"></div>
       
-      <?php if (!empty($mensagem)) echo "<p style='color: green;'>$mensagem</p>"; ?>
-      <?php if (!empty($erro)) echo "<p style='color: red;'>$erro</p>"; ?>
+        <?php if (!empty($mensagem)) echo "<p style='color: green;'>$mensagem</p>"; ?>
+        <?php if (!empty($erro)) echo "<p style='color: red;'>$erro</p>"; ?>
 
-      <form method="POST" enctype="multipart/form-data">
-        <input type="file" name="nova_foto" accept="image/*" required>
-        <button type="submit">Atualizar Foto</button>
+        <form method="POST" enctype="multipart/form-data">
+
+          <input type="file" name="nova_foto" accept="image/*" required>
+          <button class="botao" type="submit">Atualizar</button>
+
+        </div>
+
+          <div class="editarleft">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome">
+
+            <label for="apelido">Apelido</label>
+            <input type="text" id="apelido" name="apelido" >
+
+
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email">
+
+          </div>
+
+          <div class="editarright">
+            <label for="sobrenome">Sobrenome</label>
+            <input type="text" id="sobrenome" name="sobrenome">
+
+
+            <label for="telefone">Número de Telefone</label>
+            <input type="tel" id="telefone" name="telefone">
+
+
+            <label for="endereco">Endereço</label>
+            <input type="text" id="endereco" name="endereco">
+          </div>
+
+        </div>
+
+        <button class="confirmar">CONFIRMAR</button>
+
+          
       </form>
   </div>
 </div>

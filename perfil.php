@@ -22,10 +22,33 @@ if (!isset($_SESSION['usuario_id'])) {
 </head>
 
     
+    
 <body>
     <?php include 'includes/header-perfil.php'; ?>
     <a href="logout.php">Sair</a>
 
+    <div class="certificado">
+        <h3>Certificado</h3>
+        <div class="blocos1">
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+        </div>
+    </div>
+
+    <div class="favoritos">
+        <h2>Favortios</h2>
+        <h3>Pastas</h3>
+        
+        <div class="blocos2">
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"><i class="ph ph-plus"></i></div>
+        </div>
+    </div>
+
+    <?php include 'includes/footer.php'; ?>
 </body>
 
 </html>

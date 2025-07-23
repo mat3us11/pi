@@ -58,3 +58,7 @@ window.addEventListener('click', (e) => {
     }
   });
 
+  function handleFileChange(input) {
+  const nova_foto = input.files[0]?.name || "Nenhum arquivo escolhido";
+  document.getElementById("file-name").textContent = nova_foto;
+}
