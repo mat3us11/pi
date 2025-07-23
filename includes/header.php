@@ -7,6 +7,12 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 $foto_perfil = (isset($_SESSION['usuario_foto']) && !empty($_SESSION['usuario_foto'])) 
     ? $_SESSION['usuario_foto'] 
     : './assets/img/imagem-padrao.png';
+
+// Definir nome ou apelido conforme preferência
+$nome = $_SESSION['usuario_nome'] ?? '';
+$apelido = $_SESSION['usuario_apelido'] ?? '';
+$preferencia = $_SESSION['usuario_preferencia_nome_apelido'] ?? 0;
+$nome_para_exibir = ($preferencia && !empty($apelido)) ? $apelido : $nome;
 ?>  
 
 <header>
@@ -31,7 +37,7 @@ $foto_perfil = (isset($_SESSION['usuario_foto']) && !empty($_SESSION['usuario_fo
             <div class="usuario-logado">
               <div class="foto-perfil-header" style="background-image: url('<?php echo htmlspecialchars($foto_perfil); ?>');"><a href="/perfil.php"></a></div>
               <div class="dados-usuario">
-                <p class="nome-usuario"><?php echo htmlspecialchars($_SESSION['usuario_nome']); ?></p>
+                <p class="nome-usuario"><?php echo htmlspecialchars($nome_para_exibir); ?></p>
                 <p class="email-usuario"><?php echo htmlspecialchars($_SESSION['usuario_email']); ?></p>
               </div>
             </div>
@@ -61,7 +67,7 @@ $foto_perfil = (isset($_SESSION['usuario_foto']) && !empty($_SESSION['usuario_fo
     <div class="perfil">
      <div class="foto-perfil" style="background-image: url('<?php echo htmlspecialchars($foto_perfil); ?>');"></div>
       <?php if (isset($_SESSION['usuario_nome'])): ?>
-        <p class="saudacao">Olá, <?php echo htmlspecialchars($_SESSION['usuario_nome']); ?>!</p>
+        <p class="saudacao">Olá, <?php echo htmlspecialchars($nome_para_exibir); ?>!</p>
       <?php else: ?>
         <a href="cadastro.php"><button class="btn btn-outline">Cadastre-se</button></a>
         <a href="login.php"><button class="btn btn-fill">Login</button></a>

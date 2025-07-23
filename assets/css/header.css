@@ -159,7 +159,7 @@ a {
 /* Botão hamburguer */
 .hamburger {
     display: none;
-    position: fixed;
+    position: absolute;
     top: 20px;
     right: 20px;
     background: none;
