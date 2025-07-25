@@ -50,6 +50,4 @@ if (!isset($_SESSION['usuario_id'])) {
 
     <?php include 'includes/footer.php'; ?>
 </body>
-
-</html>
-<br>
+</html> 

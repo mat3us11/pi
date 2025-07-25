@@ -110,7 +110,7 @@ $preferencia_nome_apelido = $usuario['preferencia_nome_apelido'] ?? 0;
           <div class="botoes-perfil">
             <a href="#" id="btn-editar-perfil" class="btn-perfil"><i class="ph ph-pencil-simple"></i> Editar Perfil</a>
             <a href="index.php" class="btn-perfil"><i class="ph ph-house"></i> Home</a>
-            <a href="passeios.php" class="btn-perfil"><i class="ph ph-bicycle"></i> Passeios</a>
+            <a href="./passeios.php" class="btn-perfil"><i class="ph ph-bicycle"></i> Passeios</a>
             <a href="#" class="btn-perfil"><i class="ph ph-map-trifold"></i> Roteiros</a>
           </div>
         </div>
@@ -125,27 +125,32 @@ $preferencia_nome_apelido = $usuario['preferencia_nome_apelido'] ?? 0;
   </div>
 </header>
 
+<!-- Botão Hamburguer -->
 <button class="hamburger" id="hamburgerBtn" aria-label="Abrir menu">
   <i class="ph ph-list" id="hamburgerIcon"></i>
 </button>
 
+<!-- Modal Mobile -->
 <div class="mobile-modal" id="mobileModal" aria-hidden="true">
-  <nav class="modal-conteudo-mobile">
+  <nav class="modal-conteudo">
     <div class="perfil">
-      <div class="foto-perfil" style="background-image: url('<?php echo htmlspecialchars($foto_perfil); ?>');"></div>
+     <div class="foto-perfil" style="background-image: url('<?php echo htmlspecialchars($foto_perfil); ?>');"></div>
       <?php if (isset($_SESSION['usuario_nome'])): ?>
-        <p class="saudacao">Olá, <?php echo htmlspecialchars($_SESSION['usuario_nome']); ?>!</p>
+        <p class="saudacao">Olá, <?php 
+  echo ($preferencia_nome_apelido && !empty($apelido_usuario)) 
+    ? htmlspecialchars($apelido_usuario) 
+    : htmlspecialchars($nome_usuario); 
+?>!</p>
+
       <?php else: ?>
-        <div class="cadastro-login">
-          <a href="cadastro.php"><button class="btn btn-outline">Cadastre-se</button></a>
-          <a href="login.php"><button class="btn btn-fill">Login</button></a>
-        </div>
+        <a href="cadastro.php"><button class="btn btn-outline">Cadastre-se</button></a>
+        <a href="login.php"><button class="btn btn-fill">Login</button></a>
       <?php endif; ?>
     </div>
 
     <ul class="modal-nav">
-      <li><a href="perfil.php" class="nav-link"><i class="ph ph-user"></i> Perfil</a></li>
-      <li><a href="#" class="nav-link"><i class="ph ph-bicycle"></i> Passeios</a></li>
+      <li><a href="./perfil.php" class="nav-link"><i class="ph ph-user"></i> Perfil</a></li>
+      <li><a href="./passeios.php" class="nav-link"><i class="ph ph-bicycle"></i> Passeios</a></li>
       <li><a href="#" class="nav-link"><i class="ph ph-map-trifold"></i> Roteiros</a></li>
       <li><a href="#" class="nav-link"><i class="ph ph-clock-counter-clockwise"></i> Histórico</a></li>
       <li><a href="#" class="nav-link"><i class="ph ph-question"></i> Dúvidas</a></li>
@@ -154,7 +159,7 @@ $preferencia_nome_apelido = $usuario['preferencia_nome_apelido'] ?? 0;
 </div>
 
 <div id="modal-editar" class="modal">
-  <div class="modal-conteudo">
+  <div class="modal-editar">
     <h3>Editar Perfil</h3>
     <span class="fechar" id="fechar-modal">&times;</span>
 

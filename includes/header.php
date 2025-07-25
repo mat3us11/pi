@@ -76,7 +76,7 @@ $nome_para_exibir = ($preferencia && !empty($apelido)) ? $apelido : $nome;
 
     <ul class="modal-nav">
       <li><a href="./perfil.php" class="nav-link"><i class="ph ph-user"></i> Perfil</a></li>
-      <li><a href="#" class="nav-link"><i class="ph ph-bicycle"></i> Passeios</a></li>
+      <li><a href="./passeios.php" class="nav-link"><i class="ph ph-bicycle"></i> Passeios</a></li>
       <li><a href="#" class="nav-link"><i class="ph ph-map-trifold"></i> Roteiros</a></li>
       <li><a href="#" class="nav-link"><i class="ph ph-clock-counter-clockwise"></i> Histórico</a></li>
       <li><a href="#" class="nav-link"><i class="ph ph-question"></i> Dúvidas</a></li>
