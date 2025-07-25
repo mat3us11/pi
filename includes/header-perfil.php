@@ -110,7 +110,7 @@ $preferencia_nome_apelido = $usuario['preferencia_nome_apelido'] ?? 0;
           <div class="botoes-perfil">
             <a href="#" id="btn-editar-perfil" class="btn-perfil"><i class="ph ph-pencil-simple"></i> Editar Perfil</a>
             <a href="index.php" class="btn-perfil"><i class="ph ph-house"></i> Home</a>
-            <a href="#" class="btn-perfil"><i class="ph ph-bicycle"></i> Passeios</a>
+            <a href="passeios.php" class="btn-perfil"><i class="ph ph-bicycle"></i> Passeios</a>
             <a href="#" class="btn-perfil"><i class="ph ph-map-trifold"></i> Roteiros</a>
           </div>
         </div>

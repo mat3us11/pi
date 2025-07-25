@@ -1,7 +1,7 @@
 .certificado {
     display: flex;
     flex-direction: column;
-    width: 63%;
+    width: 65%;
     margin: auto;
     gap: 25px;
 }
@@ -23,10 +23,9 @@
 }
 
 .favoritos {
- 
     display: flex;
     flex-direction: column;
-    width: 63%;
+    width: 65%;
     margin: auto;
     gap: 25px;
 }

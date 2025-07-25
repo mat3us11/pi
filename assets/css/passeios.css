@@ -1,0 +1,231 @@
+
+.pesquisa-home {
+    display: flex;
+    width: 65%;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+    background-color: #89CFF0;
+    border-radius: 5px;
+    height: 50px;
+    padding: 2px;
+    gap: 3px;
+}
+
+.pesquisa-home .coluna1 {
+    display: flex;
+    width: 30%;
+}
+
+.coluna1 .input1 {
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.input1:focus {
+    outline: none;
+}
+
+.input1::placeholder {
+    font-size: 20px;
+    font-family: 'Afacad';
+    color: black;
+}
+
+.pesquisa-home .coluna2 {
+    display: flex;
+    width: 60%;
+    gap: 2px;
+}
+
+.coluna2 .input2 {
+    width: 50%;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.input2:focus {
+    outline: none;
+}
+
+.input2::placeholder {
+    font-size: 20px;
+    font-family: 'Afacad';
+    color: black;
+}
+
+.coluna2 .input3 {
+    width: 50%;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.input3:focus {
+    outline: none;
+}
+
+.input3::placeholder {
+    font-size: 20px;
+    font-family: 'Afacad';
+    color: black;
+}
+
+.pesquisa-home .coluna3 {
+    display: flex;
+    width: 10%;
+}
+
+.coluna3 button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #009cff;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 0 6px 6px 0;
+    transition: background-color 0.3s;
+    border-radius: 5px;
+    border: none;
+    width: 100%;
+    font-size: 16px;
+}
+
+.destino {
+    display: flex;
+    flex-direction: column;
+    width: 65%;
+    margin: auto;
+    gap: 20px;
+    padding: 20px;
+}
+
+.destino h3 {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.blocos {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+}
+
+.blocos .left, .blocos .right {
+    width: 50%;
+    height: 350px;
+    background-color: #D9D9D9;
+    border-radius: 10px;
+
+}
+
+.help {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 65%;
+    margin: auto;
+    gap: 20px;
+    border-top: 0.4px solid rgba(0, 0, 0, 0.226) ;
+    border-bottom: 0.4px solid rgba(0, 0, 0, 0.226) ;
+}
+
+.help h3 {
+    font-size: 28px;
+}
+
+.ajudas {
+    display: flex;
+    gap: 150px;
+    justify-content: space-around;
+}
+
+.atracoes {
+    display: flex;
+    flex-direction: column;
+}
+
+.atracoes .texto {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.texto h5, .texto i {
+    display: flex;
+    gap: 10px;
+    font-size: 24px;
+}
+
+.spam {
+    width: 80%;
+    margin-left: 30px;
+    display: flex;
+    font-size: 20px;
+    text-align: left;
+}
+
+.reserva {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.aqui {
+    display: flex;
+    flex-direction: column;
+}
+
+.explore {
+    display: flex;
+    flex-direction: column;
+    width: 65%;
+    margin: auto;
+    padding: 25px;
+    gap: 40px;
+}
+
+.explore h3 {
+    font-size: 28px;
+}
+
+.local {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+.cidade h4 {
+    border-bottom: 0.4px solid rgba(0, 0, 0, 0.226);
+    width: 100%;
+    padding: 0px 20px 0px 20px;
+    font-size: 24px;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.cidade h4:hover {
+    color: aqua;
+    transition: 0.5s;
+    border-bottom: 0.4px solid aqua;
+}
+
+.destaques {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+}
+.up, .down {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+.quadrado {
+    width: 25%;
+    height: 250px;
+    background-color: #D9D9D9;
+}
+

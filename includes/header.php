@@ -24,7 +24,7 @@ $nome_para_exibir = ($preferencia && !empty($apelido)) ? $apelido : $nome;
         </a>
       </div>
       <ul class="nav-links">
-        <li><a href="#"><i class="ph ph-bicycle"></i> Passeios</a></li>
+        <li><a href="passeios.php"><i class="ph ph-bicycle"></i> Passeios</a></li>
         <li><a href="#"><i class="ph ph-map-trifold"></i> Roteiros de Viagem</a></li>
         <li><a href="perfil.php"><i class="ph ph-user"></i> Perfil</a></li>
       </ul>
