@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="./assets/css/footer.css">
     <link rel="stylesheet" href="./assets/css/passeios.css">
     <script defer src="./assets/js/modal.js"></script>
-    <title>Perfil</title>
+    <title>Passeios</title>
 </head>
 
 <body>

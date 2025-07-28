@@ -1,0 +1,86 @@
+.explore {
+    width: 65%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 20px;
+}
+
+.explore .up {
+    width: 100%;
+}
+
+.roteiro input {
+    width: 65%;
+    border: solid 2px black;
+    padding: 5px;
+    border-radius: 5px;
+    position: absolute;
+    padding-left: 25px;
+}
+
+.roteiro i {
+    position: relative;
+    height: 100%;
+    justify-content: flex-start;
+    display: flex;
+    padding: 7px;
+    width: 10%;
+}
+
+.roteiro input::placeholder {
+    color: black;
+}
+
+.explore .down {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 5px;
+}
+
+.down .tipo {
+    width: 100%;
+}
+
+.tipo input {
+    width: 100%;
+    border: solid 2px black;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.tipo input::placeholder {
+    color: black;
+}
+
+.down .duracao {
+    width: 100%;
+}
+
+.duracao input {
+    width: 100%;
+    border: solid 2px black;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.duracao input::placeholder {
+    color: black;
+}
+
+.down .estilo {
+    width: 100%;
+}
+
+.estilo input {
+    width: 100%;
+    border: solid 2px black;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.estilo input::placeholder {
+    color: black;
+}
