@@ -17,7 +17,6 @@
         <div class="up">
             <div class="roteiro">
                 <input class="input" type="search" placeholder="Explore roteiros">
-                <i class="ph ph-map-trifold"></i>
             </div>
         </div>
 
@@ -34,6 +33,85 @@
                 <input class="input" type="search" placeholder="Estilo (cultural, aventura.... ">
             </div>
         </div>
-
-        
+    
+        <button>Pesquisar</button>
     </div>
+
+    <div class="criar">
+        <h2>Deseja criar seu próprio roteiro?</h2>
+
+        <button>Criar novo roteiro</button>
+    </div>
+
+    <div class="prontos">
+        <h2>Roteiros prontos</h2>
+        <div class="passeio">
+            <img src="" alt="cidade">
+
+            <div class="escrita">
+                <div class="nome">
+                    <h4>Boituva</h4>
+                </div>
+
+                <div class="criador">
+                    <h4>Roberto</h4>
+                </div>
+
+                <div class="estilo">
+                    <h4>Cultural, gastronomico</h4>
+                </div>
+            </div>
+
+            <div class="botao2">
+                <button><i class="ph ph-caret-right"></i></button>
+            </div>
+        </div>
+
+        <div class="passeio">
+            <img src="" alt="cidade">
+
+            <div class="escrita">
+                <div class="nome">
+                    <h4>Boituva</h4>
+                </div>
+
+                <div class="criador">
+                    <h4>Roberto</h4>
+                </div>
+
+                <div class="estilo">
+                    <h4>Cultural, gastronomico</h4>
+                </div>
+            </div>
+
+            <div class="botao2">
+                <button><i class="ph ph-caret-right"></i></button>
+            </div>
+        </div>
+
+        <div class="passeio">
+            <img src="" alt="cidade">
+
+            <div class="escrita">
+                <div class="nome">
+                    <h4>Boituva</h4>
+                </div>
+
+                <div class="criador">
+                    <h4>Roberto</h4>
+                </div>
+
+                <div class="estilo">
+                    <h4>Cultural, gastronomico</h4>
+                </div>
+            </div>
+
+            <div class="botao2">
+                <button><i class="ph ph-caret-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <?php include 'includes/footer.php'; ?>    
+
+</body>

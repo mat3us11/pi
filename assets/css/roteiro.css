@@ -1,23 +1,28 @@
 .explore {
     width: 65%;
-    margin: auto;
+    margin: 20px auto;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding-top: 20px;
+    gap: 6px;
+    padding: 3px;
+    background-color: #89CFF0;
+    border-radius: 5px;
+    height: 125px;
 }
 
 .explore .up {
     width: 100%;
 }
 
+.roteiro {
+    width: 100%;
+}
+
 .roteiro input {
-    width: 65%;
-    border: solid 2px black;
-    padding: 5px;
+    border: none;
+    width: 100%;
+    padding: 10px;
     border-radius: 5px;
-    position: absolute;
-    padding-left: 25px;
 }
 
 .roteiro i {
@@ -25,19 +30,24 @@
     height: 100%;
     justify-content: flex-start;
     display: flex;
-    padding: 7px;
+    padding: 9px;
     width: 10%;
 }
 
 .roteiro input::placeholder {
     color: black;
+    font-size: 20px;
+}
+
+.roteiro input:focus {
+    outline: none;
 }
 
 .explore .down {
     display: flex;
     flex-direction: row;
     width: 100%;
-    gap: 5px;
+    gap: 3px;
 }
 
 .down .tipo {
@@ -46,13 +56,18 @@
 
 .tipo input {
     width: 100%;
-    border: solid 2px black;
-    padding: 5px;
+    padding: 10px;
     border-radius: 5px;
+    border: none;
+}
+
+.tipo input:focus {
+    outline: none;
 }
 
 .tipo input::placeholder {
     color: black;
+    font-size: 20px;
 }
 
 .down .duracao {
@@ -61,13 +76,18 @@
 
 .duracao input {
     width: 100%;
-    border: solid 2px black;
-    padding: 5px;
+    padding: 10px;
     border-radius: 5px;
+    border: none;
+}
+
+.duracao input:focus{
+outline: none;
 }
 
 .duracao input::placeholder {
     color: black;
+    font-size: 20px;
 }
 
 .down .estilo {
@@ -76,11 +96,108 @@
 
 .estilo input {
     width: 100%;
-    border: solid 2px black;
-    padding: 5px;
+    padding: 10px;
     border-radius: 5px;
+    border: none;
+}
+
+.estilo input:focus{
+    outline: none;
 }
 
 .estilo input::placeholder {
     color: black;
+    font-size: 20px;
 }
+
+.explore button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #004774;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    width: 100%;
+    font-size: 16px;
+    padding: 5px;
+}
+
+.criar {
+    width: 35%;
+    margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+    background-color: #E9F4F7;
+    padding: 10px;
+    gap: 10px;
+    border-radius: 10px;
+}
+
+
+.criar button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #009cff;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    width: 100%;
+    font-size: 16px;
+    padding: 5px;
+}
+
+.prontos {
+    display: flex;
+    flex-direction: column;
+    width: 65%;
+    margin: auto;
+    gap: 20px;
+}
+
+.passeio {
+    display: flex;
+    width: 100%;
+    border: 2px solid black;
+    height: 90px;
+    border-radius: 10px;
+    position: relative;
+    align-items: center;
+}
+
+.passeio img {
+    width: 20%;
+    height: 100%;
+}
+
+.escrita {
+    width: 70%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.botao2{
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.botao2 button {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background-color: white;
+    border-radius: 0px 10px  10px 0px ;
+    cursor: pointer;
+}
+
+
+
