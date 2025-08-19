@@ -70,11 +70,15 @@
             <div class="data">
                 <h4 class="espaco">Jan 10,  2025 - Jan 25, 2025</h4>
             </div>
+
+            <div class="bloco">
+                <i class="ph ph-caret-right"></i>
+            </div>
         </div>
     </div>
 
     
 </body>
-<!-- <?php 
+<?php 
     include 'includes/footer.php';
-?> -->
+?>
