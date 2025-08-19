@@ -49,8 +49,8 @@ $nome_para_exibir = ($preferencia && !empty($apelido)) ? $apelido : $nome;
       <?php endif; ?>
 
       <div class="icons">
-        <i class="ph ph-clock-counter-clockwise"></i>
-        <i class="ph ph-question"></i>
+        <a href="./historico.php"><i class="ph ph-clock-counter-clockwise"></i></a>
+        <a href="./duvidas.php"><i class="ph ph-question"></i></a>
       </div>
     </div>
   </div>
@@ -78,8 +78,8 @@ $nome_para_exibir = ($preferencia && !empty($apelido)) ? $apelido : $nome;
       <li><a href="./perfil.php" class="nav-link"><i class="ph ph-user"></i> Perfil</a></li>
       <li><a href="./passeios.php" class="nav-link"><i class="ph ph-bicycle"></i> Passeios</a></li>
       <li><a href="#" class="nav-link"><i class="ph ph-map-trifold"></i> Roteiros</a></li>
-      <li><a href="#" class="nav-link"><i class="ph ph-clock-counter-clockwise"></i> Histórico</a></li>
-      <li><a href="#" class="nav-link"><i class="ph ph-question"></i> Dúvidas</a></li>
+      <li><a href="./historico.php" class="nav-link"><i class="ph ph-clock-counter-clockwise"></i> Histórico</a></li>
+      <li><a href="./duvidas.php" class="nav-link"><i class="ph ph-question"></i> Dúvidas</a></li>
     </ul>
   </nav>
 </div>
