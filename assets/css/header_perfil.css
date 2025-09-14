@@ -582,10 +582,13 @@ header {
   .header-perfil{
     height: 200px;
   }
+  .header-container-perfil{
+    gap: 0;
+    display: block;
+  }
   .perfil-conteudo {
     flex-direction: column;
     align-items: flex-start;
-    gap: 20px;
   }
 
   .dados p {
@@ -653,5 +656,112 @@ header {
   .questDown button {
     padding: 5px;
     font-size: 15px;
+  }
+
+   .modal-editar {
+    width: 95%;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 12px;
+    padding: 20px;
+  }
+
+  .modal-editar h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: #00678A;
+  }
+
+  .modal-editar .editar {
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    width: 100%;
+  }
+
+  /* FOTO */
+  .foto {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .foto-perfil-grande {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    margin-bottom: 5px;
+    background-size: cover;
+    background-position: center;
+    border: 3px solid #00678A;
+  }
+
+  .custom-file-label {
+    font-size: 14px;
+    padding: 8px 14px;
+    background: #00678A;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.3s;
+  }
+
+  .custom-file-label:hover {
+    background: #005a76;
+  }
+
+  /* CAMPOS */
+  .editarleft,
+  .editarright {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .editarleft label,
+  .editarright label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .editarleft input,
+  .editarright input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    background: #f9f9f9;
+  }
+
+  .editarleft input:focus,
+  .editarright input:focus {
+    border-color: #006994;
+    background: #fff;
+  }
+
+  /* CHECKBOX */
+  .editarright label input[type="checkbox"] {
+    margin-right: 8px;
+    transform: scale(1.1);
+  }
+  #preferencia{
+    display: flex;
+  }
+
+  /* BOTÃO CONFIRMAR */
+  .modal-editar .confirmar{
+    width: 100%;
+  }
+
+  .confirmar:hover {
+    background: #005370;
   }
 }
