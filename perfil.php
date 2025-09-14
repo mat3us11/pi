@@ -6,6 +6,9 @@ if (!isset($_SESSION['usuario_id'])) {
     header("Location: login.php");
     exit;
 }
+$nivel = $_SESSION['nivel'] ?? 'user';
+
+
 ?>
 
 <!DOCTYPE html>
@@ -21,11 +24,21 @@ if (!isset($_SESSION['usuario_id'])) {
     <title>Perfil</title>
 </head>
 
-    
-    
 <body>
     <?php include 'includes/header-perfil.php'; ?>
     <a href="logout.php">Sair</a>
+
+    <?php if ($nivel === 'admin'): ?>
+        <div class="admin-opcoes">
+            <h2>Área do Administrador</h2>
+            <ul>
+                <li><a href="gerenciar_usuarios.php">👤 Gerenciar Usuários</a></li>
+                <li><a href="relatorios.php">📊 Relatórios</a></li>
+                <li><a href="configuracoes_site.php">⚙️ Configurações do Site</a></li>
+                <li><a href="logs.php">📝 Logs do Sistema</a></li>
+            </ul>
+        </div>
+    <?php endif; ?>
 
     <div class="certificado">
         <h3>Certificado</h3>
@@ -39,7 +52,7 @@ if (!isset($_SESSION['usuario_id'])) {
     <div class="favoritos">
         <h2>Favortios</h2>
         <h3>Pastas</h3>
-        
+
         <div class="blocos2">
             <div class="item"></div>
             <div class="item"></div>
@@ -50,4 +63,5 @@ if (!isset($_SESSION['usuario_id'])) {
 
     <?php include 'includes/footer.php'; ?>
 </body>
-</html> 
+
+</html>

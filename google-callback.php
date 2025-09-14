@@ -49,9 +49,10 @@ if (!$email) {
 }
 
 // Verifica se o usuário já existe no banco
-$stmt = $conn->prepare("SELECT id, nome, foto_perfil FROM usuario WHERE email = ?");
+$stmt = $conn->prepare("SELECT id, nome, foto_perfil, nivel FROM usuario WHERE email = ?");
 $stmt->execute([$email]);
 $dados = $stmt->fetch(PDO::FETCH_ASSOC);
+
 
 if ($dados) {
     $foto_atual = $dados['foto_perfil'];
@@ -66,22 +67,25 @@ if ($dados) {
     }
 
     // Atualiza sessão
-    $_SESSION["usuario_id"] = $dados["id"];
+    $_SESSION["usuario_id"]   = $dados["id"];
     $_SESSION["usuario_nome"] = $dados["nome"];
     $_SESSION["usuario_email"] = $email;
     $_SESSION["usuario_foto"] = $foto_final ?? './assets/img/imagem-padrao.png';
+    $_SESSION["nivel"]        = $dados["nivel"]; // ✅ AQUI O QUE FALTAVA
 } else {
     // Novo usuário
-    $inserir = $conn->prepare("INSERT INTO usuario (nome, email, foto_perfil) VALUES (?, ?, ?)");
-    $inserir->execute([$nome, $email, $foto_google]);
+    $inserir = $conn->prepare("INSERT INTO usuario (nome, email, foto_perfil, nivel) VALUES (?, ?, ?, ?)");
+    $inserir->execute([$nome, $email, $foto_google, 'user']);
 
     $novo_id = $conn->lastInsertId();
 
-    $_SESSION["usuario_id"] = $novo_id;
+    $_SESSION["usuario_id"]   = $novo_id;
     $_SESSION["usuario_nome"] = $nome;
     $_SESSION["usuario_email"] = $email;
     $_SESSION["usuario_foto"] = $foto_google ?? './assets/img/imagem-padrao.png';
+    $_SESSION["nivel"]        = 'user';
 }
+
 
 header("Location: index.php");
 exit;

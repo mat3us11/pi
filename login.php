@@ -20,17 +20,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   if (empty($email) || empty($senha)) {
     $erro = "Preencha todos os campos.";
   } else {
-    $stmt = $conn->prepare("SELECT id, nome, senha FROM usuario WHERE email = ?");
+    $stmt = $conn->prepare("SELECT id, nome, senha, nivel FROM usuario WHERE email = ?");
     $stmt->execute([$email]);
 
     if ($stmt->rowCount() > 0) {
       $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
       if (password_verify($senha, $usuario["senha"])) {
-        $_SESSION["usuario_id"] = $usuario["id"];
+        // 🔹 Seta todos os dados na sessão
+        $_SESSION["usuario_id"]   = $usuario["id"];
         $_SESSION["usuario_nome"] = $usuario["nome"];
         $_SESSION["usuario_email"] = $email;
+        $_SESSION["nivel"] = $usuario["nivel"];
+        $_SESSION["logado"]   = true;
 
-        $_SESSION["logado"] = true;
         header("Location: index.php");
         exit;
       } else {
