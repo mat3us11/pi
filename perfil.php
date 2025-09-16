@@ -29,14 +29,22 @@ $nivel = $_SESSION['nivel'] ?? 'user';
     <a href="logout.php">Sair</a>
 
     <?php if ($nivel === 'admin'): ?>
-        <div class="admin-opcoes">
+        <div class="admin">
+            <div class="admin-opcoes">
             <h2>Área do Administrador</h2>
             <ul>
-                <li><a href="gerenciar_usuarios.php">👤 Gerenciar Usuários</a></li>
-                <li><a href="relatorios.php">📊 Relatórios</a></li>
-                <li><a href="configuracoes_site.php">⚙️ Configurações do Site</a></li>
-                <li><a href="logs.php">📝 Logs do Sistema</a></li>
+                <div class="opcoes-cima">
+                    <li><a href="#">Criar Rota</a></li>
+                    <li><a href="#">Adcionar local</a></li>
+                    <li><a href="#">Emitir Certificados</a></li>
+                </div>
+                <div class="opcoes-baixo">
+                    <li><a href="#">Gerenciar Inscrições</a></li>
+                    <li><a href="gerenciar_usuarios.php">Gerenciar Usuários</a></li>
+                    <li><a href="#">Gerenciar Publicações</a></li>
+                </div>
             </ul>
+        </div>
         </div>
     <?php endif; ?>
 

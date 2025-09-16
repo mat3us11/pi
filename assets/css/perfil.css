@@ -75,6 +75,62 @@ body{
     cursor: pointer;
 }
 
+.admin {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.admin-opcoes {
+  width: 65%;
+  justify-content: flex;
+}
+
+.admin-opcoes h2 {
+  margin-bottom: 20px;
+}
+
+.admin-opcoes ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; 
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  flex-direction: column;
+}
+
+.opcoes-cima, .opcoes-baixo{
+    display: flex;
+    justify-content: space-around;
+    margin: 0;
+}
+
+.admin-opcoes li {
+  flex: 1 1 calc(33.333% - 20px);
+  max-width: 220px;       
+  background-color: #0066cc;
+  padding: 15px 20px;
+  border-radius: 8px;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.admin-opcoes li:hover {
+  background-color: #004999;
+  transform: scale(1.05);
+}
+
+.admin-opcoes a {
+  font-size: 14px;
+  color: white;
+  text-decoration: none;
+  display: block;
+  white-space: nowrap; 
+}
+
 @media (max-width: 768px) {
     .certificado {
         width: 95%;
