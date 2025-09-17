@@ -1,0 +1,116 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Afacad';
+}
+
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.usuarios-opcoes{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.usuarios-wrapper {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f9f9f9;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 80%;
+}
+
+.usuarios-tabela {
+  width: 100%;
+}
+
+.usuarios-wrapper h2 {
+  margin-bottom: 10px;
+}
+
+.usuarios-wrapper p {
+  margin-bottom: 20px;
+  color: #555;
+}
+
+form.usuarios-filtros {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+form.usuarios-filtros select,
+form.usuarios-filtros input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  flex: 1;
+}
+
+form.usuarios-filtros button[type="submit"] {
+  background: #00678A;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+form.usuarios-filtros button[type="submit"]:hover {
+  background: #004f67;
+}
+
+.usuarios-tabela table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.usuarios-tabela th,
+.usuarios-tabela td {
+  padding: 14px 12px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.usuarios-tabela th {
+  background: #f1f1f1;
+}
+
+.usuarios-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.usuarios-info img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.usuarios-btn-acao {
+  background: #00678A;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-right: 5px;
+}
+
+.usuarios-btn-acao:hover {
+  background: #004f67;
+}
