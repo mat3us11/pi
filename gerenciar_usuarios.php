@@ -80,7 +80,7 @@ $ocultarImagemHeader = true;
                                 <tr>
                                     <td>
                                         <div class="usuarios-info">
-                                            <img src="<?= $usuario['foto_perfil'] ?: '/img/imagem-padrao.png' ?>" alt="Foto">
+                                            <img src="<?= $usuario['foto_perfil'] ?: './assets/img/imagem-padrao.png' ?>" alt="Foto">
                                             <?= htmlspecialchars($usuario['nome']) ?>
                                         </div>
                                     </td>

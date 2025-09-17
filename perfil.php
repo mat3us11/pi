@@ -26,7 +26,6 @@ $nivel = $_SESSION['nivel'] ?? 'user';
 
 <body>
     <?php include 'includes/header-perfil.php'; ?>
-    <a href="logout.php">Sair</a>
 
     <?php if ($nivel === 'admin'): ?>
         <div class="admin">

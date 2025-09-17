@@ -112,6 +112,7 @@ $preferencia_nome_apelido = $usuario['preferencia_nome_apelido'] ?? 0;
             <a href="index.php" class="btn-perfil"><i class="ph ph-house"></i> Home</a>
             <a href="./passeios.php" class="btn-perfil"><i class="ph ph-bicycle"></i> Passeios</a>
             <a href="#" class="btn-perfil"><i class="ph ph-map-trifold"></i> Roteiros</a>
+            <a href="logout.php" class="btn-perfil"><i class="ph ph-sign-out"></i> Sair</a>
           </div>
         </div>
       </div>
@@ -192,6 +193,7 @@ $preferencia_nome_apelido = $usuario['preferencia_nome_apelido'] ?? 0;
           </label>
         </div>
       </div>
+      
 
       <button class="confirmar" type="submit">CONFIRMAR</button>
     </form>
