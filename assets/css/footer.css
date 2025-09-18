@@ -134,6 +134,10 @@ footer {
     justify-content: center;
 }
 
+input::placeholder{
+    color: rgba(255, 255, 255, 0.692);
+}
+
 
 .footerDown i {
     font-size: 25px;
