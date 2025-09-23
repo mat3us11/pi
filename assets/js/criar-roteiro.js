@@ -1,4 +1,4 @@
-
+// ===== UPLOAD DA CAPA =====
 const input = document.getElementById("foto-capa");
 const preview = document.getElementById("preview");
 const placeholder = document.querySelector(".placeholder");
@@ -36,6 +36,18 @@ checkboxes.forEach(checkbox => {
   });
 });
 
+
+function debounce(func, delay) {
+  let timer;
+  return function(...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      func.apply(this, args);
+    }, delay);
+  };
+}
+
+
 const accessToken = "pk.eyJ1IjoiY2FtcHZpYSIsImEiOiJjbWRldzIwbnUwNnlqMmpvOHo5NnN6ZW42In0.-Dsl7B1W4suz30SbKnzJKg";
 const bboxSP = "-53.0,-25.5,-44.0,-19.0"; 
 
@@ -54,6 +66,7 @@ async function fetchPlaces(query, inputId) {
 function showSuggestions(places, inputId) {
   const input = document.getElementById(inputId);
   hideAllSuggestions();
+
   let list = document.createElement("ul");
   list.classList.add("suggestions");
 
@@ -74,8 +87,15 @@ function hideAllSuggestions() {
   document.querySelectorAll(".suggestions").forEach(list => list.remove());
 }
 
-document.getElementById("pontoPartida").addEventListener("input", e => fetchPlaces(e.target.value, "pontoPartida"));
-document.getElementById("destino").addEventListener("input", e => fetchPlaces(e.target.value, "destino"));
+const fetchPlacesDebounced = debounce(fetchPlaces, 300); // 300ms
+
+document.getElementById("pontoPartida").addEventListener("input", e =>
+  fetchPlacesDebounced(e.target.value, "pontoPartida")
+);
+
+document.getElementById("destino").addEventListener("input", e =>
+  fetchPlacesDebounced(e.target.value, "destino")
+);
 
 const btnAddParada = document.getElementById("btn-add-parada");
 const paradasDiv = document.getElementById("paradas");
@@ -93,12 +113,16 @@ btnAddParada.addEventListener("click", () => {
   paradasDiv.appendChild(parada);
 
   const inputParada = parada.querySelector("input");
-  inputParada.addEventListener("input", e => fetchPlaces(e.target.value, inputParada.id));
+  inputParada.addEventListener("input", e =>
+    fetchPlacesDebounced(e.target.value, inputParada.id)
+  );
 });
+
 document.addEventListener("click", (e) => {
   const isInput = e.target.tagName === "INPUT" && e.target.closest(".rota-item");
   const isSuggestion = e.target.closest(".suggestions");
   const isDropdown = e.target.closest(".dropdown");
+
   if (!isInput && !isSuggestion && !isDropdown) {
     hideAllSuggestions();
   }
