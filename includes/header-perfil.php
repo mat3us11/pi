@@ -111,7 +111,7 @@ $preferencia_nome_apelido = $usuario['preferencia_nome_apelido'] ?? 0;
             <a href="#" id="btn-editar-perfil" class="btn-perfil"><i class="ph ph-pencil-simple"></i> Editar Perfil</a>
             <a href="index.php" class="btn-perfil"><i class="ph ph-house"></i> Home</a>
             <a href="./passeios.php" class="btn-perfil"><i class="ph ph-bicycle"></i> Passeios</a>
-            <a href="#" class="btn-perfil"><i class="ph ph-map-trifold"></i> Roteiros</a>
+            <a href="./roteiro.php" class="btn-perfil"><i class="ph ph-map-trifold"></i> Roteiros</a>
             <a href="../processos/logout.php" class="btn-perfil"><i class="ph ph-sign-out"></i> Sair</a>
           </div>
         </div>
@@ -152,9 +152,9 @@ $preferencia_nome_apelido = $usuario['preferencia_nome_apelido'] ?? 0;
     <ul class="modal-nav">
       <li><a href="./perfil.php" class="nav-link"><i class="ph ph-user"></i> Perfil</a></li>
       <li><a href="./passeios.php" class="nav-link"><i class="ph ph-bicycle"></i> Passeios</a></li>
-      <li><a href="#" class="nav-link"><i class="ph ph-map-trifold"></i> Roteiros</a></li>
-      <li><a href="#" class="nav-link"><i class="ph ph-clock-counter-clockwise"></i> Histórico</a></li>
-      <li><a href="#" class="nav-link"><i class="ph ph-question"></i> Dúvidas</a></li>
+      <li><a href="./roteiro.php" class="nav-link"><i class="ph ph-map-trifold"></i> Roteiros</a></li>
+      <li><a href="./historico.php" class="nav-link"><i class="ph ph-clock-counter-clockwise"></i> Histórico</a></li>
+      <li><a href="./duvidas.php" class="nav-link"><i class="ph ph-question"></i> Dúvidas</a></li>
     </ul>
   </nav>
 </div>

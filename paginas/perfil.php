@@ -35,7 +35,7 @@ $nivel = $_SESSION['nivel'] ?? 'user';
             <ul>
                 <div class="opcoes-cima">
                     <li><a href="#">Criar Rota</a></li>
-                    <li><a href="#">Adcionar local</a></li>
+                    <li><a href="./adicionar_local.php">Adcionar local</a></li>
                     <li><a href="#">Emitir Certificados</a></li>
                 </div>
                 <div class="opcoes-baixo">
