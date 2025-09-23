@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 23/09/2025 às 15:30
+-- Tempo de geração: 23/09/2025 às 21:03
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -22,6 +22,31 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `campvia` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `campvia`;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `passeios`
+--
+
+CREATE TABLE `passeios` (
+  `id` int(11) NOT NULL,
+  `usuario_id` int(11) NOT NULL,
+  `nome` varchar(200) NOT NULL,
+  `descricao` text NOT NULL,
+  `categorias` varchar(255) DEFAULT NULL,
+  `localidade` varchar(255) NOT NULL,
+  `capa` varchar(255) DEFAULT NULL,
+  `criado_em` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `passeios`
+--
+
+INSERT INTO `passeios` (`id`, `usuario_id`, `nome`, `descricao`, `categorias`, `localidade`, `capa`, `criado_em`) VALUES
+(1, 24, 'asasassas', 'asasasasas', 'cultural', 'Americana, São Paulo, Brasil', '../uploads/geralcapa_24_1758654005.jfif', '2025-09-23 19:00:05'),
+(2, 24, 'adawsdawdwadwadsdwa', 'awdaxsddgfbdfgfd', 'cultural', 'Americana, São Paulo, Brasil', '../uploads/geralcapa_24_1758654024.jfif', '2025-09-23 19:00:24');
 
 -- --------------------------------------------------------
 
@@ -47,8 +72,9 @@ CREATE TABLE `rota` (
 --
 
 INSERT INTO `rota` (`id`, `usuario_id`, `nome`, `descricao`, `categorias`, `ponto_partida`, `destino`, `paradas`, `capa`, `criado_em`) VALUES
-(1, 10, 'Rota teste', 'Teste 123 ', 'cultural,aventura,gastronomica,ecologica,citytour', 'Rua Ismênia Maria Dos Santos, Tatuí - São Paulo, 18280-160, Brasil', 'Rua Vereador Braz Gica Da Paz, Porangaba - São Paulo, 18260-000, Brasil', NULL, 'uploads/capa_10_1758633074.jpg', '2025-09-23 13:11:14'),
-(4, 10, 'Teste 2', 'TEste 21312 kjndhkjandaw', 'aventura,gastronomica', 'Boituva, São Paulo, Brasil', 'Tatuí, São Paulo, Brasil', NULL, 'uploads/capa_10_1758633863.svg', '2025-09-23 13:24:23');
+(6, 21, 'aaa', 'ssss', 'cultural', 'Assis, São Paulo, Brasil', 'Adamantina, São Paulo, Brasil', NULL, '../uploads/geralcapa_21_1758648741.jfif', '2025-09-23 17:32:21'),
+(7, 24, 'Qualquer coisa', 'djawiodjwaiojdaoijodwa', 'cultural,gastronomica,citytour', 'Assis, São Paulo, Brasil', 'Adamantina, São Paulo, Brasil', '[\"ali\",\"ali\"]', '../uploads/geralcapa_24_1758652610.jpg', '2025-09-23 18:36:50'),
+(8, 24, 'a', 'a', 'cultural', 'Assis, Monteiro Lobato - São Paulo, 12250, Brasil', 'Adamantina, São Paulo, Brasil', NULL, '../uploads/geralcapa_24_1758652890.jpg', '2025-09-23 18:41:30');
 
 -- --------------------------------------------------------
 
@@ -83,11 +109,23 @@ INSERT INTO `usuario` (`id`, `nome`, `email`, `senha`, `foto_perfil`, `endereco`
 (16, 'mateus azevedo', 'teste3@gmail.com', '$2y$10$ZBzzxqbtvDoPwrUJqaGnP.OF9pS1Jv94cFuudFfHOMfvv3JRhXiCC', NULL, NULL, NULL, 'nome', 'admin'),
 (17, 'Isabelle', 'isabelleplati01@gmail.com', '', 'https://lh3.googleusercontent.com/a/ACg8ocJHrLXw10R7DBv1jJ-XrKy_JwtJh-h_448I2Mxota_vZ-4N-A=s96-c', '', '', 'nome', 'usuario'),
 (18, 'Tese Usuarios', 'Teste12345@gmail.com', '$2y$10$OVfaXDYKDvJmxl8SvVI2Hu5xpNczcjjdRykomyby03IkWWk9Oq7jC', NULL, NULL, NULL, 'nome', 'usuario'),
-(19, 'Teste teste tesrw', 'testefoto@gmail.com', '$2y$10$jSq.JSN0MOsy8cyCdQZiw.mlUDVSLwVEKJJRCpVNgPTd2gSYap6ei', 'uploads/foto_19_1758067196.png', '', '', 'nome', 'usuario');
+(19, 'Teste teste tesrw', 'testefoto@gmail.com', '$2y$10$jSq.JSN0MOsy8cyCdQZiw.mlUDVSLwVEKJJRCpVNgPTd2gSYap6ei', 'uploads/foto_19_1758067196.png', '', '', 'nome', 'usuario'),
+(20, 'nome', 'nome@gmail.com', '$2y$10$LWIDO6YH05IfMWT/E.OAMuxzpqmdkRSRNeMMHD/WZBXNxQcgROL..', NULL, NULL, NULL, 'nome', 'usuario'),
+(21, 'abc', 'abc2@gmail.com', '$2y$10$8syJIh8/fPX1xN94FyjazuywSPJUzpSZPZuVdo0GgP2P9h2tklNnu', NULL, NULL, NULL, 'nome', 'usuario'),
+(22, 'admin', 'admin@gmail.com', 'admin123', NULL, NULL, NULL, 'nome', 'admin'),
+(23, 'admin', 'admin@gmail.com', 'admin123', NULL, NULL, NULL, 'nome', 'admin'),
+(24, 'admin', 'admin1@gmail.com', '$2y$10$UL/YVDXn7bLJa336XEBTIenbfVDbsY7cch5pxmytT0pDsPnqbfXHm', '../uploads/perfilfoto_24_1758650065.jpg', '', '', 'nome', 'admin');
 
 --
 -- Índices para tabelas despejadas
 --
+
+--
+-- Índices de tabela `passeios`
+--
+ALTER TABLE `passeios`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `usuario_id` (`usuario_id`);
 
 --
 -- Índices de tabela `rota`
@@ -107,20 +145,32 @@ ALTER TABLE `usuario`
 --
 
 --
+-- AUTO_INCREMENT de tabela `passeios`
+--
+ALTER TABLE `passeios`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de tabela `rota`
 --
 ALTER TABLE `rota`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- Restrições para tabelas despejadas
 --
+
+--
+-- Restrições para tabelas `passeios`
+--
+ALTER TABLE `passeios`
+  ADD CONSTRAINT `passeios_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`);
 
 --
 -- Restrições para tabelas `rota`
@@ -132,5 +182,3 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-
