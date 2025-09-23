@@ -39,7 +39,7 @@
   display: none;
 }
 
-.placeholder {
+.informacoes-soltas input::placeholder {
   position: absolute;
   text-align: center;
   font-size: 14px;
