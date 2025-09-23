@@ -1,0 +1,90 @@
+/* ====== CARD ROTEIRO DETALHE ====== */
+.rota-detalhe {
+    width: 70%;
+    margin: 40px auto;
+    padding: 25px;
+    background: linear-gradient(135deg, #f0f8ff, #e0f0ff);
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    font-family: 'Segoe UI', sans-serif;
+    color: #333;
+}
+
+.rota-detalhe h2 {
+    font-size: 28px;
+    color: #004774;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.rota-detalhe p {
+    font-size: 16px;
+    margin: 6px 0;
+    line-height: 1.5;
+}
+
+.rota-detalhe img {
+    width: 100%;
+    max-height: 350px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin: 15px 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.rota-detalhe img:hover {
+    transform: scale(1.03);
+}
+
+/* LISTA DE PARADAS */
+.rota-detalhe ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.rota-detalhe ul li {
+    background-color: #dff4ff;
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+/* TITULOS DAS SEÇÕES */
+.rota-detalhe strong {
+    color: #0077b6;
+}
+
+/* BOTÃO VOLTAR */
+.voltar-rota {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 18px;
+    background-color: #009cff;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.voltar-rota:hover {
+    background-color: #007acc;
+}
+
+/* RESPONSIVO */
+@media(max-width: 900px) {
+    .rota-detalhe {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .rota-detalhe h2 {
+        font-size: 24px;
+    }
+
+    .rota-detalhe p {
+        font-size: 15px;
+    }
+}
