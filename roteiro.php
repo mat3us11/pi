@@ -40,7 +40,7 @@
     <div class="criar">
         <h2>Deseja criar seu próprio roteiro?</h2>
 
-        <button>Criar novo roteiro</button>
+        <button><a href="criar-roteiro.php">Criar novo roteiro</a></button>
     </div>
 
     <div class="prontos">

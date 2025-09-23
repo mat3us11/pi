@@ -232,7 +232,3 @@ window.addEventListener('click', e => {
   }
 });
 </script>
-
-
-
-</script>
