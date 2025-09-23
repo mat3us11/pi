@@ -37,9 +37,12 @@ window.addEventListener('click', (e) => {
     }
 });
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 521bc56542e3af2706fe63e32d7c44ff5d497f83
 document.addEventListener("DOMContentLoaded", () => {
     const modal = document.getElementById("modalUsuario");
     const fechar = document.getElementById("fecharModal");
