@@ -5,7 +5,6 @@
     flex-direction: column;
     gap: 6px;
     padding: 3px;
-    background-color: #89CFF0;
     border-radius: 5px;
     height: 125px;
 }
@@ -23,6 +22,7 @@
     width: 100%;
     padding: 10px;
     border-radius: 5px;
+    border: solid black 1px;
 }
 
 .roteiro i {
@@ -58,7 +58,7 @@
     width: 100%;
     padding: 10px;
     border-radius: 5px;
-    border: none;
+    border: solid black 1px;
 }
 
 .tipo input:focus {
@@ -78,7 +78,7 @@
     width: 100%;
     padding: 10px;
     border-radius: 5px;
-    border: none;
+    border: solid black 1px;
 }
 
 .duracao input:focus{
@@ -98,7 +98,7 @@ outline: none;
     width: 100%;
     padding: 10px;
     border-radius: 5px;
-    border: none;
+    border: solid black 1px;
 }
 
 .estilo input:focus{

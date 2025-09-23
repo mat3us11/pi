@@ -20,7 +20,7 @@
     
     <div class="footerDown">
         <div class="point">
-            <img src="assets/img/point.png">
+            <img src="../assets/img/point.png">
             <div class="midia">
                 <i class="ph ph-instagram-logo"></i>
                 <i class="ph ph-whatsapp-logo"></i>

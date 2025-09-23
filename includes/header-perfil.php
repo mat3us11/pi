@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $id_usuario) {
     if (!in_array($extensao, $permitidas)) {
       $erro = "Formato de imagem inválido. Use JPG, JPEG, PNG ou WEBP.";
     } else {
-      $pasta = "uploads/";
+      $pasta = "../uploads/perfil";
       if (!is_dir($pasta)) mkdir($pasta, 0755, true);
 
       $nomeArquivo = "foto_" . $id_usuario . "_" . time() . "." . $extensao;
@@ -39,9 +39,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $id_usuario) {
 
         if (
           $foto_antiga &&
-          strpos($foto_antiga, 'uploads/') === 0 &&
+          strpos($foto_antiga, '../uploads/perfil') === 0 &&
           file_exists($foto_antiga) &&
-          $foto_antiga !== './assets/img/imagem-padrao.png'
+          $foto_antiga !== '../assets/img/imagem-padrao.png'
         ) {
           unlink($foto_antiga);
         }
@@ -80,7 +80,7 @@ $stmt = $conn->prepare("SELECT nome, apelido, endereco, foto_perfil, preferencia
 $stmt->execute([$id_usuario]);
 $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$foto_perfil = $usuario['foto_perfil'] ?? './assets/img/imagem-padrao.png';
+$foto_perfil = $usuario['foto_perfil'] ?? '../assets/img/imagem-padrao.png';
 $nome_usuario = $usuario['nome'] ?? 'Usuário';
 $email_usuario = $_SESSION['usuario_email'] ?? '';
 $apelido_usuario = $usuario['apelido'] ?? '';
@@ -112,7 +112,7 @@ $preferencia_nome_apelido = $usuario['preferencia_nome_apelido'] ?? 0;
             <a href="index.php" class="btn-perfil"><i class="ph ph-house"></i> Home</a>
             <a href="./passeios.php" class="btn-perfil"><i class="ph ph-bicycle"></i> Passeios</a>
             <a href="#" class="btn-perfil"><i class="ph ph-map-trifold"></i> Roteiros</a>
-            <a href="logout.php" class="btn-perfil"><i class="ph ph-sign-out"></i> Sair</a>
+            <a href="../processos/logout.php" class="btn-perfil"><i class="ph ph-sign-out"></i> Sair</a>
           </div>
         </div>
       </div>
@@ -201,7 +201,7 @@ $preferencia_nome_apelido = $usuario['preferencia_nome_apelido'] ?? 0;
 </div>
 
 <div class="quest">
-        <img src="./assets/img/moçadebraçoesabertosaoarlivre.jpg" alt="imagem">
+        <img src="../assets/img/moçadebraçoesabertosaoarlivre.jpg" alt="imagem">
 
         <div class="questDown">
           <h4>O que é importante na hora de viajar?</h4>

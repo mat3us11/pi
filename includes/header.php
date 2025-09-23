@@ -6,7 +6,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 // Se não tiver foto, usar a padrão
 $foto_perfil = (isset($_SESSION['usuario_foto']) && !empty($_SESSION['usuario_foto'])) 
     ? $_SESSION['usuario_foto'] 
-    : './assets/img/imagem-padrao.png';
+    : '../assets/img/imagem-padrao.png';
 
 // Definir nome ou apelido conforme preferência
 $nome = $_SESSION['usuario_nome'] ?? '';
@@ -42,15 +42,15 @@ $nome_para_exibir = ($preferencia && !empty($apelido)) ? $apelido : $nome;
               </div>
             </div>
           <?php else: ?>
-            <a href="cadastro.php"><button class="btn btn-outline">Cadastre-se</button></a>
+            <a href="../paginas/cadastro.php"><button class="btn btn-outline">Cadastre-se</button></a>
             <a href="login.php"><button class="btn btn-fill">Login</button></a>
           <?php endif; ?>
         </div>
       <?php endif; ?>
 
       <div class="icons">
-        <a href="./historico.php"><i class="ph ph-clock-counter-clockwise"></i></a>
-        <a href="./duvidas.php"><i class="ph ph-question"></i></a>
+        <a href="historico.php"><i class="ph ph-clock-counter-clockwise"></i></a>
+        <a href="duvidas.php"><i class="ph ph-question"></i></a>
       </div>
     </div>
   </div>
@@ -85,7 +85,7 @@ $nome_para_exibir = ($preferencia && !empty($apelido)) ? $apelido : $nome;
 </div>
 
 <?php if (!isset($ocultarImagemHeader) || !$ocultarImagemHeader): ?>
-  <img class="imagem-desktop" src="./assets/img/header-index.png" alt="">
+  <img class="imagem-desktop" src="../assets/img/header-index.png" alt="">
 <?php endif; ?>
 
 <script src="https://unpkg.com/@phosphor-icons/web"></script>

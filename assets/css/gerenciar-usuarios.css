@@ -52,6 +52,10 @@ form.usuarios-filtros input {
   flex: 1;
 }
 
+input::placeholder{
+  color: black;
+}
+
 form.usuarios-filtros button[type="submit"] {
   background: #00678A;
   color: white;

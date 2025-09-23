@@ -532,7 +532,7 @@ header {
 .quest {
     margin: auto;
     width: 63%;
-    border-radius: 20px 20px 20px 20px;
+    border-radius: 20px;
     background-color: #EBEBEB;
     margin-top: -100px; 
     padding-bottom: 20px;
@@ -571,7 +571,7 @@ header {
     height: 300px;
     object-fit: cover;
     object-position: center 80%; 
-    border-radius: 20px 20px 20px 20px;
+    border-radius: 20px 20px 0 0;
 }
 
 /* RESPONSIVO */
