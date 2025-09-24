@@ -1,3 +1,15 @@
+<?php
+session_start();
+require_once '../includes/config.php'; // conexão PDO
+
+$sql = "SELECT r.id, r.nome, r.descricao, r.categorias, r.capa, r.localidade, u.nome AS criador
+        FROM passeios r
+        JOIN usuario u ON r.usuario_id = u.id
+        ORDER BY r.criado_em DESC";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$passeios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,11 +45,32 @@
 
         <div class="blocos">
             <div class="left">
+            <?php
+// Supondo que $passeios é o array com todos os passeios
+if (count($passeios) > 0) {
+    $passeio = $passeios[0]; // pega o primeiro passeio
+    ?>
+    <img src="<?= htmlspecialchars($passeio['capa']) ?>" alt="Capa do passeio" />
+    <?php
+} else {
+    echo "<p>Nenhum passeio encontrado.</p>";
+}
+?>
 
             </div>
 
             <div class="right">
-
+            <?php
+// Supondo que $passeios é o array com todos os passeios
+if (count($passeios) > 0) {
+    $passeio = $passeios[2]; // pega o primeiro passeio
+    ?>
+    <img src="<?= htmlspecialchars($passeio['capa']) ?>" alt="Capa do passeio" />
+    <?php
+} else {
+    echo "<p>Nenhum passeio encontrado.</p>";
+}
+?>
             </div>
         </div>
     </div>
