@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() !== PHP_SESSION_ACTIVE) {
+  session_start();
+}
 require_once '../includes/config.php';
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
@@ -8,8 +10,10 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 
 $id_rota = (int)$_GET['id'];
 
-// Buscar rota no banco com info do usuário
-$sql = "SELECT r.*, u.nome AS criador
+/* Buscar rota */
+$sql = "SELECT r.id, r.usuario_id, r.nome, r.descricao, r.categorias, r.capa,
+               r.ponto_partida, r.destino, r.paradas, r.criado_em,
+               u.nome AS criador
         FROM rota r
         JOIN usuario u ON r.usuario_id = u.id
         WHERE r.id = ?";
@@ -21,8 +25,21 @@ if (!$rota) {
     die("Rota não encontrada.");
 }
 
-// Transformar JSON de paradas em array
+/* Paradas em array */
 $paradas = $rota['paradas'] ? json_decode($rota['paradas'], true) : [];
+
+/* Verifica se usuário logado é o criador */
+$usuarioLogadoId = isset($_SESSION['usuario_id']) ? (int)$_SESSION['usuario_id'] : null;
+$ehDono = $usuarioLogadoId && ($usuarioLogadoId === (int)$rota['usuario_id']);
+
+/* Normaliza capa */
+$capa = !empty($rota['capa']) ? $rota['capa'] : '../assets/img/placeholder.jpg';
+
+/* Quebra categorias em chips */
+$chipsCategorias = [];
+if (!empty($rota['categorias'])) {
+    $chipsCategorias = array_filter(array_map('trim', preg_split('/,|\|/', $rota['categorias'])));
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -30,36 +47,85 @@ $paradas = $rota['paradas'] ? json_decode($rota['paradas'], true) : [];
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><?= htmlspecialchars($rota['nome']) ?> - Roteiro</title>
+
 <link rel="stylesheet" href="../assets/css/header.css">
 <link rel="stylesheet" href="../assets/css/footer.css">
 <link rel="stylesheet" href="../assets/css/ver-rota.css">
+<script defer src="../assets/js/modal.js"></script>
 </head>
 <body>
 <?php include '../includes/header.php'; ?>
 
-<div class="rota-detalhe" style="width: 70%; margin: 30px auto; padding: 20px; background: #f5f5f5; border-radius: 12px;">
-    <a class="voltar-rota" href="roteiro.php">← Voltar para roteiros</a>
-    <h2><?= htmlspecialchars($rota['nome']) ?></h2>
-    <p><strong>Criador:</strong> <?= htmlspecialchars($rota['criador']) ?></p>
-    <p><strong>Categorias:</strong> <?= htmlspecialchars($rota['categorias']) ?></p>
-    <img src="<?= htmlspecialchars($rota['capa'] ?: '../assets/img/placeholder.jpg') ?>" alt="Capa" style="width:100%; max-height:300px; object-fit:cover; border-radius: 8px; margin: 15px 0;">
-    <p><strong>Descrição:</strong></p>
-    <p><?= nl2br(htmlspecialchars($rota['descricao'])) ?></p>
+<!-- HEADER DA ROTA (com foto ao lado) -->
+<section class="rota-header">
+  <div class="rota-header__img">
+    <img src="<?= htmlspecialchars($capa) ?>" alt="Capa da rota">
+  </div>
+  <div class="rota-header__info">
+    <h1><?= htmlspecialchars($rota['nome']) ?></h1>
+    <div class="meta">
+      <span><strong>Criador:</strong> <?= htmlspecialchars($rota['criador']) ?></span>
+      <?php if (!empty($rota['criado_em'])): ?>
+        <span>• <?= date('d/m/Y', strtotime($rota['criado_em'])) ?></span>
+      <?php endif; ?>
+    </div>
 
-    <p><strong>Ponto de Partida:</strong> <?= htmlspecialchars($rota['ponto_partida']) ?></p>
-    <p><strong>Destino:</strong> <?= htmlspecialchars($rota['destino']) ?></p>
-
-    <?php if(count($paradas) > 0): ?>
-        <p><strong>Paradas:</strong></p>
-        <ul>
-            <?php foreach($paradas as $p): ?>
-                <li><?= htmlspecialchars($p) ?></li>
-            <?php endforeach; ?>
-        </ul>
+    <?php if (!empty($chipsCategorias)): ?>
+      <div class="chips">
+        <?php foreach ($chipsCategorias as $cat): ?>
+          <span class="chip"><?= htmlspecialchars($cat) ?></span>
+        <?php endforeach; ?>
+      </div>
     <?php endif; ?>
-</div>
 
+    <div class="rota-header__actions">
+      <a class="btn btn--ghost" href="roteiro.php">← Voltar</a>
+      <?php if ($ehDono): ?>
+        <a class="btn btn--primary" href="editar-rota.php?id=<?= (int)$rota['id'] ?>">✎ Editar roteiro</a>
+      <?php endif; ?>
+    </div>
+  </div>
+</section>
 
+<!-- CONTEÚDO -->
+<main class="rota-content">
+  <section class="card">
+    <h2 class="section-title">Descrição</h2>
+    <p class="descricao"><?= nl2br(htmlspecialchars($rota['descricao'])) ?></p>
+  </section>
+
+  <section class="info-grid">
+    <div class="card info-card">
+      <div class="info-card__body">
+        <h3>Ponto de Partida</h3>
+        <p><?= htmlspecialchars($rota['ponto_partida'] ?: '—') ?></p>
+      </div>
+    </div>
+
+    <div class="card info-card">
+      <div class="info-card__body">
+        <h3>Destino</h3>
+        <p><?= htmlspecialchars($rota['destino'] ?: '—') ?></p>
+      </div>
+    </div>
+  </section>
+
+  <?php if (count($paradas) > 0): ?>
+  <section class="card">
+    <h2 class="section-title">Paradas</h2>
+    <ol class="timeline">
+      <?php foreach ($paradas as $p): ?>
+        <li class="timeline__item">
+          <div class="timeline__point"></div>
+          <div class="timeline__content">
+            <div class="timeline__title"><?= htmlspecialchars($p) ?></div>
+          </div>
+        </li>
+      <?php endforeach; ?>
+    </ol>
+  </section>
+  <?php endif; ?>
+</main>
 
 <?php include '../includes/footer.php'; ?>
 </body>
