@@ -63,7 +63,7 @@ if (count($passeios) > 0) {
             <?php
 // Supondo que $passeios é o array com todos os passeios
 if (count($passeios) > 0) {
-    $passeio = $passeios[2]; // pega o primeiro passeio
+    $passeio = $passeios[1]; // pega o primeiro passeio
     ?>
     <img src="<?= htmlspecialchars($passeio['capa']) ?>" alt="Capa do passeio" />
     <?php
