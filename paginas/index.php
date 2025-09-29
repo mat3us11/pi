@@ -2,14 +2,14 @@
 session_start();
 require_once '../includes/config.php'; // conexão PDO
 
-// Busca os passeios com PDO
+// Busca os passeios
 $sql = "SELECT r.id, r.nome, r.descricao, r.categorias, r.capa, r.localidade, u.nome AS criador
         FROM passeios r
         JOIN usuario u ON r.usuario_id = u.id
         ORDER BY r.criado_em DESC";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
-$passeios = $stmt->fetchAll(PDO::FETCH_ASSOC); // aqui criamos o array certo
+$passeios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,7 +33,6 @@ $passeios = $stmt->fetchAll(PDO::FETCH_ASSOC); // aqui criamos o array certo
 
         <div class="coluna2">
             <input class="input2" type="text" id="data" placeholder="Quando você vai?" onfocus="this.type='date'">
-
             <input class="input3" type="search" placeholder="Quem vai com você?">
         </div>
 
@@ -42,37 +41,35 @@ $passeios = $stmt->fetchAll(PDO::FETCH_ASSOC); // aqui criamos o array certo
         </div>
     </div>
 
-
     <div class="destinos">
         <h3>Destinos mais procurados</h3>
 
         <!-- Primeira imagem -->
         <div class="destinoUp">
             <?php if (!empty($passeios[0])): ?>
-                <img src="<?= htmlspecialchars($passeios[0]['capa']) ?>" alt="Capa do passeio">
+                <a href="ver-passeios.php?id=<?= (int)$passeios[0]['id'] ?>">
+                    
+                    <img src="<?= htmlspecialchars($passeios[0]['capa']) ?>" alt="<?= htmlspecialchars($passeios[0]['nome']) ?>">
+                    
+                </a>
             <?php else: ?>
                 <p>Nenhum passeio encontrado.</p>
             <?php endif; ?>
         </div>
 
+        <!-- Segunda e terceira imagem -->
         <div class="destinoDown">
-            <!-- Segunda imagem -->
-            <div class="destinoL">
-                <?php if (!empty($passeios[1])): ?>
-                    <img src="<?= htmlspecialchars($passeios[1]['capa']) ?>" alt="Capa do passeio">
-                <?php else: ?>
-                    <p>Nenhum passeio encontrado.</p>
-                <?php endif; ?>
-            </div>
-
-            <!-- Terceira imagem -->
-            <div class="destinoR">
-                <?php if (!empty($passeios[2])): ?>
-                    <img src="<?= htmlspecialchars($passeios[2]['capa']) ?>" alt="Capa do passeio">
-                <?php else: ?>
-                    <p>Nenhum passeio encontrado.</p>
-                <?php endif; ?>
-            </div>
+            <?php for ($i = 1; $i <= 2; $i++): ?>
+                <div class="<?= $i === 1 ? 'destinoL' : 'destinoR' ?>">
+                    <?php if (!empty($passeios[$i])): ?>
+                        <a href="ver-passeios.php?id=<?= (int)$passeios[$i]['id'] ?>">
+                            <img src="<?= htmlspecialchars($passeios[$i]['capa']) ?>" alt="<?= htmlspecialchars($passeios[$i]['nome']) ?>">
+                        </a>
+                    <?php else: ?>
+                        <p>Nenhum passeio encontrado.</p>
+                    <?php endif; ?>
+                </div>
+            <?php endfor; ?>
         </div>
     </div>
 
@@ -101,11 +98,12 @@ $passeios = $stmt->fetchAll(PDO::FETCH_ASSOC); // aqui criamos o array certo
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script>
         document.getElementById('data').onblur = function() {
-            if (this.value == '') {
+            if (this.value === '') {
                 this.type = 'text';
             }
         }
     </script>
+
     <?php include '../includes/footer.php'; ?>
 </body>
 </html>

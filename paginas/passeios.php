@@ -46,12 +46,14 @@ $passeios = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="blocos">
             <div class="left">
             <?php
-// Supondo que $passeios é o array com todos os passeios
 if (count($passeios) > 0) {
     $passeio = $passeios[0]; // pega o primeiro passeio
     ?>
+    <a href="ver-passeios.php?id=<?= (int)$passeios[0]['id'] ?>">
     <img src="<?= htmlspecialchars($passeio['capa']) ?>" alt="Capa do passeio" />
+</a>
     <?php
+
 } else {
     echo "<p>Nenhum passeio encontrado.</p>";
 }
@@ -61,12 +63,15 @@ if (count($passeios) > 0) {
 
             <div class="right">
             <?php
-// Supondo que $passeios é o array com todos os passeios
+
 if (count($passeios) > 0) {
-    $passeio = $passeios[1]; // pega o primeiro passeio
+    $passeio = $passeios[0]; // pega o primeiro passeio
     ?>
+    <a href="ver-passeios.php?id=<?= (int)$passeios[0]['id'] ?>">
     <img src="<?= htmlspecialchars($passeio['capa']) ?>" alt="Capa do passeio" />
+</a>
     <?php
+
 } else {
     echo "<p>Nenhum passeio encontrado.</p>";
 }

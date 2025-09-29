@@ -114,7 +114,7 @@ outline: none;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #004774;
+    background-color: #009cff;
     color: white;
     font-weight: 600;
     cursor: pointer;
@@ -123,6 +123,11 @@ outline: none;
     width: 100%;
     font-size: 16px;
     padding: 5px;
+}
+
+.explore button:hover {
+    background-color: #007acc;
+    transition: 0.3s ease;
 }
 
 /* ====== BLOCO CRIAR ====== */

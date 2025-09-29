@@ -25,7 +25,7 @@
                 <i class="ph ph-instagram-logo"></i>
                 <i class="ph ph-whatsapp-logo"></i>
                 <i class="ph ph-linkedin-logo"></i>
-                <i class="ph ph-facebook-logo"></i>
+                <i class="ph ph-facebook-logo"></i> 
             </div>
         </div>
 
