@@ -79,7 +79,7 @@
 .informacoes-soltas textarea {
   min-height: 80px;
   resize: vertical;
-}
+} 
 
 .dropdown {
   position: relative;
@@ -121,6 +121,20 @@
   display: flex;
   align-items: center;
   gap: 6px;
+}
+
+/* DURACAO */
+.inicio-fim{
+  padding-top: 1em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1em;
+  width: 100%;
+}
+
+.inicio-fim .informacoes-soltas{
+  width: 100%;
 }
 
 .adicionar-rota {

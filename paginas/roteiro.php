@@ -3,9 +3,9 @@ session_start();
 require_once '../includes/config.php'; // conexão PDO
 
 $sql = "SELECT r.id, r.nome, r.descricao, r.categorias, r.capa, u.nome AS criador
-        FROM rota r
-        JOIN usuario u ON r.usuario_id = u.id
-        ORDER BY r.criado_em DESC";
+        FROM roteiros r
+        JOIN usuarios u ON r.usuario_id = u.id
+        ORDER BY r.created_at DESC";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $rotas = $stmt->fetchAll(PDO::FETCH_ASSOC);

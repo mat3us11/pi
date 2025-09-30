@@ -61,6 +61,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   <!-- Formulário -->
   <form action="" method="POST" enctype="multipart/form-data">
+
+    <!-- CAPA -->
     <div class="container-capa">
       <div class="capa" onclick="document.getElementById('foto-capa').click()">
         <div class="placeholder">
@@ -71,17 +73,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
     </div>
 
+    <!-- NOME -->
     <div class="informacoes-rota">
       <div class="informacoes-soltas">
         <label for="nome_rota">Nome da rota</label>
         <input type="text" name="nome_rota" id="nome_rota" placeholder="Nome (Obrigatório)" required>
       </div>
 
+      <!-- DESCRICAO -->
       <div class="informacoes-soltas">
         <label for="descricao_rota">Descrição</label>
         <textarea name="descricao_rota" id="descricao_rota" placeholder="Descrição da rota (Obrigatório)" required></textarea>
       </div>
 
+
+      <!-- CATEGORIAS -->
       <div class="informacoes-soltas">
         <label>Categorias</label>
         <div class="dropdown">
@@ -98,7 +104,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           </div>
         </div>
       </div>
+
+        <!-- DURACAO -->
+      <div class="duracao">
+        <div class="informacoes-soltas   dias">
+          <label for="duration_days">Duração (dias):</label>
+          <input type="number" id="duration_days" name="duration_days" min="1" required >
+        </div>
+
+        <div class="inicio-fim">
+          <!-- Data de Início -->
+          <div class="informacoes-soltas">
+            <label for="start_date">Data de Início (opcional):</label>
+            <input type="date" id="start_date" name="start_date">
+          </div>
+
+          <!-- Data de Fim -->
+          <div class="informacoes-soltas">
+            <label for="end_date">Data de Fim (opcional):</label>
+            <input type="date" id="end_date" name="end_date">
+          </div>
+        </div>
+      </div>
+
+      <!-- Destino -->
+      <div class="informacoes-soltas">
+        <label for="destination">Destino principal:</label>
+        <input type="text" id="destination" name="destination" placeholder="Ex: Cusco, Peru" required>
+      </div>
+
+      <!-- Custo Estimado -->
+      <div class="informacoes-soltas">
+        <label for="estimated_cost">Custo Estimado (R$):</label>
+        <input type="number" id="estimated_cost" name="estimated_cost" min="0" step="0.01">
+      </div>
+
     </div>
+
+    
+
+
 
     <div class="adicionar-rota">
       <h3>Adicionar Rota</h3>

@@ -1,6 +1,6 @@
 <?php
 $host = "localhost";
-$banco = "campvia";
+$banco = "campivia";
 $usuario = "root";
 $senha = "";
 

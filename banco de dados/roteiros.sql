@@ -19,9 +19,11 @@ CREATE TABLE usuarios (
 CREATE TABLE roteiros (
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     usuario_id INT REFERENCES usuarioS(id) ON DELETE CASCADE,
+    capa VARCHAR(500),
     nome VARCHAR(150) NOT NULL,
     descricao TEXT,
-    duracao INT,
+    categorias VARCHAR(100),
+    duracao_dias INT,
     data_comeco DATE,
     data_fim DATE,
     destino VARCHAR(150),
