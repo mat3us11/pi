@@ -12,8 +12,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $usuario_id = $_SESSION['usuario_id'];
     $nome = $_POST['nome_rota'] ?? '';
     $descricao = $_POST['descricao_rota'] ?? '';
-    $ponto_partida = $_POST['ponto_partida'] ?? '';
-    $destino = $_POST['destino'] ?? '';
+    $duracao_dias = $_POST['duration_days'] ?? '';
+    $data_comeco = $_POST['start_date'] ?? '';
+    $data_fim = $_POST['end_date'] ?? '';
+    $destino = $_POST['destinatios'] ?? '';
+    $custo = $_POST['estimated_cost'] ?? '';
     $categorias = isset($_POST['categorias']) ? implode(',', $_POST['categorias']) : '';
     $paradas = isset($_POST['paradas']) ? json_encode($_POST['paradas']) : null;
     
@@ -27,13 +30,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $capa = $destinoUpload;
         }
     }
-    $sql = "INSERT INTO rota 
-            (usuario_id, nome, descricao, categorias, ponto_partida, destino, paradas, capa)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO roteiros 
+            (usuario_id, capa, nome, descricao, categorias, duracao_dias, data_comeco, data_fim, destino, custo)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
 
     try {
-        $stmt->execute([$usuario_id, $nome, $descricao, $categorias, $ponto_partida, $destino, $paradas, $capa]);
+        $stmt->execute([$usuario_id, $nome, $descricao, $categorias, $duracao_dias, $data_comeco, $data_fim, $destino, $custo, $capa]);
         header("Location: roteiro.php?sucesso=1");
         exit;
     } catch (PDOException $e) {
@@ -61,6 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   <!-- Formulário -->
   <form action="" method="POST" enctype="multipart/form-data">
+
 
     <!-- CAPA -->
     <div class="container-capa">
@@ -122,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <!-- Data de Fim -->
           <div class="informacoes-soltas">
             <label for="end_date">Data de Fim (opcional):</label>
-            <input type="date" id="end_date" name="end_date">
+            <input type="date" id="end_date" name="end_date" >
           </div>
         </div>
       </div>
