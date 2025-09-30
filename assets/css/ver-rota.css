@@ -5,9 +5,21 @@ html, body {
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Arial;
 }
 
+.main-teste33{
+  width: 52%;
+  margin: auto;
+}
+
+.voltar{
+  padding-top: 4%;
+
+}
+.voltar a{
+  background-color: #ffffff;
+}
+
 /* ===== HEADER com imagem ===== */
 .rota-header {
-  width: min(1100px, 92%);
   margin: 30px auto;
   display: flex;
   gap: 24px;
@@ -18,7 +30,6 @@ html, body {
   box-shadow: 0 6px 16px rgba(0, 74, 116, .08);
 }
 .rota-header__img img {
-  width: 260px;
   height: 180px;
   object-fit: cover;
   border-radius: 12px;
@@ -59,6 +70,7 @@ html, body {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 /* ===== Botões ===== */
@@ -86,8 +98,6 @@ html, body {
 
 /* ===== Conteúdo ===== */
 .rota-content {
-  width: min(1100px, 92%);
-  margin: 20px auto 60px;
 }
 .card {
   background: #ffffff;
@@ -146,7 +156,12 @@ html, body {
 
 /* ===== Responsivo ===== */
 @media (max-width: 768px) {
-  .rota-header { flex-direction: column; align-items: center; text-align: center; }
+  .main-teste33{
+    width: 90%;
+    margin: auto;
+  }
+  .rota-header { flex-direction: column; align-items: flex-start; }
+  
   .rota-header__img img { width: 100%; height: auto; }
   .rota-header__actions { justify-content: center; }
   .info-grid { grid-template-columns: 1fr; }

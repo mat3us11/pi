@@ -56,6 +56,13 @@ if (!empty($rota['categorias'])) {
 <body>
 <?php include '../includes/header.php'; ?>
 
+
+<div class="main-teste33">
+<div class="voltar">
+  <a class="btn btn--ghost" href="roteiro.php">← Voltar</a>
+</div>
+
+
 <!-- HEADER DA ROTA (com foto ao lado) -->
 <section class="rota-header">
   <div class="rota-header__img">
@@ -79,7 +86,6 @@ if (!empty($rota['categorias'])) {
     <?php endif; ?>
 
     <div class="rota-header__actions">
-      <a class="btn btn--ghost" href="roteiro.php">← Voltar</a>
       <?php if ($ehDono): ?>
         <a class="btn btn--primary" href="editar-rota.php?id=<?= (int)$rota['id'] ?>">✎ Editar roteiro</a>
       <?php endif; ?>
@@ -126,6 +132,8 @@ if (!empty($rota['categorias'])) {
   </section>
   <?php endif; ?>
 </main>
+
+</div>
 
 <?php include '../includes/footer.php'; ?>
 </body>
