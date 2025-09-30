@@ -48,34 +48,44 @@ $passeios = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <?php
 if (count($passeios) > 0) {
     $passeio = $passeios[0]; // pega o primeiro passeio
+    
+    // Verifica se existe uma imagem válida
+    $imagemCapa = (!empty($passeio['capa'])) ? htmlspecialchars($passeio['capa']) : '../assets/img/placeholder_rosseio.png';
     ?>
-    <a href="ver-passeios.php?id=<?= (int)$passeios[0]['id'] ?>">
-    <img src="<?= htmlspecialchars($passeio['capa']) ?>" alt="Capa do passeio" />
-</a>
+    
+    <a class="passeio" href="ver-passeios.php?id=<?= (int)$passeio['id'] ?>">
+        <img src="<?= $imagemCapa ?>" alt="Imagem do passeio" />
+    </a>
+    
     <?php
-
 } else {
     echo "<p>Nenhum passeio encontrado.</p>";
 }
 ?>
+
+
 
             </div>
 
             <div class="right">
             <?php
-
 if (count($passeios) > 0) {
     $passeio = $passeios[0]; // pega o primeiro passeio
+    
+    // Verifica se existe uma imagem válida
+    $imagemCapa = (!empty($passeio['capa'])) ? htmlspecialchars($passeio['capa']) : '../assets/img/placeholder_rosseio.png';
     ?>
-    <a href="ver-passeios.php?id=<?= (int)$passeios[0]['id'] ?>">
-    <img src="<?= htmlspecialchars($passeio['capa']) ?>" alt="Capa do passeio" />
-</a>
+    
+    <a class="passeio" href="ver-passeios.php?id=<?= (int)$passeio['id'] ?>">
+        <img src="<?= $imagemCapa ?>" alt="Imagem do passeio" />
+    </a>
+    
     <?php
-
 } else {
     echo "<p>Nenhum passeio encontrado.</p>";
 }
 ?>
+
             </div>
         </div>
     </div>

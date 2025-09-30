@@ -150,13 +150,13 @@
 
 
 
-.left a:hover {
+.left .passeio:hover {
     transform: scale(1.02);
     box-shadow: 0 8px 20px rgba(0,0,0,0.1);
     transition: 0.3s;
 }
 
-.right a:hover {
+.right .passeio:hover {
     transform: scale(1.02);
     box-shadow: 0 8px 20px rgba(0,0,0,0.1);
     transition: 0.3s;

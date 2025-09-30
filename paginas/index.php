@@ -46,15 +46,23 @@ $passeios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         <!-- Primeira imagem -->
         <div class="destinoUp">
-            <?php if (!empty($passeios[0])): ?>
-                <a href="ver-passeios.php?id=<?= (int)$passeios[0]['id'] ?>">
-                    
-                    <img src="<?= htmlspecialchars($passeios[0]['capa']) ?>" alt="<?= htmlspecialchars($passeios[0]['nome']) ?>">
-                    
-                </a>
-            <?php else: ?>
-                <p>Nenhum passeio encontrado.</p>
-            <?php endif; ?>
+        <?php
+if (count($passeios) > 0) {
+    $passeio = $passeios[0]; // pega o primeiro passeio
+    
+    // Verifica se existe uma imagem válida
+    $imagemCapa = (!empty($passeio['capa'])) ? htmlspecialchars($passeio['capa']) : '../assets/img/placeholder_rosseio.png';
+    ?>
+    
+    <a class="passeio" href="ver-passeios.php?id=<?= (int)$passeio['id'] ?>">
+        <img src="<?= $imagemCapa ?>" alt="Imagem do passeio" />
+    </a>
+    
+    <?php
+} else {
+    echo "<p>Nenhum passeio encontrado.</p>";
+}
+?>
         </div>
 
         <!-- Segunda e terceira imagem -->
@@ -62,8 +70,11 @@ $passeios = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <?php for ($i = 1; $i <= 2; $i++): ?>
                 <div class="<?= $i === 1 ? 'destinoL' : 'destinoR' ?>">
                     <?php if (!empty($passeios[$i])): ?>
+                        <?php 
+                            $imagemCapa = !empty($passeios[$i]['capa']) ? htmlspecialchars($passeios[$i]['capa']) : '../assets/img/placeholder_rosseio.png';
+                        ?>
                         <a href="ver-passeios.php?id=<?= (int)$passeios[$i]['id'] ?>">
-                            <img src="<?= htmlspecialchars($passeios[$i]['capa']) ?>" alt="<?= htmlspecialchars($passeios[$i]['nome']) ?>">
+                            <img src="<?= $imagemCapa ?>" alt="<?= htmlspecialchars($passeios[$i]['nome']) ?>">
                         </a>
                     <?php else: ?>
                         <p>Nenhum passeio encontrado.</p>
