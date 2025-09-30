@@ -72,7 +72,7 @@ $fbLoginUrl = 'https://www.facebook.com/v18.0/dialog/oauth?' . http_build_query(
       <div class="lado-direito">
         <h3>Crie uma conta ou faça login</h3>
 
-        <form action="../processos/cadastrar.php" method="POST" style="width: 100%;">
+        <form action="../cadastrar.php" method="POST" style="width: 100%;">
           <input type="text" id="nome" name="nome" placeholder="Digite o seu nome" autocomplete="off" required />
           <input type="email" id="email" name="email" placeholder="Digite o endereço de e-mail" autocomplete="off"  required />
           <input type="password" id="senha" name="senha" placeholder="Digite a senha" autocomplete="off"  required />

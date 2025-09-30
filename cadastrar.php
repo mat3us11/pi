@@ -1,5 +1,5 @@
 <?php
-require_once '../includes/config.php'; 
+require_once 'includes/config.php'; 
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $nome  = $_POST['nome'] ?? '';
@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $resultado = $stmt->execute([$nome, $email, $senha_hash]);
 
     if ($resultado) {
-        header("Location: ../paginas/login.php");
+        header("Location: paginas/login.php");
         exit;
     } else {
         echo "Erro ao cadastrar.";
