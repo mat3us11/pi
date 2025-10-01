@@ -97,8 +97,6 @@ html, body {
 .btn--ghost:hover { background: #e9f4ff; }
 
 /* ===== Conteúdo ===== */
-.rota-content {
-}
 .card {
   background: #ffffff;
   border: 1px solid #d7e9ff;
@@ -133,6 +131,10 @@ html, body {
   list-style: none;
   padding-left: 0;
   counter-reset: parada;
+}
+
+.timeline a{
+  color: blue;
 }
 .timeline__item {
   position: relative;
