@@ -1,295 +1,241 @@
+/* ====== EXPLORAR ====== */
 .explore {
-    width: 65%;
-    margin: 20px auto;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    padding: 3px;
-    border-radius: 5px;
-    height: 125px;
+  width: 65%;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 8px;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
 }
 
-.explore .up {
-    width: 100%;
-}
-
-.roteiro {
-    width: 100%;
-}
+.explore .up { width: 100%; }
+.roteiro { width: 100%; }
 
 .roteiro input {
-    border: none;
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: solid black 1px;
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  font-size: 16px;
+  outline: none;
 }
-
-.roteiro i {
-    position: relative;
-    height: 100%;
-    justify-content: flex-start;
-    display: flex;
-    padding: 9px;
-    width: 10%;
-}
-
-.roteiro input::placeholder {
-    color: black;
-    font-size: 20px;
-}
-
-.roteiro input:focus {
-    outline: none;
-}
+.roteiro input:focus { border-color: #009cff; box-shadow: 0 0 0 3px rgba(0,156,255,.15); }
+.roteiro input::placeholder { color: #64748b; font-size: 16px; }
 
 .explore .down {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    gap: 3px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  width: 100%;
 }
 
-.down .tipo {
-    width: 100%;
+.down .tipo, .down .duracao, .down .estilo { width: 100%; }
+.tipo input, .duracao input, .estilo input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  outline: none;
+  font-size: 16px;
+}
+.tipo input:focus, .duracao input:focus, .estilo input:focus {
+  border-color: #009cff;
+  box-shadow: 0 0 0 3px rgba(0,156,255,.15);
+}
+.tipo input::placeholder, .duracao input::placeholder, .estilo input::placeholder {
+  color: #64748b;
 }
 
-.tipo input {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: solid black 1px;
+/* Botões ações */
+.actions {
+  display: flex;
+  gap: 8px;
+  width: 100%;
 }
-
-.tipo input:focus {
-    outline: none;
+.btn-search, .btn-clear {
+  flex: 1;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  border-radius: 8px;
+  border: none;
+  height: 40px;
+  font-weight: 700;
+  cursor: pointer;
 }
-
-.tipo input::placeholder {
-    color: black;
-    font-size: 20px;
-}
-
-.down .duracao {
-    width: 100%;
-}
-
-.duracao input {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: solid black 1px;
-}
-
-.duracao input:focus{
-outline: none;
-}
-
-.duracao input::placeholder {
-    color: black;
-    font-size: 20px;
-}
-
-.down .estilo {
-    width: 100%;
-}
-
-.estilo input {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: solid black 1px;
-}
-
-.estilo input:focus{
-    outline: none;
-}
-
-.estilo input::placeholder {
-    color: black;
-    font-size: 20px;
-}
-
-.explore button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #009cff;
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-    border-radius: 5px;
-    border: none;
-    width: 100%;
-    font-size: 16px;
-    padding: 5px;
-}
-
-.explore button:hover {
-    background-color: #007acc;
-    transition: 0.3s ease;
-}
+.btn-search { background: #009cff; color: #fff; }
+.btn-search:hover { background: #007acc; transition: .2s ease; }
+.btn-clear { background: #e2e8f0; color: #0f172a; }
+.btn-clear:hover { background: #cbd5e1; }
 
 /* ====== BLOCO CRIAR ====== */
 .criar {
-    width: 80%;
-    max-width: 600px;
-    margin: 40px auto;
-    display: flex;
-    flex-direction: column;
-    background: #E9F4F7;
-    padding: 25px 20px;
-    gap: 20px;
-    border-radius: 12px;
-    text-align: center;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  width: 80%;
+  max-width: 600px;
+  margin: 28px auto 16px;
+  display: flex;
+  flex-direction: column;
+  background: #E9F4F7;
+  padding: 22px 20px;
+  gap: 16px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.06);
 }
-
 .criar h2 {
-    font-size: 20px;
-    font-weight: 600;
-    color: #004774;
+  font-size: 20px;
+  font-weight: 700;
+  color: #004774;
 }
-
 .criar button {
-    background-color: #009cff;
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-    border-radius: 8px;
-    border: none;
-    width: 100%;
-    font-size: 16px;
-    padding: 12px 0;
-    transition: background-color 0.3s ease;
+  background-color: #009cff;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 8px;
+  border: none;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 0;
+  transition: background-color 0.2s ease;
 }
+.criar button:hover { background-color: #007acc; }
 
-.criar button:hover {
-    background-color: #007acc;
-}
-
+/* ====== LISTA ====== */
 .prontos {
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    max-width: 800px;
-    margin: 40px auto;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  max-width: 1000px;
+  margin: 20px auto 60px;
+  gap: 16px;
+}
+.prontos > h2 {
+  color: #004774;
+  font-size: 20px;
+  font-weight: 800;
 }
 
 .passeio {
-    display: flex;
-    width: 100%;
-    border: 1px solid #ddd;
-    height: 120px;
-    border-radius: 12px;
-    position: relative;
-    align-items: center;
-    overflow: hidden;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.05);
-    background-color: #fff;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: grid;
+  grid-template-columns: 30% 1fr 64px;
+  width: 100%;
+  border: 1px solid #e5e7eb;
+  min-height: 120px;
+  border-radius: 12px;
+  position: relative;
+  align-items: stretch;
+  overflow: hidden;
+  background-color: #fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.03);
 }
-
-.passeio:hover {
-    transform: scale(1.02);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-}
+.passeio:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(0,0,0,0.06); }
 
 .passeio img {
-    width: 30%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 12px 0 0 12px;
+  width: 100%;
+  height: 100%;
+  min-height: 120px;
+  object-fit: cover;
 }
 
 .escrita {
-    width: 65%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 0 15px;
-    gap: 5px;
+  padding: 12px 14px;
+  display: grid;
+  grid-template-rows: auto auto auto auto;
+  gap: 4px;
 }
-
 .escrita .nome h4 {
-    font-size: 18px;
-    font-weight: 700;
-    color: #004774;
+  font-size: 18px;
+  font-weight: 800;
+  color: #004774;
+  margin: 0;
+  line-height: 1.3;
 }
-
 .escrita .criador h4 {
-    font-size: 14px;
-    color: #333;
+  font-size: 14px;
+  color: #334155;
+  margin: 0;
 }
-
 .escrita .estilo h4 {
-    font-size: 13px;
-    font-weight: 500;
-    color: #666;
-    position: relative;
-    max-width: 90%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  margin: 0;
+  position: relative;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-
-.escrita .estilo h4::after {
-    content: "";
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    width: 40px;
-    background: linear-gradient(to right, rgba(255,255,255,0), #fff 80%);
+.trajeto {
+  margin-top: 4px;
+  color: #0b6aa3;
+  font-size: 13px;
+  display: flex; gap: 6px; align-items: center;
+}
+.trajeto .sep { color: #64748b; }
+.trajeto .from, .trajeto .to {
+  max-width: 46%;
+  overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
 }
 
 .botao2 {
-    width: 10%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
+  display: flex; justify-content: center; align-items: center;
+  background: #f8fafc;
 }
-
+.botao2 a { width: 100%; height: 100%; }
 .botao2 button {
-    width: 100%;
-    height: 100%;
-    border: none;
-    background-color: #f8f9fa;
-    border-radius: 0 12px 12px 0;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
+  width: 100%; height: 100%;
+  border: none; background: transparent; cursor: pointer;
+  font-size: 22px; color: #0b6aa3;
 }
+.botao2 button:hover { background: #eef2f7; }
 
-.botao2 button:hover {
-    background-color: #e0e0e0;
+/* ====== Sem resultados ====== */
+.no-results {
+  margin: 16px auto 0;
+  padding: 24px 16px;
+  width: 100%;
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
+  text-align: center;
+  color: #475569;
+  background: #f8fafc;
 }
+.no-results i { font-size: 28px; color: #0b6aa3; display: block; margin-bottom: 8px; }
 
 /* ====== RESPONSIVIDADE ====== */
-@media (max-width: 900px) {
-    .explore, .criar, .prontos {
-        width: 95%;
-    }
-    .passeio {
-        flex-direction: column;
-        height: auto;
-    }
-    .passeio img {
-        width: 100%;
-        height: 200px;
-        border-radius: 12px 12px 0 0;
-    }
-    .escrita {
-        width: 100%;
-        padding: 10px;
-    }
-    .botao2 {
-        width: 100%;
-        height: 50px;
-        margin-top: 5px;
-    }
+@media (max-width: 1100px) {
+  .prontos { width: 92%; max-width: 92%; }
+  .criar { width: 92%; }
+  .explore { width: 92%; }
 }
 
+@media (max-width: 900px) {
+  .explore .down { grid-template-columns: 1fr; }
+}
 
+@media (max-width: 780px) {
+  .passeio {
+    grid-template-columns: 1fr;
+  }
+  .passeio img {
+    width: 100%;
+    height: 200px;
+    border-radius: 12px 12px 0 0;
+  }
+  .botao2 { height: 56px; }
+}
 
+@media (max-width: 420px) {
+  .btn-search, .btn-clear {
+    font-size: 14px;
+  }
+}

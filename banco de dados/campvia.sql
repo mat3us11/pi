@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 23/09/2025 às 21:03
+-- Tempo de geração: 02/10/2025 às 01:43
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -51,6 +51,20 @@ INSERT INTO `passeios` (`id`, `usuario_id`, `nome`, `descricao`, `categorias`, `
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `poi_images_cache`
+--
+
+CREATE TABLE `poi_images_cache` (
+  `id` int(11) NOT NULL,
+  `poi_key` varchar(255) NOT NULL,
+  `image_url` text NOT NULL,
+  `expires_at` datetime NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `rota`
 --
 
@@ -72,9 +86,7 @@ CREATE TABLE `rota` (
 --
 
 INSERT INTO `rota` (`id`, `usuario_id`, `nome`, `descricao`, `categorias`, `ponto_partida`, `destino`, `paradas`, `capa`, `criado_em`) VALUES
-(6, 21, 'aaa', 'ssss', 'cultural', 'Assis, São Paulo, Brasil', 'Adamantina, São Paulo, Brasil', NULL, '../uploads/geralcapa_21_1758648741.jfif', '2025-09-23 17:32:21'),
-(7, 24, 'Qualquer coisa', 'djawiodjwaiojdaoijodwa', 'cultural,gastronomica,citytour', 'Assis, São Paulo, Brasil', 'Adamantina, São Paulo, Brasil', '[\"ali\",\"ali\"]', '../uploads/geralcapa_24_1758652610.jpg', '2025-09-23 18:36:50'),
-(8, 24, 'a', 'a', 'cultural', 'Assis, Monteiro Lobato - São Paulo, 12250, Brasil', 'Adamantina, São Paulo, Brasil', NULL, '../uploads/geralcapa_24_1758652890.jpg', '2025-09-23 18:41:30');
+(22, 9, 'Rota do mcqueen', 'Mcqueen lanches', 'aventura,gastronomica,citytour', 'Rua Ismênia Maria Dos Santos, Tatuí - São Paulo, 18280-160, Brasil', 'Sorocaba, São Paulo, Brasil', '[\"\\\"Sorocaba é do Senhor Jesus Cristo\\\"\",\"14-bis\",\"Adega Simao\",\"Bar\",\"Bar do Luizinho\",\"Be Brave Coffee and Tea II\",\"Bioliquido Escola de Natação\"]', '../uploads/geral/capa_9_1759361763.png', '2025-10-01 23:23:27');
 
 -- --------------------------------------------------------
 
@@ -114,7 +126,8 @@ INSERT INTO `usuario` (`id`, `nome`, `email`, `senha`, `foto_perfil`, `endereco`
 (21, 'abc', 'abc2@gmail.com', '$2y$10$8syJIh8/fPX1xN94FyjazuywSPJUzpSZPZuVdo0GgP2P9h2tklNnu', NULL, NULL, NULL, 'nome', 'usuario'),
 (22, 'admin', 'admin@gmail.com', 'admin123', NULL, NULL, NULL, 'nome', 'admin'),
 (23, 'admin', 'admin@gmail.com', 'admin123', NULL, NULL, NULL, 'nome', 'admin'),
-(24, 'admin', 'admin1@gmail.com', '$2y$10$UL/YVDXn7bLJa336XEBTIenbfVDbsY7cch5pxmytT0pDsPnqbfXHm', '../uploads/perfilfoto_24_1758650065.jpg', '', '', 'nome', 'admin');
+(24, 'admin', 'admin1@gmail.com', '$2y$10$UL/YVDXn7bLJa336XEBTIenbfVDbsY7cch5pxmytT0pDsPnqbfXHm', '../uploads/perfilfoto_24_1758650065.jpg', '', '', 'nome', 'admin'),
+(25, 'taskup', 'taskup.gestao01@gmail.com', '', 'https://lh3.googleusercontent.com/a/ACg8ocIFeYITXJ4nRSRAbnHYHNGaeQNNm6VPK1_9vL8M7c-SkYme9g=s96-c', NULL, NULL, 'nome', '');
 
 --
 -- Índices para tabelas despejadas
@@ -126,6 +139,13 @@ INSERT INTO `usuario` (`id`, `nome`, `email`, `senha`, `foto_perfil`, `endereco`
 ALTER TABLE `passeios`
   ADD PRIMARY KEY (`id`),
   ADD KEY `usuario_id` (`usuario_id`);
+
+--
+-- Índices de tabela `poi_images_cache`
+--
+ALTER TABLE `poi_images_cache`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uk_poi_key` (`poi_key`);
 
 --
 -- Índices de tabela `rota`
@@ -151,16 +171,22 @@ ALTER TABLE `passeios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT de tabela `poi_images_cache`
+--
+ALTER TABLE `poi_images_cache`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `rota`
 --
 ALTER TABLE `rota`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de tabela `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- Restrições para tabelas despejadas

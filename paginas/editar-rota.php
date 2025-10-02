@@ -1,14 +1,39 @@
 <?php
-session_start();
+// paginas/editar-rota.php
+if (session_status() !== PHP_SESSION_ACTIVE) {
+  session_start();
+}
 require_once '../includes/config.php';
 
-// 🔒 Bloqueia não logados
+/* ---------- Helpers ---------- */
+function h($s){ return htmlspecialchars($s ?? '', ENT_QUOTES, 'UTF-8'); }
+
+/** Normaliza caminho salvo (../uploads/..., uploads/... ou absoluto) para apagar arquivo com segurança */
+function resolve_upload_path(?string $dbPath): ?string {
+  if (!$dbPath) return null;
+  if (preg_match('#^https?://#i', $dbPath)) return null; // URL não apaga
+
+  $projectRoot = realpath(__DIR__ . '/..'); 
+  if ($projectRoot === false) return null;
+
+  $p = str_replace('\\', '/', trim($dbPath));
+  $p = preg_replace('#^\./+#', '', $p);
+  while (strpos($p, '../') === 0) { $p = substr($p, 3); }
+
+  // absoluto?
+  if (preg_match('#^/|^[A-Za-z]:/#', $p)) return $p;
+
+  if (strpos($p, 'uploads/') === 0) return $projectRoot . '/' . $p;
+
+  return $projectRoot . '/' . ltrim($p, '/');
+}
+
+/* ---------- Autorização básica ---------- */
 if (!isset($_SESSION['usuario_id'])) {
   header("Location: ../paginas/login.php");
   exit;
 }
 
-// Verifica ID
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
   http_response_code(400);
   die("Rota inválida.");
@@ -17,7 +42,7 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 $id_rota = (int) $_GET['id'];
 $usuarioLogadoId = (int) $_SESSION['usuario_id'];
 
-/* ===== Carrega rota e valida ownership ===== */
+/* ---------- Carrega rota e valida ownership ---------- */
 $sql = "SELECT r.id, r.usuario_id, r.nome, r.descricao, r.categorias, r.capa,
                r.ponto_partida, r.destino, r.paradas, r.criado_em,
                u.nome AS criador
@@ -37,26 +62,45 @@ if ($usuarioLogadoId !== (int)$rota['usuario_id']) {
   die("Você não tem permissão para editar esta rota.");
 }
 
+/* ---------- CSRF ---------- */
+if (empty($_SESSION['csrf_edit'])) {
+  $_SESSION['csrf_edit'] = bin2hex(random_bytes(16));
+}
+$csrf_edit = $_SESSION['csrf_edit'];
+
 $erro = '';
 $sucesso = '';
 
-/* ===== Salvar (POST) ===== */
+/* ---------- Salvar (POST) ---------- */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  if (!hash_equals($_SESSION['csrf_edit'] ?? '', $_POST['csrf'] ?? '')) {
+    http_response_code(400);
+    die('Token inválido.');
+  }
+
   $nome           = trim($_POST['nome_rota'] ?? '');
   $descricao      = trim($_POST['descricao_rota'] ?? '');
   $ponto_partida  = trim($_POST['ponto_partida'] ?? '');
   $destino        = trim($_POST['destino'] ?? '');
   $categorias     = isset($_POST['categorias']) ? implode(',', (array)$_POST['categorias']) : '';
-  $paradasArr     = isset($_POST['paradas']) ? (array)$_POST['paradas'] : [];
-  $paradasArr     = array_values(array_filter(array_map('trim', $paradasArr)));
-  $paradasJson    = !empty($paradasArr) ? json_encode($paradasArr, JSON_UNESCAPED_UNICODE) : null;
+
+  // Paradas: aceitamos strings; se vier objeto (compat), mantemos só o "nome"
+  $paradasArr = isset($_POST['paradas']) ? (array)$_POST['paradas'] : [];
+  $paradasArr = array_map(function($p){
+    if (is_array($p)) return trim($p['nome'] ?? '');
+    return trim((string)$p);
+  }, $paradasArr);
+  $paradasArr = array_values(array_filter($paradasArr));
+  $paradasJson = !empty($paradasArr) ? json_encode($paradasArr, JSON_UNESCAPED_UNICODE) : null;
 
   if ($nome === '' || $descricao === '' || $ponto_partida === '' || $destino === '') {
     $erro = "Preencha nome, descrição, ponto de partida e destino.";
   }
 
-  // Upload da capa (opcional)
+  // Upload da capa (opcional) + apaga capa antiga com segurança
   $capaPath = $rota['capa']; // mantém atual por padrão
+  $oldCapa  = $rota['capa'];
+
   if (!$erro && isset($_FILES['foto_capa']) && $_FILES['foto_capa']['error'] !== UPLOAD_ERR_NO_FILE) {
     if ($_FILES['foto_capa']['error'] !== UPLOAD_ERR_OK) {
       $erro = "Erro no upload da imagem (código {$_FILES['foto_capa']['error']}).";
@@ -73,24 +117,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       } elseif ($size > 4*1024*1024) {
         $erro = "A imagem deve ter no máximo 4MB.";
       } else {
-        // pasta de upload (mesma ideia da sua criação, corrigindo a barra que faltava)
-        $dir = realpath(__DIR__ . '/../uploads/geral');
-        if ($dir === false) {
-          $tentativa = __DIR__ . '/../uploads/geral';
-          if (!is_dir($tentativa)) mkdir($tentativa, 0775, true);
-          $dir = realpath($tentativa);
-        }
-        if ($dir === false) {
-          $erro = "Falha ao preparar pasta de upload.";
+        // pasta de upload
+        $dir = __DIR__ . '/../uploads/geral';
+        if (!is_dir($dir)) { @mkdir($dir, 0775, true); }
+        if (!is_dir($dir) || !is_writable($dir)) {
+          $erro = "Pasta de upload não disponível.";
         } else {
           $ext = $permitidos[$mime];
           $nomeArquivo = 'capa_' . $usuarioLogadoId . '_' . time() . '.' . $ext;
-          $destinoUpload = $dir . '/' . $nomeArquivo; // <- com barra
+          $destinoUpload = rtrim($dir, '/\\') . '/' . $nomeArquivo;
 
           if (!move_uploaded_file($_FILES['foto_capa']['tmp_name'], $destinoUpload)) {
             $erro = "Não foi possível salvar a imagem enviada.";
           } else {
-            // caminho relativo para servir (ajuste conforme sua estrutura)
+            // apaga capa antiga (se local)
+            $oldAbs = resolve_upload_path($oldCapa);
+            if ($oldAbs && is_file($oldAbs) && file_exists($oldAbs)) { @unlink($oldAbs); }
+
+            // salva caminho relativo para servir no site
             $capaPath = '../uploads/geral/' . $nomeArquivo;
           }
         }
@@ -137,11 +181,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 }
 
-/* ===== Valores para o form ===== */
+/* ---------- Valores p/ form ---------- */
 $capaAtual = !empty($rota['capa']) ? $rota['capa'] : '../assets/img/placeholder.jpg';
 $categoriasMarcadas = array_filter(array_map('trim', explode(',', (string)$rota['categorias'])));
+
+// Paradas vêm como JSON de strings; se vieram objetos no passado, converte para texto
 $paradas = $rota['paradas'] ? json_decode($rota['paradas'], true) : [];
-if (!is_array($paradas)) $paradas = [];
+if (is_array($paradas)) {
+  $paradas = array_map(function($p){
+    if (is_array($p)) return (string)($p['nome'] ?? '');
+    return (string)$p;
+  }, $paradas);
+  $paradas = array_values(array_filter($paradas));
+} else {
+  $paradas = [];
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -154,9 +208,6 @@ if (!is_array($paradas)) $paradas = [];
   <link rel="stylesheet" href="../assets/css/footer.css">
   <link rel="stylesheet" href="../assets/css/editar-roteiros.css">
   <script defer src="../assets/js/editar-roteiros.js"></script>
-  <!-- você pode usar o mesmo CSS do criar, ou deixar estes estilos leves -->
-
-  <script defer src="../assets/js/modal.js"></script>
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body>
@@ -165,17 +216,22 @@ if (!is_array($paradas)) $paradas = [];
   <div class="wrap">
     <div class="card">
       <div class="titulo">Editar Roteiro</div>
-      <div class="meta">Criado por <?= htmlspecialchars($rota['criador']) ?> <?php if(!empty($rota['criado_em'])): ?> • <?= date('d/m/Y', strtotime($rota['criado_em'])) ?><?php endif; ?></div>
+      <div class="meta">
+        Criado por <?= h($rota['criador']) ?>
+        <?php if(!empty($rota['criado_em'])): ?> • <?= date('d/m/Y', strtotime($rota['criado_em'])) ?><?php endif; ?>
+      </div>
 
-      <?php if ($sucesso): ?><div class="alert alert--ok"><?= htmlspecialchars($sucesso) ?></div><?php endif; ?>
-      <?php if ($erro): ?><div class="alert alert--err"><?= htmlspecialchars($erro) ?></div><?php endif; ?>
+      <?php if ($sucesso): ?><div class="alert alert--ok"><?= h($sucesso) ?></div><?php endif; ?>
+      <?php if ($erro): ?><div class="alert alert--err"><?= h($erro) ?></div><?php endif; ?>
 
       <form method="POST" enctype="multipart/form-data" class="grid">
+        <input type="hidden" name="csrf" value="<?= h($csrf_edit) ?>">
+
         <!-- Capa -->
         <div class="full">
           <label>Capa</label>
           <div class="thumb">
-            <img id="preview" src="<?= htmlspecialchars($capaAtual) ?>" alt="Prévia da capa">
+            <img id="preview" src="<?= h($capaAtual) ?>" alt="Prévia da capa">
             <input type="file" id="foto-capa" name="foto_capa" accept="image/*">
           </div>
         </div>
@@ -183,16 +239,16 @@ if (!is_array($paradas)) $paradas = [];
         <!-- Nome -->
         <div class="full">
           <label for="nome_rota">Nome da rota</label>
-          <input type="text" name="nome_rota" id="nome_rota" value="<?= htmlspecialchars($rota['nome']) ?>" placeholder="Nome (Obrigatório)" required>
+          <input type="text" name="nome_rota" id="nome_rota" value="<?= h($rota['nome']) ?>" placeholder="Nome (Obrigatório)" required>
         </div>
 
         <!-- Descrição -->
         <div class="full">
           <label for="descricao_rota">Descrição</label>
-          <textarea name="descricao_rota" id="descricao_rota" placeholder="Descrição da rota (Obrigatório)" required><?= htmlspecialchars($rota['descricao']) ?></textarea>
+          <textarea name="descricao_rota" id="descricao_rota" placeholder="Descrição da rota (Obrigatório)" required><?= h($rota['descricao']) ?></textarea>
         </div>
 
-        <!-- Categorias (dropdown igual ao criar) -->
+        <!-- Categorias -->
         <div class="full">
           <label>Categorias</label>
           <div class="dropdown">
@@ -212,7 +268,7 @@ if (!is_array($paradas)) $paradas = [];
                 foreach ($catalogo as $val => $label):
                   $checked = in_array($val, $categoriasMarcadas) ? 'checked' : '';
               ?>
-              <label><input type="checkbox" name="categorias[]" value="<?= $val ?>" <?= $checked ?>> <?= $label ?></label>
+              <label><input type="checkbox" name="categorias[]" value="<?= h($val) ?>" <?= $checked ?>> <?= h($label) ?></label>
               <?php endforeach; ?>
             </div>
           </div>
@@ -221,13 +277,13 @@ if (!is_array($paradas)) $paradas = [];
         <!-- Ponto de partida -->
         <div class="rota-item">
           <label for="pontoPartida"><i class="ph ph-arrow-circle-up"></i> Ponto de Partida</label>
-          <input type="text" id="pontoPartida" name="ponto_partida" value="<?= htmlspecialchars($rota['ponto_partida']) ?>" placeholder="Localização" required>
+          <input type="text" id="pontoPartida" name="ponto_partida" value="<?= h($rota['ponto_partida']) ?>" placeholder="Localização" required>
         </div>
 
         <!-- Destino -->
         <div class="rota-item">
           <label for="destino"><i class="ph ph-map-pin"></i> Destino</label>
-          <input type="text" id="destino" name="destino" value="<?= htmlspecialchars($rota['destino']) ?>" placeholder="Localização" required>
+          <input type="text" id="destino" name="destino" value="<?= h($rota['destino']) ?>" placeholder="Localização" required>
         </div>
 
         <!-- Paradas -->
@@ -237,7 +293,7 @@ if (!is_array($paradas)) $paradas = [];
             <?php if (!empty($paradas)): ?>
               <?php foreach ($paradas as $i => $p): ?>
                 <div class="rota-item">
-                  <input type="text" id="parada<?= $i+1 ?>" name="paradas[]" value="<?= htmlspecialchars($p) ?>" placeholder="Localização">
+                  <input type="text" id="parada<?= $i+1 ?>" name="paradas[]" value="<?= h($p) ?>" placeholder="Localização">
                 </div>
               <?php endforeach; ?>
             <?php else: ?>
