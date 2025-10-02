@@ -1,0 +1,153 @@
+/* ===== Layout principal ===== */
+html, body {
+  background: linear-gradient(180deg, #f0f8ff 0%, #e9f4ff 60%, #e0f0ff 100%);
+  color: #223849;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Arial;
+}
+
+/* ===== HEADER com imagem ===== */
+.rota-header {
+  width: min(1100px, 92%);
+  margin: 30px auto;
+  display: flex;
+  gap: 24px;
+  background: #ffffff;
+  border: 1px solid #d7e9ff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 6px 16px rgba(0, 74, 116, .08);
+}
+.rota-header__img img {
+  width: 260px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+.rota-header__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.rota-header__info h1 {
+  font-size: 26px;
+  font-weight: 800;
+  color: #004774;
+  margin-bottom: 6px;
+}
+.meta {
+  font-size: 14px;
+  color: #4e6b82;
+  margin-bottom: 10px;
+}
+.chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.chip {
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 999px;
+  color: #0077b6;
+  background: #eff7ff;
+  border: 1px solid #cfe8ff;
+  font-weight: 700;
+}
+.rota-header__actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* ===== Botões ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: .2s ease;
+}
+.btn--primary {
+  background: linear-gradient(180deg, #009cff 0%, #007acc 100%);
+  color: #fff;
+}
+.btn--primary:hover { background: linear-gradient(180deg, #007acc 0%, #006bb3 100%); }
+.btn--ghost {
+  background: #f3f9ff;
+  border: 1px solid #d7e9ff;
+  color: #007acc;
+}
+.btn--ghost:hover { background: #e9f4ff; }
+
+/* ===== Conteúdo ===== */
+.rota-content {
+  width: min(1100px, 92%);
+  margin: 20px auto 60px;
+}
+.card {
+  background: #ffffff;
+  border: 1px solid #d7e9ff;
+  border-radius: 16px;
+  padding: 18px 20px;
+  box-shadow: 0 6px 16px rgba(0, 74, 116, .08);
+  margin-bottom: 20px;
+}
+.section-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #004774;
+  margin-bottom: 12px;
+}
+.descricao { line-height: 1.7; }
+
+/* ===== Info grid ===== */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+.info-card h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0077b6;
+  margin-bottom: 6px;
+}
+
+/* ===== Timeline ===== */
+.timeline {
+  list-style: none;
+  padding-left: 0;
+  counter-reset: parada;
+}
+.timeline__item {
+  position: relative;
+  padding-left: 42px;
+  margin-bottom: 12px;
+}
+.timeline__item::before {
+  counter-increment: parada;
+  content: counter(parada);
+  position: absolute;
+  left: 0; top: 0;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #cfe8ff;
+  color: #0077b6;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+}
+.timeline__title { font-weight: 600; }
+
+/* ===== Responsivo ===== */
+@media (max-width: 768px) {
+  .rota-header { flex-direction: column; align-items: center; text-align: center; }
+  .rota-header__img img { width: 100%; height: auto; }
+  .rota-header__actions { justify-content: center; }
+  .info-grid { grid-template-columns: 1fr; }
+}

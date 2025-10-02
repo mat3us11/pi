@@ -42,7 +42,7 @@ if (!empty($passeio['categorias'])) {
 
 <link rel="stylesheet" href="../assets/css/header.css">
 <link rel="stylesheet" href="../assets/css/footer.css">
-<link rel="stylesheet" href="../assets/css/ver-rota.css">
+<link rel="stylesheet" href="../assets/css/ver-passeios.css">
 <script defer src="../assets/js/modal.js"></script>
 </head>
 <body>
