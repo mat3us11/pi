@@ -7,42 +7,86 @@ require_once '../includes/config.php';
 
 /* ---------- Helpers ---------- */
 function h($s){ return htmlspecialchars($s ?? '', ENT_QUOTES, 'UTF-8'); }
-
-/** Normaliza caminho salvo (../uploads/..., uploads/... ou absoluto) para apagar arquivo com segurança */
 function resolve_upload_path(?string $dbPath): ?string {
   if (!$dbPath) return null;
-  if (preg_match('#^https?://#i', $dbPath)) return null; // URL não apaga
-
+  if (preg_match('#^https?://#i', $dbPath)) return null;
   $projectRoot = realpath(__DIR__ . '/..'); 
   if ($projectRoot === false) return null;
-
   $p = str_replace('\\', '/', trim($dbPath));
   $p = preg_replace('#^\./+#', '', $p);
   while (strpos($p, '../') === 0) { $p = substr($p, 3); }
-
-  // absoluto?
   if (preg_match('#^/|^[A-Za-z]:/#', $p)) return $p;
-
   if (strpos($p, 'uploads/') === 0) return $projectRoot . '/' . $p;
-
   return $projectRoot . '/' . ltrim($p, '/');
 }
 
-/* ---------- Autorização básica ---------- */
+/* Normaliza categorias livres -> set canônico */
+function normalize_categorias($cats): array {
+  $canon = ['cultural','aventura','gastronomica','ecologica','citytour'];
+  $mapSyn = [
+    'cultural'      => ['cultural','cultura'],
+    'aventura'      => ['aventura','adrenalina','radical'],
+    'gastronomica'  => ['gastronomica','gastronômica','comida','culinaria','culinária','food'],
+    'ecologica'     => ['ecologica','ecológica','natureza','eco','parque','verde'],
+    'citytour'      => ['citytour','city tour','turismo','city','centro','pontos turisticos','pontos turísticos','turístico','turisticos']
+  ];
+  $result = [];
+
+  // transforma cats (string/array) em lista de tokens
+  $tokens = [];
+  if (is_array($cats)) {
+    $tokens = $cats;
+  } else {
+    $parts = preg_split('/[,;|]/', (string)$cats);
+    $tokens = array_map('trim', $parts);
+  }
+
+  // util: baixar caixa + remover acentos simples
+  $xform = function($s){
+    $s = mb_strtolower($s ?? '', 'UTF-8');
+    $s = strtr($s, ['á'=>'a','à'=>'a','ã'=>'a','â'=>'a','ä'=>'a',
+                    'é'=>'e','ê'=>'e','è'=>'e','ë'=>'e',
+                    'í'=>'i','ì'=>'i','ï'=>'i','î'=>'i',
+                    'ó'=>'o','ò'=>'o','õ'=>'o','ô'=>'o','ö'=>'o',
+                    'ú'=>'u','ù'=>'u','ü'=>'u','û'=>'u',
+                    'ç'=>'c']);
+    $s = preg_replace('/\s+/', ' ', $s);
+    return trim($s);
+  };
+
+  foreach ($tokens as $raw) {
+    if ($raw === '' || $raw === null) continue;
+    $t = $xform($raw);
+    foreach ($mapSyn as $key => $syns) {
+      foreach ($syns as $syn) {
+        // casa por igualdade ou por "starts with" pra ser tolerante
+        if ($t === $xform($syn) || str_starts_with($t, $xform($syn))) {
+          $result[$key] = true;
+          break 2;
+        }
+      }
+      // tenta batida direta com a chave canônica
+      if ($t === $key) { $result[$key] = true; break; }
+    }
+  }
+
+  // mantém ordem canônica
+  return array_values(array_filter($canon, fn($c) => isset($result[$c])));
+}
+
+/* ---------- Auth ---------- */
 if (!isset($_SESSION['usuario_id'])) {
   header("Location: ../paginas/login.php");
   exit;
 }
-
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
   http_response_code(400);
   die("Rota inválida.");
 }
-
 $id_rota = (int) $_GET['id'];
 $usuarioLogadoId = (int) $_SESSION['usuario_id'];
 
-/* ---------- Carrega rota e valida ownership ---------- */
+/* ---------- Carrega rota ---------- */
 $sql = "SELECT r.id, r.usuario_id, r.nome, r.descricao, r.categorias, r.capa,
                r.ponto_partida, r.destino, r.paradas, r.criado_em,
                u.nome AS criador
@@ -53,52 +97,86 @@ $stmt = $conn->prepare($sql);
 $stmt->execute([$id_rota]);
 $rota = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if (!$rota) {
-  http_response_code(404);
-  die("Rota não encontrada.");
-}
-if ($usuarioLogadoId !== (int)$rota['usuario_id']) {
-  http_response_code(403);
-  die("Você não tem permissão para editar esta rota.");
-}
+if (!$rota) { http_response_code(404); die("Rota não encontrada."); }
+if ($usuarioLogadoId !== (int)$rota['usuario_id']) { http_response_code(403); die("Você não tem permissão para editar esta rota."); }
 
 /* ---------- CSRF ---------- */
-if (empty($_SESSION['csrf_edit'])) {
-  $_SESSION['csrf_edit'] = bin2hex(random_bytes(16));
-}
-$csrf_edit = $_SESSION['csrf_edit'];
+if (empty($_SESSION['csrf_edit']))   $_SESSION['csrf_edit']   = bin2hex(random_bytes(16));
+if (empty($_SESSION['csrf_refine'])) $_SESSION['csrf_refine'] = bin2hex(random_bytes(16));
+$csrf_edit   = $_SESSION['csrf_edit'];
+$csrf_refine = $_SESSION['csrf_refine'];
 
-$erro = '';
+/* Evita cache de tokens antigos */
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+header('Pragma: no-cache');
+
+$erro = ''; 
 $sucesso = '';
+
+/* ====== Se voltamos do refino com IA, aplica sugestões no formulário ====== */
+$aplicouIA = false;
+if (!empty($_SESSION['refine_apply'][$id_rota]) && isset($_GET['from']) && $_GET['from'] === 'ia') {
+  $ia = $_SESSION['refine_apply'][$id_rota];
+
+  $rota['nome']          = $ia['nome']          ?? $rota['nome'];
+  $rota['descricao']     = $ia['descricao']     ?? $rota['descricao'];
+  // normaliza categorias aqui
+  if (isset($ia['categorias'])) {
+    $norm = normalize_categorias($ia['categorias']);
+    $rota['categorias'] = implode(',', $norm);
+  }
+  $rota['ponto_partida'] = $ia['ponto_partida'] ?? $rota['ponto_partida'];
+  $rota['destino']       = $ia['destino']       ?? $rota['destino'];
+
+  if (isset($ia['paradas']) && is_array($ia['paradas'])) {
+    $rota['paradas'] = json_encode($ia['paradas'], JSON_UNESCAPED_UNICODE);
+  }
+
+  $aplicouIA = true;
+}
 
 /* ---------- Salvar (POST) ---------- */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (!hash_equals($_SESSION['csrf_edit'] ?? '', $_POST['csrf'] ?? '')) {
-    http_response_code(400);
-    die('Token inválido.');
+    http_response_code(400); die('Token inválido.');
   }
 
   $nome           = trim($_POST['nome_rota'] ?? '');
   $descricao      = trim($_POST['descricao_rota'] ?? '');
   $ponto_partida  = trim($_POST['ponto_partida'] ?? '');
   $destino        = trim($_POST['destino'] ?? '');
-  $categorias     = isset($_POST['categorias']) ? implode(',', (array)$_POST['categorias']) : '';
 
-  // Paradas: aceitamos strings; se vier objeto (compat), mantemos só o "nome"
+  // vem de checkboxes
+  $categoriasPost = isset($_POST['categorias']) ? (array)$_POST['categorias'] : [];
+  // por segurança, normaliza novamente (evita valores fora do catálogo)
+  $categoriasNorm = normalize_categorias($categoriasPost);
+  $categorias     = implode(',', $categoriasNorm);
+
+  // paradas (mantém compat)
   $paradasArr = isset($_POST['paradas']) ? (array)$_POST['paradas'] : [];
   $paradasArr = array_map(function($p){
-    if (is_array($p)) return trim($p['nome'] ?? '');
-    return trim((string)$p);
+    if (is_array($p)) {
+      $nome = trim((string)($p['nome'] ?? ''));
+      if ($nome === '') return null;
+      return [
+        'nome' => $nome,
+        'lat'  => ($p['lat'] === '' ? null : (isset($p['lat']) ? (float)$p['lat'] : null)),
+        'lon'  => ($p['lon'] === '' ? null : (isset($p['lon']) ? (float)$p['lon'] : null)),
+        'image_url' => $p['image_url'] ?? null
+      ];
+    }
+    $nome = trim((string)$p);
+    if ($nome === '') return null;
+    return ['nome'=>$nome, 'lat'=>null, 'lon'=>null, 'image_url'=>null];
   }, $paradasArr);
-  $paradasArr = array_values(array_filter($paradasArr));
+  $paradasArr = array_values(array_filter($paradasArr, fn($x) => !is_null($x)));
   $paradasJson = !empty($paradasArr) ? json_encode($paradasArr, JSON_UNESCAPED_UNICODE) : null;
 
   if ($nome === '' || $descricao === '' || $ponto_partida === '' || $destino === '') {
     $erro = "Preencha nome, descrição, ponto de partida e destino.";
   }
 
-  // Upload da capa (opcional) + apaga capa antiga com segurança
-  $capaPath = $rota['capa']; // mantém atual por padrão
+  $capaPath = $rota['capa'];
   $oldCapa  = $rota['capa'];
 
   if (!$erro && isset($_FILES['foto_capa']) && $_FILES['foto_capa']['error'] !== UPLOAD_ERR_NO_FILE) {
@@ -111,13 +189,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $mime  = finfo_file($finfo, $tmp);
       finfo_close($finfo);
 
-      $permitidos = ['image/jpeg'=>'jpg','image/png'=>'png','image/webp'=>'webp'];
+      $permitidos = ['image/jpeg'=>'jpg','image/png'=>'png','image/webp'=>'webp','image/gif'=>'gif','image/jpg'=>'jpg'];
       if (!isset($permitidos[$mime])) {
-        $erro = "Formato de imagem inválido. Use JPG, PNG ou WEBP.";
-      } elseif ($size > 4*1024*1024) {
-        $erro = "A imagem deve ter no máximo 4MB.";
+        $erro = "Formato de imagem inválido. Use JPG, PNG, WEBP ou GIF.";
+      } elseif ($size > 6*1024*1024) {
+        $erro = "A imagem deve ter no máximo 6MB.";
       } else {
-        // pasta de upload
         $dir = __DIR__ . '/../uploads/geral';
         if (!is_dir($dir)) { @mkdir($dir, 0775, true); }
         if (!is_dir($dir) || !is_writable($dir)) {
@@ -130,11 +207,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           if (!move_uploaded_file($_FILES['foto_capa']['tmp_name'], $destinoUpload)) {
             $erro = "Não foi possível salvar a imagem enviada.";
           } else {
-            // apaga capa antiga (se local)
             $oldAbs = resolve_upload_path($oldCapa);
             if ($oldAbs && is_file($oldAbs) && file_exists($oldAbs)) { @unlink($oldAbs); }
-
-            // salva caminho relativo para servir no site
             $capaPath = '../uploads/geral/' . $nomeArquivo;
           }
         }
@@ -167,7 +241,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($ok) {
       $sucesso = "Rota atualizada com sucesso!";
-      // reflete no array $rota para reexibir no form
       $rota['nome'] = $nome;
       $rota['descricao'] = $descricao;
       $rota['categorias'] = $categorias;
@@ -175,6 +248,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $rota['destino'] = $destino;
       $rota['paradas'] = $paradasJson;
       $rota['capa'] = $capaPath;
+
+      if (!empty($_SESSION['refine_apply'][$id_rota])) {
+        unset($_SESSION['refine_apply'][$id_rota]);
+      }
     } else {
       $erro = "Não foi possível salvar as alterações. Tente novamente.";
     }
@@ -183,16 +260,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 /* ---------- Valores p/ form ---------- */
 $capaAtual = !empty($rota['capa']) ? $rota['capa'] : '../assets/img/placeholder.jpg';
-$categoriasMarcadas = array_filter(array_map('trim', explode(',', (string)$rota['categorias'])));
 
-// Paradas vêm como JSON de strings; se vieram objetos no passado, converte para texto
+/* normaliza SEMPRE antes de marcar checkboxes */
+$categoriasMarcadas = normalize_categorias((string)$rota['categorias']);
+
+// Paradas -> mostrar como campos simples (compat)
 $paradas = $rota['paradas'] ? json_decode($rota['paradas'], true) : [];
 if (is_array($paradas)) {
-  $paradas = array_map(function($p){
+  $paradas = array_values(array_map(function($p){
     if (is_array($p)) return (string)($p['nome'] ?? '');
     return (string)$p;
-  }, $paradas);
-  $paradas = array_values(array_filter($paradas));
+  }, $paradas));
 } else {
   $paradas = [];
 }
@@ -223,6 +301,9 @@ if (is_array($paradas)) {
 
       <?php if ($sucesso): ?><div class="alert alert--ok"><?= h($sucesso) ?></div><?php endif; ?>
       <?php if ($erro): ?><div class="alert alert--err"><?= h($erro) ?></div><?php endif; ?>
+      <?php if ($aplicouIA && !$erro): ?>
+        <div class="alert alert--ok">Sugestões da IA foram aplicadas ao formulário. Revise e clique em <strong>Salvar alterações</strong>.</div>
+      <?php endif; ?>
 
       <form method="POST" enctype="multipart/form-data" class="grid">
         <input type="hidden" name="csrf" value="<?= h($csrf_edit) ?>">
@@ -310,6 +391,44 @@ if (is_array($paradas)) {
         <div class="full btns">
           <a href="ver-rota.php?id=<?= (int)$rota['id'] ?>" class="btn btn--ghost">Cancelar</a>
           <button type="submit" class="btn btn--primary">Salvar alterações</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Refino com IA (aplica no mesmo formulário desta rota) -->
+    <div class="card" style="margin-top:16px;">
+      <div class="titulo">Refinar com IA (Gemini)</div>
+      <p style="margin:6px 0 12px;">
+        O refino <strong>aplica as sugestões diretamente neste formulário</strong>. Depois é só clicar em <strong>Salvar alterações</strong>.
+      </p>
+
+      <form method="POST" action="../processos/refinar-roteiro-ia.php" class="grid" autocomplete="off">
+        <input type="hidden" name="csrf" value="<?= h($csrf_refine) ?>">
+        <input type="hidden" name="refinar_de" value="<?= (int)$rota['id'] ?>">
+        <input type="hidden" name="apply_to_form" value="1">
+
+        <div class="full">
+          <label for="pedido_ia">O que melhorar / restrições</label>
+          <textarea id="pedido_ia" name="pedido" rows="4" placeholder="Ex.: reduzir custo, priorizar locais ao ar livre, incluir café especial, horário entre 10h–18h"></textarea>
+        </div>
+
+        <div class="rota-item">
+          <label for="ponto_partida_ia"><i class="ph ph-arrow-circle-up"></i> Ponto de Partida (base)</label>
+          <input type="text" id="ponto_partida_ia" name="ponto_partida" value="<?= h($rota['ponto_partida']) ?>">
+        </div>
+
+        <div class="rota-item">
+          <label for="destino_ia"><i class="ph ph-map-pin"></i> Destino (base)</label>
+          <input type="text" id="destino_ia" name="destino" value="<?= h($rota['destino']) ?>">
+        </div>
+
+        <div class="full">
+          <label for="categorias_ia">Categorias (opcional)</label>
+          <input type="text" id="categorias_ia" name="categorias" value="<?= h(implode(',', $categoriasMarcadas)) ?>" placeholder="cultural,gastronomica,citytour">
+        </div>
+
+        <div class="full btns">
+          <button type="submit" class="btn btn--primary">Refinar e preencher formulário</button>
         </div>
       </form>
     </div>

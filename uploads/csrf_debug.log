@@ -1,0 +1,13 @@
+[2025-10-03 16:14:45] refinar-roteiro-ia.php HIT | sid=7c9kmsfe8b0rvjjbsj3kgn6hrl | posted= | sess_ref=f4e89109c3c190924199fc0047bdda43 | sess_ia=dfea08518910fcf62d9fe2e0648ad22c | sess_edit=d824155c710cf079e0b6b3e3f34b937d | sess_pub=3c7b555f21b2119a02af0c2adce3a204 | ua=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36
+[2025-10-03 16:14:45] -> 400 (token invalido)
+[2025-10-03 16:18:01] refinar-roteiro-ia.php HIT | sid=7c9kmsfe8b0rvjjbsj3kgn6hrl | posted=f4e89109c3c190924199fc0047bdda43 | sess_ref=f4e89109c3c190924199fc0047bdda43 | sess_ia=dfea08518910fcf62d9fe2e0648ad22c | sess_edit=d824155c710cf079e0b6b3e3f34b937d | sess_pub=3c7b555f21b2119a02af0c2adce3a204 | ua=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36
+[2025-10-03 16:18:01] -> 302 (sem draft) redir criar
+[2025-10-03 16:20:20] refinar-roteiro-ia.php HIT | sid=7c9kmsfe8b0rvjjbsj3kgn6hrl | posted=f4e89109c3c190924199fc0047bdda43 | sess_ref=f4e89109c3c190924199fc0047bdda43 | sess_ia=dfea08518910fcf62d9fe2e0648ad22c | sess_edit=d824155c710cf079e0b6b3e3f34b937d | sess_pub=3c7b555f21b2119a02af0c2adce3a204 | ua=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36
+[2025-10-03 16:20:20] -> draft criado a partir da rota id=27
+[2025-10-03 16:20:44] -> OK refine, redir editor
+[2025-10-03 16:21:01] refinar-roteiro-ia.php HIT | sid=7c9kmsfe8b0rvjjbsj3kgn6hrl | posted=f4e89109c3c190924199fc0047bdda43 | sess_ref=f4e89109c3c190924199fc0047bdda43 | sess_ia=dfea08518910fcf62d9fe2e0648ad22c | sess_edit=d824155c710cf079e0b6b3e3f34b937d | sess_pub=3c7b555f21b2119a02af0c2adce3a204 | ua=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36
+[2025-10-03 16:21:26] -> OK refine, redir editor
+[2025-10-03 16:21:57] refinar-roteiro-ia.php HIT | sid=7c9kmsfe8b0rvjjbsj3kgn6hrl | posted=f4e89109c3c190924199fc0047bdda43 | sess_ref=f4e89109c3c190924199fc0047bdda43 | sess_ia=dfea08518910fcf62d9fe2e0648ad22c | sess_edit=d824155c710cf079e0b6b3e3f34b937d | sess_pub=3c7b555f21b2119a02af0c2adce3a204 | ua=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36
+[2025-10-03 16:21:57] -> draft criado a partir da rota id=27
+[2025-10-03 16:22:12] -> OK refine, redir editor
+[2025-10-03 16:26:45] refinar-roteiro-ia.php | posted_csrf=f4e89109c3c190924199fc0047bdda43
