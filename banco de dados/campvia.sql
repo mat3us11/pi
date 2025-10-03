@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 02/10/2025 às 01:43
+-- Tempo de geração: 02/10/2025 às 02:01
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -22,6 +22,44 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `campvia` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `campvia`;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `cidade`
+--
+
+CREATE TABLE `cidade` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(120) NOT NULL,
+  `estado` char(2) NOT NULL DEFAULT 'SP',
+  `slug` varchar(140) NOT NULL,
+  `descricao` text DEFAULT NULL,
+  `capa` varchar(255) DEFAULT NULL,
+  `criado_em` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `cidade`
+--
+
+INSERT INTO `cidade` (`id`, `nome`, `estado`, `slug`, `descricao`, `capa`, `criado_em`) VALUES
+(1, 'Iperó', 'SP', 'ipero', NULL, NULL, '2025-10-01 23:46:11'),
+(2, 'Capela do Alto', 'SP', 'capela-do-alto', NULL, NULL, '2025-10-01 23:46:11'),
+(3, 'Boituva', 'SP', 'boituva', NULL, NULL, '2025-10-01 23:46:11'),
+(4, 'Cerquilho', 'SP', 'cerquilho', NULL, NULL, '2025-10-01 23:46:11'),
+(5, 'Araçoiaba da Serra', 'SP', 'aracoiaba-da-serra', NULL, NULL, '2025-10-01 23:46:11'),
+(6, 'Tietê', 'SP', 'tiete', NULL, NULL, '2025-10-01 23:46:11'),
+(7, 'Itapetininga', 'SP', 'itapetininga', NULL, NULL, '2025-10-01 23:46:11'),
+(8, 'Laranjal Paulista', 'SP', 'laranjal-paulista', NULL, NULL, '2025-10-01 23:46:11'),
+(9, 'Porto Feliz', 'SP', 'porto-feliz', NULL, NULL, '2025-10-01 23:46:11'),
+(10, 'Conchas', 'SP', 'conchas', NULL, NULL, '2025-10-01 23:46:11'),
+(11, 'Salto de Pirapora', 'SP', 'salto-de-pirapora', NULL, NULL, '2025-10-01 23:46:11'),
+(12, 'Sorocaba', 'SP', 'sorocaba', NULL, NULL, '2025-10-01 23:46:11'),
+(13, 'Votorantim', 'SP', 'votorantim', NULL, NULL, '2025-10-01 23:46:11'),
+(14, 'Pilar do Sul', 'SP', 'pilar-do-sul', NULL, NULL, '2025-10-01 23:46:11'),
+(15, 'Capivari', 'SP', 'capivari', NULL, NULL, '2025-10-01 23:46:11'),
+(16, 'Porangaba', 'SP', 'porangaba', NULL, NULL, '2025-10-01 23:46:11');
 
 -- --------------------------------------------------------
 
@@ -76,6 +114,7 @@ CREATE TABLE `rota` (
   `categorias` varchar(255) DEFAULT NULL,
   `ponto_partida` varchar(255) NOT NULL,
   `destino` varchar(255) NOT NULL,
+  `cidade_id` int(11) DEFAULT NULL,
   `paradas` text DEFAULT NULL,
   `capa` varchar(255) DEFAULT NULL,
   `criado_em` timestamp NOT NULL DEFAULT current_timestamp()
@@ -85,8 +124,8 @@ CREATE TABLE `rota` (
 -- Despejando dados para a tabela `rota`
 --
 
-INSERT INTO `rota` (`id`, `usuario_id`, `nome`, `descricao`, `categorias`, `ponto_partida`, `destino`, `paradas`, `capa`, `criado_em`) VALUES
-(22, 9, 'Rota do mcqueen', 'Mcqueen lanches', 'aventura,gastronomica,citytour', 'Rua Ismênia Maria Dos Santos, Tatuí - São Paulo, 18280-160, Brasil', 'Sorocaba, São Paulo, Brasil', '[\"\\\"Sorocaba é do Senhor Jesus Cristo\\\"\",\"14-bis\",\"Adega Simao\",\"Bar\",\"Bar do Luizinho\",\"Be Brave Coffee and Tea II\",\"Bioliquido Escola de Natação\"]', '../uploads/geral/capa_9_1759361763.png', '2025-10-01 23:23:27');
+INSERT INTO `rota` (`id`, `usuario_id`, `nome`, `descricao`, `categorias`, `ponto_partida`, `destino`, `cidade_id`, `paradas`, `capa`, `criado_em`) VALUES
+(22, 9, 'Rota do mcqueen', 'Mcqueen lanches', 'aventura,gastronomica,citytour', 'Rua Ismênia Maria Dos Santos, Tatuí - São Paulo, 18280-160, Brasil', 'Sorocaba, São Paulo, Brasil', 12, '[\"\\\"Sorocaba é do Senhor Jesus Cristo\\\"\",\"14-bis\",\"Adega Simao\",\"Bar\",\"Bar do Luizinho\",\"Be Brave Coffee and Tea II\",\"Bioliquido Escola de Natação\"]', '../uploads/geral/capa_9_1759361763.png', '2025-10-01 23:23:27');
 
 -- --------------------------------------------------------
 
@@ -134,6 +173,14 @@ INSERT INTO `usuario` (`id`, `nome`, `email`, `senha`, `foto_perfil`, `endereco`
 --
 
 --
+-- Índices de tabela `cidade`
+--
+ALTER TABLE `cidade`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uniq_slug` (`slug`),
+  ADD KEY `idx_nome_estado` (`nome`,`estado`);
+
+--
 -- Índices de tabela `passeios`
 --
 ALTER TABLE `passeios`
@@ -152,7 +199,8 @@ ALTER TABLE `poi_images_cache`
 --
 ALTER TABLE `rota`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `usuario_id` (`usuario_id`);
+  ADD KEY `usuario_id` (`usuario_id`),
+  ADD KEY `idx_rota_cidade` (`cidade_id`);
 
 --
 -- Índices de tabela `usuario`
@@ -163,6 +211,12 @@ ALTER TABLE `usuario`
 --
 -- AUTO_INCREMENT para tabelas despejadas
 --
+
+--
+-- AUTO_INCREMENT de tabela `cidade`
+--
+ALTER TABLE `cidade`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de tabela `passeios`
@@ -202,6 +256,7 @@ ALTER TABLE `passeios`
 -- Restrições para tabelas `rota`
 --
 ALTER TABLE `rota`
+  ADD CONSTRAINT `fk_rota_cidade` FOREIGN KEY (`cidade_id`) REFERENCES `cidade` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `rota_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE;
 COMMIT;
 
