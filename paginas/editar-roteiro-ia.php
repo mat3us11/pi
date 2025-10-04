@@ -109,7 +109,7 @@ header('Pragma: no-cache');
             <?php if ($img): ?><img class="stop-thumb" src="<?= h($img) ?>" alt=""><?php endif; ?>
             <label>Nome</label>
             <input type="text" name="paradas[<?= $i ?>][nome]" value="<?= h($nome) ?>">
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
+            <div style="display:none;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
               <div><label>Lat</label><input type="text" name="paradas[<?= $i ?>][lat]" value="<?= h($lat) ?>"></div>
               <div><label>Lon</label><input type="text" name="paradas[<?= $i ?>][lon]" value="<?= h($lon) ?>"></div>
             </div>
