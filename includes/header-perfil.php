@@ -208,9 +208,40 @@ $preferencia_nome_apelido = $usuario['preferencia_nome_apelido'] ?? 0;
 
           <h5>Responda a 5 perguntas simples sobre as suas preferências e nos ajude a personalizar a sua proxima viagem</h5>
 
-          <button>Começar</button>
+          <button id="abrirQuest">Começar</button>
+
         </div>
     </div>
+
+    <!-- MODAL QUEST -->
+<div id="modal-quest" class="modal">
+  <div class="modal-content">
+    <span class="fechar" id="fecharQuest">&times;</span>
+    <h3>Questionário de Viagem</h3>
+
+    <form id="formQuest" method="post" action="salvar_quest.php">
+      <label>Pergunta 1:</label>
+      <input type="text" name="destino" required>
+
+      <label>Pergunta 2:</label>
+      <input type="text" name="destino" required>
+
+      <label>Pergunta 3: Qual seu tipo de hospedagem ideal?</label>
+      <input type="text" name="hospedagem">
+
+      <label>Pergunta 4: Prefere natureza ou cidade grande?</label>
+      <select name="estilo" required>
+        <option value="natureza">Natureza</option>
+        <option value="cidade">Cidade grande</option>
+      </select>
+
+      <label>Pergunta 5: Qual sua atividade favorita em viagens?</label>
+      <input type="text" name="atividade">
+
+      <button type="submit" class="confirmar">Enviar Respostas</button>
+    </form>
+  </div>
+</div>
 <script src="https://unpkg.com/@phosphor-icons/web"></script>
 <script>
 const btnEditar = document.getElementById('btn-editar-perfil');
@@ -229,6 +260,31 @@ fecharModal.addEventListener('click', () => {
 window.addEventListener('click', e => {
   if (e.target === modalEditar) {
     modalEditar.style.display = 'none';
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const abrirQuest = document.getElementById("abrirQuest");
+  const modalQuest = document.getElementById("modal-quest");
+  const fecharQuest = document.getElementById("fecharQuest");
+
+  if (abrirQuest && modalQuest && fecharQuest) {
+    // Abrir modal
+    abrirQuest.addEventListener("click", () => {
+      modalQuest.style.display = "flex";
+    });
+
+    // Fechar ao clicar no X
+    fecharQuest.addEventListener("click", () => {
+      modalQuest.style.display = "none";
+    });
+
+    // Fechar clicando fora
+    window.addEventListener("click", (e) => {
+      if (e.target === modalQuest) {
+        modalQuest.style.display = "none";
+      }
+    });
   }
 });
 </script>
