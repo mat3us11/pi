@@ -1,120 +1,128 @@
 <?php
 session_start();
-require_once '../includes/config.php'; // conexão PDO
+require_once '../includes/config.php';
 
-// Busca os passeios
-$sql = "SELECT r.id, r.nome, r.descricao, r.categorias, r.capa, r.localidade, u.nome AS criador
-        FROM passeios r
-        JOIN usuario u ON r.usuario_id = u.id
-        ORDER BY r.criado_em DESC";
-$stmt = $conn->prepare($sql);
+$stmt = $conn->prepare("
+  SELECT id, nome, estado, slug, descricao, capa
+  FROM cidade
+  ORDER BY RAND()
+  LIMIT 32
+");
 $stmt->execute();
-$passeios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$cidades = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+function ph($src){
+  return (!empty($src)) ? htmlspecialchars($src) : '../assets/img/placeholder_rosseio.png';
+}
+
+$ofertas   = array_slice($cidades, 0, 2);
+$destaques = array_slice($cidades, 2, 3);
+$interior  = array_slice($cidades, 5, 12);
+$slider    = array_slice($cidades, 17);
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/header.css">
-    <link rel="stylesheet" href="../assets/css/footer.css">
-    <link rel="stylesheet" href="../assets/css/index.css">
-    <script defer src="../assets/js/modal.js"></script>
-    <title>Home</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Home</title>
+  <link rel="stylesheet" href="../assets/css/header.css" />
+  <link rel="stylesheet" href="../assets/css/footer.css" />
+  <link rel="stylesheet" href="../assets/css/index.css" />
+  <script defer src="../assets/js/modal.js"></script>
 </head>
-
 <body>
-    <?php include '../includes/header.php'; ?>
+  <?php include '../includes/header.php'; ?>
 
-    <div class="pesquisa-home">
-        <div class="coluna1">
-            <input class="input1" type="search" placeholder="Para onde você vai?">
-        </div>
-
-        <div class="coluna2">
-            <input class="input2" type="text" id="data" placeholder="Quando você vai?" onfocus="this.type='date'">
-            <input class="input3" type="search" placeholder="Quem vai com você?">
-        </div>
-
-        <div class="coluna3">
-            <button>Pesquisar</button>
-        </div>
+  <section class="hero">
+    <div class="container-index hero__inner">
+      <h1 class="hero__title">Encontre seu próximo destino</h1>
     </div>
+  </section>
 
-    <div class="destinos">
-        <h3>Destinos mais procurados</h3>
-
-        <!-- Primeira imagem -->
-        <div class="destinoUp">
-        <?php
-if (count($passeios) > 0) {
-    $passeio = $passeios[0]; // pega o primeiro passeio
-    
-    // Verifica se existe uma imagem válida
-    $imagemCapa = (!empty($passeio['capa'])) ? htmlspecialchars($passeio['capa']) : '../assets/img/placeholder_rosseio.png';
-    ?>
-    
-    <a class="passeio" href="ver-passeios.php?id=<?= (int)$passeio['id'] ?>">
-        <img src="<?= $imagemCapa ?>" alt="Imagem do passeio" />
-    </a>
-    
-    <?php
-} else {
-    echo "<p>Nenhum passeio encontrado.</p>";
-}
-?>
-        </div>
-
-        <!-- Segunda e terceira imagem -->
-        <div class="destinoDown">
-            <?php for ($i = 1; $i <= 2; $i++): ?>
-                <div class="<?= $i === 1 ? 'destinoL' : 'destinoR' ?>">
-                    <?php if (!empty($passeios[$i])): ?>
-                        <?php 
-                            $imagemCapa = !empty($passeios[$i]['capa']) ? htmlspecialchars($passeios[$i]['capa']) : '../assets/img/placeholder_rosseio.png';
-                        ?>
-                        <a href="ver-passeios.php?id=<?= (int)$passeios[$i]['id'] ?>">
-                            <img src="<?= $imagemCapa ?>" alt="<?= htmlspecialchars($passeios[$i]['nome']) ?>">
-                        </a>
-                    <?php else: ?>
-                        <p>Nenhum passeio encontrado.</p>
-                    <?php endif; ?>
-                </div>
-            <?php endfor; ?>
-        </div>
+  <div class="pesquisa-home">
+    <div class="coluna1">
+      <input class="input1" type="search" placeholder="Para onde você vai?">
     </div>
-
-    <div class="Mais">
-        <h3>Conheça o interior</h3>
-        <div class="MaisUp">
-            <div class="up1">
-                <div class="item"></div>
-                <div class="item"></div>
-                <div class="item"></div>
-            </div>
-
-            <div class="up2">
-                <div class="item"></div>
-                <div class="item"></div>
-                <div class="item"></div>
-            </div>
-        </div>
-
-        <div class="MaisDown">
-            <div class="Mais1"></div>
-            <div class="Mais2"></div>
-        </div>
+    <div class="coluna2">
+      <input class="input2" type="text" id="data" placeholder="Quando você vai?" onfocus="this.type='date'">
+      <input class="input3" type="search" placeholder="Quem vai com você?">
     </div>
+    <div class="coluna3">
+      <button>Pesquisar</button>
+    </div>
+  </div>
 
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <script>
-        document.getElementById('data').onblur = function() {
-            if (this.value === '') {
-                this.type = 'text';
-            }
-        }
-    </script>
+  <section class="home-sec">
+    <h3 class="home-sec__title">Cidades em destaque</h3>
+    <?php if (empty($ofertas)): ?>
+      <p class="home-sec__empty container-index">Sem cidades para exibir.</p>
+    <?php else: ?>
+      <div class="ofertas-grid container-index">
+        <?php foreach ($ofertas as $c): ?>
+          <a class="city-card city-card--xl" href="cidade.php?slug=<?= urlencode($c['slug']) ?>">
+            <img loading="lazy" src="<?= ph($c['capa']) ?>" alt="Capa de <?= htmlspecialchars($c['nome']) ?>">
+            <span class="city-chip"><?= htmlspecialchars($c['nome']) ?></span>
+          </a>
+        <?php endforeach; ?>
+      </div>
+    <?php endif; ?>
+  </section>
 
-    <?php include '../includes/footer.php'; ?>
+  <section class="home-sec">
+    <h3 class="home-sec__title">Destinos mais procurados</h3>
+    <?php if (empty($destaques)): ?>
+      <p class="home-sec__empty container-index">Sem cidades para exibir.</p>
+    <?php else: ?>
+      <div class="destinos-grid container-index">
+        <?php foreach ($destaques as $c): ?>
+          <a class="city-card city-card--md" href="cidade.php?slug=<?= urlencode($c['slug']) ?>">
+            <img loading="lazy" src="<?= ph($c['capa']) ?>" alt="Capa de <?= htmlspecialchars($c['nome']) ?>">
+            <span class="city-chip"><?= htmlspecialchars($c['nome']) ?></span>
+          </a>
+        <?php endforeach; ?>
+      </div>
+    <?php endif; ?>
+  </section>
+
+  <section class="home-sec">
+    <h3 class="home-sec__title">Conheça o interior</h3>
+    <?php if (empty($interior)): ?>
+      <p class="home-sec__empty container-index">Sem cidades para exibir.</p>
+    <?php else: ?>
+      <div class="interior-grid container-index">
+        <?php foreach ($interior as $c): ?>
+          <a class="city-card city-card--sm" href="cidade.php?slug=<?= urlencode($c['slug']) ?>">
+            <img loading="lazy" src="<?= ph($c['capa']) ?>" alt="Capa de <?= htmlspecialchars($c['nome']) ?>">
+            <span class="city-chip city-chip--sm"><?= htmlspecialchars($c['nome']) ?></span>
+          </a>
+        <?php endforeach; ?>
+      </div>
+    <?php endif; ?>
+  </section>
+
+  <?php if (!empty($slider)): ?>
+  <section class="home-sec mobile-slider">
+    <h3 class="home-sec__title container-index">Outras cidades</h3>
+    <div class="container-index">
+      <div class="extra-strip">
+        <?php foreach ($slider as $c): ?>
+          <a class="strip-item" href="cidade.php?slug=<?= urlencode($c['slug']) ?>">
+            <img loading="lazy" src="<?= ph($c['capa']) ?>" alt="Capa de <?= htmlspecialchars($c['nome']) ?>">
+            <span><?= htmlspecialchars($c['nome']) ?></span>
+          </a>
+        <?php endforeach; ?>
+      </div>
+    </div>
+  </section>
+  <?php endif; ?>
+
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <script>
+    const data = document.getElementById('data');
+    if (data) data.onblur = function(){ if (!this.value) this.type='text'; }
+  </script>
+
+  <?php include '../includes/footer.php'; ?>
 </body>
 </html>

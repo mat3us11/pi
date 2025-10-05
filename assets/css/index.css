@@ -1,416 +1,259 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Afacad';
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Afacad', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+html, body {
+  height: 100%;
+  background:
+    radial-gradient(1200px 400px at 70% -10%, rgba(0,156,255,.10), transparent 60%),
+    radial-gradient(900px 500px at -10% 30%, rgba(137,207,240,.16), transparent 55%),
+    #fafafa;
+  color: #0b1220;
+}
+
+.container-index {
+  width: 65%;
+  margin: 0 auto;
+}
+@media (max-width: 768px) {
+  .container-index { width: 90%; }
 }
 
 .pesquisa-home {
-    display: flex;
-    width: 65%;
-    margin: 20px auto;
-    font-family: Arial, sans-serif;
-    background-color: #89CFF0;
-    border-radius: 5px;
-    height: 50px;
-    padding: 2px;
-    gap: 3px;
+  display: flex;
+  width: 65%;
+  margin: 20px auto;
+  background-color: #89CFF0;
+  border-radius: 5px;
+  height: 50px;
+  padding: 2px;
+  gap: 3px;
 }
-
-.pesquisa-home .coluna1 {
-    display: flex;
-    width: 30%;
-}
-
+.pesquisa-home .coluna1 { display: flex; width: 30%; }
 .coluna1 .input1 {
-    width: 100%;
-    border: none;
-    border-radius: 5px;
-    padding: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
 }
-
-.input1:focus {
-    outline: none;
-}
-
+.input1:focus { outline: none; }
 .input1::placeholder {
-    font-size: 20px;
-    font-family: 'Afacad';
-    color: black;
+  font-size: 20px;
+  color: black;
 }
-
-.pesquisa-home .coluna2 {
-    display: flex;
-    width: 60%;
-    gap: 2px;
-}
-
-.coluna2 .input2 {
-    width: 50%;
-    border: none;
-    border-radius: 5px;
-    padding: 10px;
-}
-
-.input2:focus {
-    outline: none;
-}
-
-.input2::placeholder {
-    font-size: 20px;
-    font-family: 'Afacad';
-    color: black;
-}
-
+.pesquisa-home .coluna2 { display: flex; width: 60%; gap: 2px; }
+.coluna2 .input2,
 .coluna2 .input3 {
-    width: 50%;
-    border: none;
-    border-radius: 5px;
-    padding: 10px;
+  width: 50%;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
 }
-
-.input3:focus {
-    outline: none;
-}
-
+.input2:focus, .input3:focus { outline: none; }
+.input2::placeholder,
 .input3::placeholder {
-    font-size: 20px;
-    font-family: 'Afacad';
-    color: black;
+  font-size: 20px;
+  color: black;
 }
-
-.pesquisa-home .coluna3 {
-    display: flex;
-    width: 10%;
-}
-
+.pesquisa-home .coluna3 { display: flex; width: 10%; }
 .coluna3 button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #009cff;
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-    border-radius: 0 6px 6px 0;
-    transition: background-color 0.3s;
-    border-radius: 5px;
-    border: none;
-    width: 100%;
-    font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #009CFF;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  width: 100%;
+  font-size: 16px;
+  transition: background-color 0.3s, transform 0.2s;
 }
-
-
-
-.ofertas {
-    display: flex;
-    flex-direction: column;
-    width: 65%;
-    gap: 5px;
-    margin: auto;
+.coluna3 button:hover {
+  background-color: #007acc;
+  transform: scale(1.02);
 }
-
-.ofertas h3 {
-    font-family: "Afacad";
-    font-size: 25px;
-    font-weight: 200;
-    justify-content: start;
-    width: 100%;
-
-}
-
-.visualizer {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    position: relative;
-    align-items: center;
-    width: 100%;
-}
-
-.left, .right {
-    position: relative;
-    display: flex;
-    width: 100%;
-}
-
-.ofertaL, .ofertaR {
-    width: 100%;
-    height: 180px;
-    background-color: #C9C9C9;
-    border-radius: 10px;
-}
-
-/* Seta esquerda */
-.visualizer .left i {
-    position: absolute;
-    background-color: #e0e0e0;
-    border-radius: 50%;
-    padding: 10px;
-    margin-left: -20px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-}
-
-/* Seta direita */
-.visualizer .right i {
-    position: absolute;
-    right: -20px;
-    background-color: #e0e0e0;
-    border-radius: 50%;
-    padding: 10px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-    top: 35%;
-}
-
-
-.destinos {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-    margin-top: 60px;
-    width: 65%;
-    gap: 20px;
-}
-
-.destinos h3 {
-    font-family: "Afacad";
-    font-size: 25px;
-    font-weight: 200;
-    justify-content: start;
-    width: 100%;
-}
-
-.destinos .destinoUp {
-    width: 100%;
-    height: 240px;
-    background-color: #C9C9C9;
-    border-radius: 10px;
-}
-
-.destinoUp img {
-    width: 100%;
-    height: 100%;
-    object-fit:cover;
-    border-radius: 10px;
-    image-rendering: crisp-edges;
-    cursor: pointer;
-}
-
-.destinoUp img:hover {
-    transform: scale(1.02);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    transition: 0.3s;
-}
-
-.destinoDown {
-    display: flex;
-    gap: 10px;
-    width: 100%;
-}
-
-.destinoR, .destinoL {
-    width: 100%;
-    height: 360px;
-    background-color: #C9C9C9;
-    border-radius: 10px;
-}
-
-.destinoL img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 10px;
-    image-rendering: crisp-edges;
-}
-
-.destinoR img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 10px;
-    image-rendering: crisp-edges;
-}
-
-.destinoL img:hover {
-    transform: scale(1.01);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    transition: 0.3s;
-}
-
-.destinoR img:hover {
-    transform: scale(1.01);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    transition: 0.3s;
-}
-
-.Mais {
-    width: 65%;
-    margin: auto;
-    margin-top: 60px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.Mais h3 {
-    font-family: "Afacad";
-    font-size: 25px;
-    font-weight: 200;
-    justify-content: start;
-    width: 100%;
-}
-
-.MaisUp {
-    display: flex;
-    width: 100%;
-    gap: 10px;
-}
-
-.up1 {
-    width: 100%;
-    display: flex;
-    gap: 10px;
-}
-
-.up1 .item {
-    border-radius: 10px;
-    height: 130px;
-    width: 100%;
-    background-color: #C9C9C9;
-
-}
-
-.up2 {
-    width: 100%;
-    display: flex;
-    gap: 10px;
-}
-
-.up2 .item {
-    border-radius: 10px;
-    height: 130px;
-    width: 100%;
-    background-color: #C9C9C9;
-
-}
-
-.MaisDown {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin-bottom: 60px;
-}
-
-.MaisDown .Mais1 {
-    width: 100%;
-    height: 220px;
-    background-color: #D9D9D9;
-    border-radius: 10px 10px 0px 0px;
-}
-
-.MaisDown .Mais2 {
-    width: 100%;
-    height: 200px;
-    background-color: #C9C9C9;
-    border-radius: 10px;
-    border-radius: 0px 0px 10px 10px;
-}
-
 @media (max-width: 768px) {
-    .pesquisa-home {
-        width: 90%;
-        display: flex;
-        flex-direction: column;
-        height: 100px;
-        gap: 5px;
-        background-color: #fff;
-    }
-
-    .pesquisa-home .coluna1 {
-        width: 100%;
-    }
-
-    .coluna1 .input1 {
-        border: 2px solid black;
-    }
-    
-    .pesquisa-home .coluna2 {
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        gap: 10px   ;
-    }
-
-    .coluna2 .input2 {
-        border: 2px solid black;
-    }
-
-    .coluna2 .input3 {
-        border: 2px solid black;
-    }
-
-    .pesquisa-home .coluna3 {
-        width: 100%;
-    }
-
-    .coluna3 button {
-        padding: 5px;
-    }
-
-    .ofertas {
-        width: 90%;
-    }
-
-    .ofertas h3 {
-        margin-top: 10px;
-    }
-
-    .ofertaL, .ofertaR {
-        height: 120px;
-    }
-
-    .destinos {
-        width: 90%;
-    }
-
-    .destinos .destinoUp {
-        height: 180px;
-    }
-
-    .destinoR, .destinoL {
-        height: 160px;
-    }
-
-    .Mais {
-        width: 90%;
-    }
-
-    .MaisUp {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 20px;
-    }
-
-    .MaisUp .up1 {
-        display: flex;
-
-    }
-
-    .up1 .item {
-        height: 110px;
-    }
-
-     .up2 .item {
-        height: 110px;
-    }
-
-    .MaisDown {
-        display: none;
-    }
+  .pesquisa-home {
+    width: 90%;
+    flex-direction: column;
+    height: auto;
+    gap: 5px;
+    background-color: #fff;
+  }
+  .pesquisa-home .coluna1 { width: 100%; }
+  .coluna1 .input1 { border: 2px solid black; }
+  .pesquisa-home .coluna2 { width: 100%; gap: 10px; }
+  .coluna2 .input2,
+  .coluna2 .input3 { border: 2px solid black; }
+  .pesquisa-home .coluna3 { width: 100%; }
+  .coluna3 button { padding: 5px; }
 }
 
+.home-sec {
+  width: 100%;
+  margin-top: 40px;
+}
+.home-sec__title {
+  width: 65%;
+  margin: 0 auto 16px auto;
+  font-family: "Afacad";
+  font-size: 26px;
+  font-weight: 700;
+  color: #0b1220;
+  text-align: left;
+  padding-left: 10px;
+  border-left: 4px solid #009CFF;
+}
+.home-sec__empty {
+  width: 65%;
+  margin: 0 auto;
+  color: #596273;
+  text-align: left;
+}
+@media (max-width: 768px) {
+  .home-sec__title,
+  .home-sec__empty {
+    width: 90%;
+  }
+}
 
+.city-card {
+  position: relative;
+  display: block;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #f2f4f7;
+  box-shadow: 0 4px 10px rgba(0,0,0,.06);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.city-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0,0,0,.10);
+}
+.city-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  aspect-ratio: 16/9;
+}
+.city-chip {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.95);
+  color: #111;
+  font-weight: 800;
+  font-size: .95rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,.15);
+}
+.city-chip--sm {
+  padding: 5px 8px;
+  font-size: .86rem;
+}
+
+.ofertas-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 12px;
+  width: 65%;
+  margin: 0 auto;
+}
+.city-card--xl { min-height: 200px; }
+
+.destinos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 12px;
+  width: 65%;
+  margin: 0 auto;
+}
+.destinos-grid .city-card--md { min-height: 220px; }
+
+.interior-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  width: 65%;
+  margin: 0 auto;
+}
+.city-card--sm { min-height: 130px; }
+
+.mobile-slider { display: none; }
+@media (max-width: 768px) {
+  .mobile-slider { display: block; }
+}
+.extra-strip {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 200px;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.strip-item {
+  position: relative;
+  scroll-snap-align: start;
+  display: block;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f2f4f7;
+  box-shadow: 0 4px 10px rgba(0,0,0,.06);
+}
+.strip-item img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  display: block;
+}
+.strip-item span {
+  position: absolute;
+  left: 10px;
+  bottom: 8px;
+  background: rgba(0,0,0,.55);
+  color: #fff;
+  font-weight: 800;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: .85rem;
+}
+
+@media (max-width: 1100px) {
+  .destinos-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (max-width: 768px) {
+  .ofertas-grid,
+  .destinos-grid {
+    grid-template-columns: 1fr;
+    width: 90%;
+  }
+  .interior-grid {
+    grid-template-columns: repeat(2, 1fr);
+    width: 90%;
+  }
+  .city-card--xl { min-height: 190px; }
+  .destinos-grid .city-card--md { min-height: 200px; }
+  .city-card--sm { min-height: 120px; }
+}
+@media (max-width: 480px) {
+  .interior-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .city-chip { top: 8px; left: 8px; padding: 6px 10px; font-size: .88rem; }
+}
+
+:focus-visible {
+  outline: 3px solid rgba(0,120,212,.35);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
