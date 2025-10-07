@@ -77,6 +77,7 @@ function h($s){ return htmlspecialchars($s ?? '', ENT_QUOTES, 'UTF-8'); }
   <link rel="stylesheet" href="../assets/css/footer.css">
   <link rel="stylesheet" href="../assets/css/roteiro.css">
   <script defer src="../assets/js/roteiro.js"></script>
+  <script defer src="../assets/js/modal.js"></script>
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 
