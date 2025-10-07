@@ -259,7 +259,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 /* ---------- Valores p/ form ---------- */
-$capaAtual = !empty($rota['capa']) ? $rota['capa'] : '../assets/img/placeholder.jpg';
+$capaAtual = !empty($rota['capa']) ? $rota['capa'] : '../assets/img/placeholder_rosseio.png';
 
 /* normaliza SEMPRE antes de marcar checkboxes */
 $categoriasMarcadas = normalize_categorias((string)$rota['categorias']);

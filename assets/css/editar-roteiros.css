@@ -111,11 +111,11 @@ input[type="text"]:focus, textarea:focus, input[type="file"]:focus, .dropdown-he
 
 /* input file bonito */
 input[type="file"] {
-  appearance: none; -webkit-appearance: none; padding: 9px 12px; height: 42px; line-height: 1.2; cursor: pointer; color: #4e6b82;
+  appearance: none; -webkit-appearance: none; padding: 9px 12px; height: 60px; line-height: 1.2; cursor: pointer; color: #4e6b82;
 }
 input[type="file"]::file-selector-button,
 input[type="file"]::-webkit-file-upload-button {
-  margin-right: 10px; padding: 9px 14px; border: 1px solid rgba(0, 124, 204, .35); border-radius: 8px;
+  margin-right: 10px; padding: 10px 14px; border: 1px solid rgba(0, 124, 204, .35); border-radius: 8px;
   background: linear-gradient(180deg, #009cff 0%, #007acc 100%); color: #ffffff; font-weight: 600; cursor: pointer;
   transition: transform .15s ease, background-color .15s ease, box-shadow .2s ease, border-color .15s ease;
   box-shadow: 0 8px 20px rgba(0,124,204,.20);

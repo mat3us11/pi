@@ -39,7 +39,7 @@ if (!empty($rota['paradas'])) {
 $usuarioLogadoId = $_SESSION['usuario_id'] ?? null;
 $ehDono = $usuarioLogadoId && ((int)$usuarioLogadoId === (int)$rota['usuario_id']);
 
-$capa = !empty($rota['capa']) ? $rota['capa'] : '../assets/img/placeholder.jpg';
+$capa = !empty($rota['capa']) ? $rota['capa'] : '../assets/img/placeholder_rosseio.png';
 
 $chipsCategorias = [];
 if (!empty($rota['categorias'])) {

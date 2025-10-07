@@ -60,7 +60,7 @@ header('Pragma: no-cache');
       <div class="full">
         <label for="capa">Capa (opcional)</label>
         <div class="thumb">
-          <img id="preview" src="<?= h($draft['capa'] ?: '../assets/img/placeholder.jpg') ?>" alt="Prévia da capa">
+          <img id="preview" src="<?= h($draft['capa'] ?: '../assets/img/placeholder_rosseio.png') ?>" alt="Prévia da capa">
           <input type="file" id="capa" name="capa" accept="image/*">
         </div>
       </div>
@@ -140,9 +140,9 @@ header('Pragma: no-cache');
 
       <form method="POST" action="../processos/refinar-roteiro-ia.php" class="grid" autocomplete="off">
         <!-- CSRF do refino -->
-        <input type="hidden" name="csrf" value="<?= h($csrf_refine) ?>">
+        <input type="hidden" name="csrf" value="<?= h($csrfRefine) ?>">
         <!-- ID da rota base -->
-        <input type="hidden" name="refinar_de" value="<?= (int)$rota['id'] ?>">
+        <input type="hidden" name="refinar_de" value="<?= (int)($draft['id'] ?? 0) ?>">
         <!-- SINALIZA QUE O RASCUNHO DEVE SUBSTITUIR A ROTA -->
         <input type="hidden" name="overwrite" value="1">
 
@@ -153,17 +153,18 @@ header('Pragma: no-cache');
 
         <div class="rota-item">
           <label for="ponto_partida_ia"><i class="ph ph-arrow-circle-up"></i> Ponto de Partida (base)</label>
-          <input type="text" id="ponto_partida_ia" name="ponto_partida" value="<?= h($rota['ponto_partida']) ?>">
+          <input type="text" id="ponto_partida_ia" name="ponto_partida" value="<?= h($draft['ponto_partida']) ?>">
         </div>
 
         <div class="rota-item">
           <label for="destino_ia"><i class="ph ph-map-pin"></i> Destino (base)</label>
-          <input type="text" id="destino_ia" name="destino" value="<?= h($rota['destino']) ?>">
+          <input type="text" id="destino_ia" name="destino" value="<?= h($draft['destino']) ?>">
         </div>
 
         <div class="full">
           <label for="categorias_ia">Categorias (opcional)</label>
-          <input type="text" id="categorias_ia" name="categorias" value="<?= h(implode(',', $categoriasMarcadas)) ?>" placeholder="cultural,gastronomica,citytour">
+         <input type="text" id="categorias_ia" name="categorias" value="<?= h($draft['categorias'] ?? '') ?>" placeholder="cultural,gastronomica,citytour">
+
         </div>
 
         <div class="full btns">
@@ -172,7 +173,8 @@ header('Pragma: no-cache');
       </form>
     </div>
 
-<?php include '../includes/footer.php'; ?>
+            </div>
+            <?php include '../includes/footer.php'; ?>  
 
 <script>
   (function(){

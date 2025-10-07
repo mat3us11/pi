@@ -129,7 +129,7 @@ function h($s){ return htmlspecialchars($s ?? '', ENT_QUOTES, 'UTF-8'); }
 
     <?php if (count($rotas) > 0): ?>
       <?php foreach ($rotas as $rota): 
-        $capa = !empty($rota['capa']) ? $rota['capa'] : '../assets/img/placeholder.jpg';
+        $capa = !empty($rota['capa']) ? $rota['capa'] : '../assets/img/placeholder_rosseio.png';
       ?>
         <article class="passeio">
           <img src="<?= h($capa) ?>" alt="<?= h($rota['nome']) ?>">

@@ -53,12 +53,12 @@ $csrf = $_SESSION['csrf_ia'];
 
       <div class="rota-item">
         <label for="ponto_partida"><i class="ph ph-arrow-circle-up"></i> Ponto de partida (opcional)</label>
-        <input id="ponto_partida" name="ponto_partida" type="text" placeholder="Rua X, Bairro Y">
+        <input id="ponto_partida" name="ponto_partida" type="text" placeholder="Rua X, Bairro Y" autocomplete="off">
       </div>
 
       <div class="rota-item">
         <label for="destino"><i class="ph ph-map-pin"></i> Destino (opcional)</label>
-        <input id="destino" name="destino" type="text" placeholder="Sorocaba, SP">
+        <input id="destino" name="destino" type="text" placeholder="Sorocaba, SP" autocomplete="off">
       </div>
 
       <div class="full btns">
