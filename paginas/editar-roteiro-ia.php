@@ -17,7 +17,6 @@ $csrfRefine  = $_SESSION['csrf_refine'];
 function h($s){ return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
 $paradas = is_array($draft['paradas'] ?? null) ? $draft['paradas'] : [];
 
-// Desabilita cache pra evitar token velho
 header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 header('Pragma: no-cache');
 ?>
@@ -51,7 +50,7 @@ header('Pragma: no-cache');
 <div class="wrap">
   <div class="card">
     <div class="titulo">Roteiro (rascunho)</div>
-    <p class="meta">Ajuste como quiser. Você pode <strong>refinar com IA</strong> ou <strong>publicar</strong> quando estiver pronto.</p>
+    <p class="meta">Ajuste como quiser. Você pode <strong>refinar com IA</strong> e depois <strong>publicar</strong>.</p>
 
     <!-- PUBLICAR -->
     <form id="form-publicar" method="POST" action="../processos/publicar-rota.php" enctype="multipart/form-data" class="grid">
@@ -131,50 +130,45 @@ header('Pragma: no-cache');
       </div>
     </form>
   </div>
-  <!-- Refino com IA (gera nova versão OU atualiza a atual) -->
-    <div class="card" style="margin-top:16px;">
-      <div class="titulo">Refinar com IA (Gemini)</div>
-      <p style="margin:6px 0 12px;">
-        Por padrão, o refino vai <strong>atualizar esta mesma rota</strong> após você publicar o rascunho.
-      </p>
 
-      <form method="POST" action="../processos/refinar-roteiro-ia.php" class="grid" autocomplete="off">
-        <!-- CSRF do refino -->
-        <input type="hidden" name="csrf" value="<?= h($csrfRefine) ?>">
-        <!-- ID da rota base -->
-        <input type="hidden" name="refinar_de" value="<?= (int)($draft['id'] ?? 0) ?>">
-        <!-- SINALIZA QUE O RASCUNHO DEVE SUBSTITUIR A ROTA -->
-        <input type="hidden" name="overwrite" value="1">
+  <!-- REFINAR COM IA (RAScunho — sem id) -->
+  <div class="card" style="margin-top:16px;">
+    <div class="titulo">Refinar com IA</div>
+    <p class="meta">Diga o que mudar (ex.: mais barato, ao ar livre, incluir café X, horário 10–18h...). O rascunho é atualizado e você revisa antes de publicar.</p>
 
-        <div class="full">
-          <label for="pedido_ia">O que melhorar / restrições</label>
-          <textarea id="pedido_ia" name="pedido" rows="4" placeholder="Ex.: reduzir custo, priorizar locais ao ar livre, incluir café especial, horário entre 10h–18h"></textarea>
-        </div>
+    <form id="form-refinar" method="POST" action="../processos/refinar-roteiro-ia.php" class="grid" autocomplete="off">
+      <input type="hidden" name="csrf" value="<?= h($csrfRefine) ?>">
+      <!-- NÃO envia refinar_de aqui! (sem id) -->
 
-        <div class="rota-item">
-          <label for="ponto_partida_ia"><i class="ph ph-arrow-circle-up"></i> Ponto de Partida (base)</label>
-          <input type="text" id="ponto_partida_ia" name="ponto_partida" value="<?= h($draft['ponto_partida']) ?>">
-        </div>
+      <div class="full">
+        <label for="pedido_refino">Pedido de refino</label>
+        <textarea id="pedido_refino" name="pedido" rows="4" placeholder="Ex.: priorizar parques gratuitos e mirantes"></textarea>
+      </div>
 
-        <div class="rota-item">
-          <label for="destino_ia"><i class="ph ph-map-pin"></i> Destino (base)</label>
-          <input type="text" id="destino_ia" name="destino" value="<?= h($draft['destino']) ?>">
-        </div>
+      <!-- overrides de base (opcionais) -->
+      <div class="rota-item">
+        <label for="ponto_partida_ia"><i class="ph ph-arrow-circle-up"></i> Ponto de Partida (base)</label>
+        <input type="text" id="ponto_partida_ia" name="ponto_partida" value="<?= h($draft['ponto_partida']) ?>">
+      </div>
 
-        <div class="full">
-          <label for="categorias_ia">Categorias (opcional)</label>
-         <input type="text" id="categorias_ia" name="categorias" value="<?= h($draft['categorias'] ?? '') ?>" placeholder="cultural,gastronomica,citytour">
+      <div class="rota-item">
+        <label for="destino_ia"><i class="ph ph-map-pin"></i> Destino (base)</label>
+        <input type="text" id="destino_ia" name="destino" value="<?= h($draft['destino']) ?>">
+      </div>
 
-        </div>
+      <div class="full">
+        <label for="categorias_ia">Categorias (opcional)</label>
+        <input type="text" id="categorias_ia" name="categorias" value="<?= h($draft['categorias'] ?? '') ?>" placeholder="cultural,gastronomica,citytour">
+      </div>
 
-        <div class="full btns">
-          <button type="submit" class="btn btn--primary">Gerar rascunho</button>
-        </div>
-      </form>
-    </div>
+      <div class="full btns">
+        <button type="submit" class="btn btn--primary">Refinar rascunho</button>
+      </div>
+    </form>
+  </div>
+</div>
 
-            </div>
-            <?php include '../includes/footer.php'; ?>  
+<?php include '../includes/footer.php'; ?>
 
 <script>
   (function(){
@@ -226,13 +220,7 @@ header('Pragma: no-cache');
   <div class="row"><strong>PHPSESSID:</strong> <code><?= h(session_id()) ?></code></div>
   <div class="row"><strong>csrf_refine (sessão):</strong> <code><?= h($_SESSION['csrf_refine']) ?></code></div>
   <div class="row"><strong>csrf_publish (sessão):</strong> <code><?= h($_SESSION['csrf_publish']) ?></code></div>
-  <div class="row"><strong>csrf_refine (hidden):</strong> <code id="dbg_csrf_ref"><?= h($csrfRefine) ?></code></div>
-  <div class="row"><strong>Action refino:</strong> <code>../processos/refinar-roteiro-ia.php</code></div>
 </div>
-<script>
-// impede cache do hidden
-document.getElementById('csrf_refine_field').value = '<?= h($csrfRefine) ?>';
-</script>
 <?php endif; ?>
 </body>
 </html>

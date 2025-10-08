@@ -32,16 +32,10 @@ function normalize_categorias($cats): array {
   ];
   $result = [];
 
-  // transforma cats (string/array) em lista de tokens
   $tokens = [];
-  if (is_array($cats)) {
-    $tokens = $cats;
-  } else {
-    $parts = preg_split('/[,;|]/', (string)$cats);
-    $tokens = array_map('trim', $parts);
-  }
+  if (is_array($cats)) $tokens = $cats;
+  else { $parts = preg_split('/[,;|]/', (string)$cats); $tokens = array_map('trim', $parts); }
 
-  // util: baixar caixa + remover acentos simples
   $xform = function($s){
     $s = mb_strtolower($s ?? '', 'UTF-8');
     $s = strtr($s, ['á'=>'a','à'=>'a','ã'=>'a','â'=>'a','ä'=>'a',
@@ -59,18 +53,11 @@ function normalize_categorias($cats): array {
     $t = $xform($raw);
     foreach ($mapSyn as $key => $syns) {
       foreach ($syns as $syn) {
-        // casa por igualdade ou por "starts with" pra ser tolerante
-        if ($t === $xform($syn) || str_starts_with($t, $xform($syn))) {
-          $result[$key] = true;
-          break 2;
-        }
+        if ($t === $xform($syn) || str_starts_with($t, $xform($syn))) { $result[$key]=true; break 2; }
       }
-      // tenta batida direta com a chave canônica
-      if ($t === $key) { $result[$key] = true; break; }
+      if ($t === $key) { $result[$key]=true; break; }
     }
   }
-
-  // mantém ordem canônica
   return array_values(array_filter($canon, fn($c) => isset($result[$c])));
 }
 
@@ -85,6 +72,9 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 }
 $id_rota = (int) $_GET['id'];
 $usuarioLogadoId = (int) $_SESSION['usuario_id'];
+
+/* Salva contexto para o refino (fallback por sessão) */
+$_SESSION['refine_ctx_id'] = $id_rota;
 
 /* ---------- Carrega rota ---------- */
 $sql = "SELECT r.id, r.usuario_id, r.nome, r.descricao, r.categorias, r.capa,
@@ -113,14 +103,13 @@ header('Pragma: no-cache');
 $erro = ''; 
 $sucesso = '';
 
-/* ====== Se voltamos do refino com IA, aplica sugestões no formulário ====== */
+/* ====== Retorno do refino: aplica sugestões no formulário ====== */
 $aplicouIA = false;
 if (!empty($_SESSION['refine_apply'][$id_rota]) && isset($_GET['from']) && $_GET['from'] === 'ia') {
   $ia = $_SESSION['refine_apply'][$id_rota];
 
   $rota['nome']          = $ia['nome']          ?? $rota['nome'];
   $rota['descricao']     = $ia['descricao']     ?? $rota['descricao'];
-  // normaliza categorias aqui
   if (isset($ia['categorias'])) {
     $norm = normalize_categorias($ia['categorias']);
     $rota['categorias'] = implode(',', $norm);
@@ -146,13 +135,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $ponto_partida  = trim($_POST['ponto_partida'] ?? '');
   $destino        = trim($_POST['destino'] ?? '');
 
-  // vem de checkboxes
   $categoriasPost = isset($_POST['categorias']) ? (array)$_POST['categorias'] : [];
-  // por segurança, normaliza novamente (evita valores fora do catálogo)
   $categoriasNorm = normalize_categorias($categoriasPost);
   $categorias     = implode(',', $categoriasNorm);
 
-  // paradas (mantém compat)
+  // Paradas simples (mantém compat)
   $paradasArr = isset($_POST['paradas']) ? (array)$_POST['paradas'] : [];
   $paradasArr = array_map(function($p){
     if (is_array($p)) {
@@ -260,20 +247,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 /* ---------- Valores p/ form ---------- */
 $capaAtual = !empty($rota['capa']) ? $rota['capa'] : '../assets/img/placeholder_rosseio.png';
-
-/* normaliza SEMPRE antes de marcar checkboxes */
 $categoriasMarcadas = normalize_categorias((string)$rota['categorias']);
 
-// Paradas -> mostrar como campos simples (compat)
 $paradas = $rota['paradas'] ? json_decode($rota['paradas'], true) : [];
 if (is_array($paradas)) {
   $paradas = array_values(array_map(function($p){
     if (is_array($p)) return (string)($p['nome'] ?? '');
     return (string)$p;
   }, $paradas));
-} else {
-  $paradas = [];
-}
+} else { $paradas = []; }
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -308,7 +290,6 @@ if (is_array($paradas)) {
       <form method="POST" enctype="multipart/form-data" class="grid">
         <input type="hidden" name="csrf" value="<?= h($csrf_edit) ?>">
 
-        <!-- Capa -->
         <div class="full">
           <label>Capa</label>
           <div class="thumb">
@@ -317,19 +298,16 @@ if (is_array($paradas)) {
           </div>
         </div>
 
-        <!-- Nome -->
         <div class="full">
           <label for="nome_rota">Nome da rota</label>
           <input type="text" name="nome_rota" id="nome_rota" value="<?= h($rota['nome']) ?>" placeholder="Nome (Obrigatório)" required>
         </div>
 
-        <!-- Descrição -->
         <div class="full">
           <label for="descricao_rota">Descrição</label>
           <textarea name="descricao_rota" id="descricao_rota" placeholder="Descrição da rota (Obrigatório)" required><?= h($rota['descricao']) ?></textarea>
         </div>
 
-        <!-- Categorias -->
         <div class="full">
           <label>Categorias</label>
           <div class="dropdown">
@@ -355,19 +333,16 @@ if (is_array($paradas)) {
           </div>
         </div>
 
-        <!-- Ponto de partida -->
         <div class="rota-item">
           <label for="pontoPartida"><i class="ph ph-arrow-circle-up"></i> Ponto de Partida</label>
           <input type="text" id="pontoPartida" name="ponto_partida" value="<?= h($rota['ponto_partida']) ?>" placeholder="Localização" required>
         </div>
 
-        <!-- Destino -->
         <div class="rota-item">
           <label for="destino"><i class="ph ph-map-pin"></i> Destino</label>
           <input type="text" id="destino" name="destino" value="<?= h($rota['destino']) ?>" placeholder="Localização" required>
         </div>
 
-        <!-- Paradas -->
         <div class="full">
           <label>Paradas</label>
           <div id="paradas">
@@ -383,11 +358,9 @@ if (is_array($paradas)) {
               </div>
             <?php endif; ?>
           </div>
-
           <button type="button" id="btn-add-parada" class="btn btn--ghost" style="margin-top:8px;">+ Adicionar Parada</button>
         </div>
 
-        <!-- Ações -->
         <div class="full btns">
           <a href="ver-rota.php?id=<?= (int)$rota['id'] ?>" class="btn btn--ghost">Cancelar</a>
           <button type="submit" class="btn btn--primary">Salvar alterações</button>
