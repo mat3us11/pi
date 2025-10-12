@@ -69,6 +69,49 @@ $csrf = $_SESSION['csrf_ia'];
   </div>
 </div>
 
+<div id="loading-overlay" class="loading-overlay" aria-hidden="true">
+  <div class="loading-box" role="status" aria-live="assertive">
+    <div class="spinner" aria-hidden="true"></div>
+    <p>Gerando seu roteiro com IA...</p>
+  </div>
+</div>
+
+
+<script>
+  (function () {
+    const form = document.querySelector('form[action="../processos/criar-roteiro-ia.php"]');
+    const overlay = document.getElementById('loading-overlay');
+    const submitBtn = form?.querySelector('button[type="submit"]');
+
+    if (!form || !overlay) return;
+
+    form.addEventListener('submit', function () {
+      if (!form.checkValidity()) return;
+
+      overlay.classList.add('is-active');
+      document.body.classList.add('loading');
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.dataset.originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Gerando...';
+      }
+    });
+
+    window.addEventListener('pageshow', function (e) {
+      if (e.persisted) {
+        overlay.classList.remove('is-active');
+        document.body.classList.remove('loading');
+        if (submitBtn && submitBtn.dataset.originalText) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = submitBtn.dataset.originalText;
+        }
+      }
+    });
+  })();
+</script>
+
+
 <?php include '../includes/footer.php'; ?>
 </body>
 </html>

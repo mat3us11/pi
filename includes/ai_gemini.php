@@ -1,8 +1,8 @@
 <?php
 // includes/ai_gemini.php
-// Cliente REST para Gemini API v1 (estável) com discovery e fallback de modelos.
+// Cliente OpenAI Responses API (2025) compatível com JSON Schema válido.
+// Substitui Gemini mantendo funções gemini_generate_raw() e gemini_first_text_from().
 
-// === Carrega .env (se houver) ===
 $envFile = __DIR__ . '/../.env';
 if (file_exists($envFile)) {
   foreach (file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
@@ -14,24 +14,26 @@ if (file_exists($envFile)) {
   }
 }
 
-define('GOOGLE_API_KEY', getenv('GOOGLE_API_KEY') ?: '');
-define('GEMINI_API_BASE', 'https://generativelanguage.googleapis.com/v1'); // v1 estável
+define('OPENAI_API_KEY', getenv('OPENAI_API_KEY') ?: '');
+define('OPENAI_API_BASE', 'https://api.openai.com/v1');
 
-const GEMINI_PREFERRED_MODELS = [
-  'gemini-1.5-flash-latest', // rápido/barato
-  'gemini-1.5-pro-latest',   // melhor qualidade
-  'gemini-2.0-flash',        // se disponível
-  'gemini-2.0-pro',          // se disponível
+const OPENAI_PREFERRED_MODELS = [
+  'gpt-4o-mini',
+  'gpt-4o',
+  'gpt-4.1-mini',
+  'gpt-4.1',
 ];
 
-function http_json_post(string $url, array $body, int $timeout=40): array {
+// === HTTP helper ===
+function http_json_post(string $url, array $body, array $headers = [], int $timeout=60): array {
   $ch = curl_init($url);
+  $hdrs = array_merge(['Content-Type: application/json'], $headers);
   curl_setopt_array($ch, [
     CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_POST           => true,
-    CURLOPT_HTTPHEADER     => ['Content-Type: application/json'],
-    CURLOPT_POSTFIELDS     => json_encode($body, JSON_UNESCAPED_UNICODE),
-    CURLOPT_TIMEOUT        => $timeout,
+    CURLOPT_POST => true,
+    CURLOPT_HTTPHEADER => $hdrs,
+    CURLOPT_POSTFIELDS => json_encode($body, JSON_UNESCAPED_UNICODE),
+    CURLOPT_TIMEOUT => $timeout,
   ]);
   $resp = curl_exec($ch);
   $err  = $resp === false ? curl_error($ch) : null;
@@ -39,71 +41,110 @@ function http_json_post(string $url, array $body, int $timeout=40): array {
   curl_close($ch);
 
   if ($resp === false) {
-    error_log('Gemini cURL error: ' . $err);
+    error_log('OpenAI cURL error: ' . $err);
     return ['ok'=>false, 'http'=>0, 'raw'=>$err, 'json'=>null];
   }
   $json = json_decode($resp, true);
   $ok = ($code >= 200 && $code < 300);
-  if (!$ok) error_log("Gemini HTTP $code: $resp");
+  if (!$ok) error_log("OpenAI HTTP $code: $resp");
   return ['ok'=>$ok, 'http'=>$code, 'raw'=>$resp, 'json'=>$json];
 }
 
-function http_json_get(string $url, int $timeout=30): array {
-  $ch = curl_init($url);
-  curl_setopt_array($ch, [
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_TIMEOUT        => $timeout,
-  ]);
-  $resp = curl_exec($ch);
-  $err  = $resp === false ? curl_error($ch) : null;
-  $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-  curl_close($ch);
-  if ($resp === false) {
-    error_log('Gemini cURL error: ' . $err);
-    return ['ok'=>false, 'http'=>0, 'raw'=>$err, 'json'=>null];
-  }
-  $json = json_decode($resp, true);
-  $ok = ($code >= 200 && $code < 300);
-  if (!$ok) error_log("Gemini HTTP $code: $resp");
-  return ['ok'=>$ok, 'http'=>$code, 'raw'=>$resp, 'json'=>$json];
-}
-
-function gemini_list_models(): array {
-  if (!GOOGLE_API_KEY) {
-    return ['ok'=>false, 'http'=>0, 'raw'=>'GOOGLE_API_KEY ausente', 'json'=>null];
-  }
-  $url = GEMINI_API_BASE . '/models?key=' . urlencode(GOOGLE_API_KEY);
-  return http_json_get($url);
-}
-
+// === Principal ===
 function gemini_generate_raw(string $prompt, ?string $model = null): array {
-  if (!GOOGLE_API_KEY) {
-    return ['ok'=>false, 'http'=>0, 'raw'=>'GOOGLE_API_KEY ausente', 'json'=>null];
+  if (!OPENAI_API_KEY) {
+    return ['ok'=>false, 'http'=>0, 'raw'=>'OPENAI_API_KEY ausente', 'json'=>null];
   }
-  $chosen = $model ?: GEMINI_PREFERRED_MODELS[0];
 
-  $url = GEMINI_API_BASE . '/models/' . rawurlencode($chosen) . ':generateContent?key=' . urlencode(GOOGLE_API_KEY);
-  $payload = ['contents' => [[ 'role' => 'user', 'parts' => [['text' => $prompt]] ]]];
+  $chosen = $model ?: OPENAI_PREFERRED_MODELS[0];
+  $url = OPENAI_API_BASE . '/responses';
+  $headers = ['Authorization: Bearer ' . OPENAI_API_KEY];
 
-  $res = http_json_post($url, $payload);
-  if ($res['ok']) return $res;
+  // Schema de saída — agora com required completo ✅
+  $schema = [
+    'type' => 'object',
+    'additionalProperties' => false,
+    'properties' => [
+      'nome' => ['type' => 'string'],
+      'descricao' => ['type' => 'string'],
+      'categorias' => ['type' => 'string'],
+      'ponto_partida' => ['type' => 'string'],
+      'destino' => ['type' => 'string'],
+      'paradas' => [
+        'type' => 'array',
+        'minItems' => 5,
+        'maxItems' => 10,
+        'items' => [
+          'type' => 'object',
+          'additionalProperties' => false,
+          'properties' => [
+            'nome' => ['type' => 'string'],
+            'descricao' => ['type' => 'string']
+          ],
+          'required' => ['nome', 'descricao']
+        ]
+      ]
+    ],
+    // 👇 Todos os campos obrigatórios
+    'required' => [
+      'nome',
+      'descricao',
+      'categorias',
+      'ponto_partida',
+      'destino',
+      'paradas'
+    ]
+  ];
 
-  if (in_array($res['http'], [400,404])) {
-    foreach (GEMINI_PREFERRED_MODELS as $alt) {
+  $body = [
+    'model' => $chosen,
+    'input' => $prompt,
+    'temperature' => 0.3,
+    'text' => [
+      'format' => [
+        'name' => 'RoteiroIA',
+        'type' => 'json_schema',
+        'schema' => $schema
+      ]
+    ]
+  ];
+
+  $res = http_json_post($url, $body, $headers);
+  if ($res['ok']) { $res['_chosen'] = $chosen; return $res; }
+
+  // fallback de modelo
+  if (in_array($res['http'], [400,404,422])) {
+    foreach (OPENAI_PREFERRED_MODELS as $alt) {
       if ($alt === $chosen) continue;
-      $urlAlt = GEMINI_API_BASE . '/models/' . rawurlencode($alt) . ':generateContent?key=' . urlencode(GOOGLE_API_KEY);
-      $resAlt = http_json_post($urlAlt, $payload);
+      $body['model'] = $alt;
+      $resAlt = http_json_post($url, $body, $headers);
       if ($resAlt['ok']) { $resAlt['_chosen'] = $alt; return $resAlt; }
     }
   }
+
   return $res;
 }
 
+// === Extrator ===
 function gemini_first_text_from(array $resp): ?string {
   if (!$resp['ok'] || empty($resp['json'])) return null;
-  $parts = $resp['json']['candidates'][0]['content']['parts'] ?? null;
-  if (!$parts) return null;
-  $out = [];
-  foreach ($parts as $p) if (isset($p['text'])) $out[] = $p['text'];
-  return $out ? implode("\n", $out) : null;
+  $j = $resp['json'];
+
+  if (isset($j['output_text']) && is_string($j['output_text'])) return $j['output_text'];
+
+  if (isset($j['output']) && is_array($j['output'])) {
+    $out = [];
+    foreach ($j['output'] as $item) {
+      if (isset($item['content'])) {
+        foreach ($item['content'] as $c) {
+          if (isset($c['text'])) $out[] = $c['text'];
+        }
+      } elseif (isset($item['text'])) {
+        $out[] = $item['text'];
+      }
+    }
+    if ($out) return implode("\n", $out);
+  }
+
+  return null;
 }

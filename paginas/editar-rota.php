@@ -271,6 +271,7 @@ if (is_array($paradas)) {
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body>
+
   <?php include '../includes/header.php'; ?>
 
   <div class="wrap">
@@ -370,7 +371,7 @@ if (is_array($paradas)) {
 
     <!-- Refino com IA (aplica no mesmo formulário desta rota) -->
     <div class="card" style="margin-top:16px;">
-      <div class="titulo">Refinar com IA (Gemini)</div>
+      <div class="titulo">Refinar com IA</div>
       <p style="margin:6px 0 12px;">
         O refino <strong>aplica as sugestões diretamente neste formulário</strong>. Depois é só clicar em <strong>Salvar alterações</strong>.
       </p>
@@ -410,6 +411,48 @@ if (is_array($paradas)) {
       <a class="btn btn--ghost" href="ver-rota.php?id=<?= (int)$rota['id'] ?>">← Voltar à rota</a>
     </div>
   </div>
+
+<div id="loading-overlay" class="loading-overlay" aria-hidden="true">
+  <div class="loading-box" role="status" aria-live="assertive">
+    <div class="spinner" aria-hidden="true"></div>
+    <p>Refinando seu roteiro com IA...</p>
+  </div>
+</div>
+
+
+<script>
+  (function () {
+    const form = document.querySelector('form[action="../processos/refinar-roteiro-ia.php"]');
+    const overlay = document.getElementById('loading-overlay');
+    const submitBtn = form?.querySelector('button[type="submit"]');
+
+    if (!form || !overlay) return;
+
+    form.addEventListener('submit', function () {
+      if (!form.checkValidity()) return;
+
+      overlay.classList.add('is-active');
+      document.body.classList.add('loading');
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.dataset.originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Gerando...';
+      }
+    });
+
+    window.addEventListener('pageshow', function (e) {
+      if (e.persisted) {
+        overlay.classList.remove('is-active');
+        document.body.classList.remove('loading');
+        if (submitBtn && submitBtn.dataset.originalText) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = submitBtn.dataset.originalText;
+        }
+      }
+    });
+  })();
+</script>
 
   <?php include '../includes/footer.php'; ?>
 </body>

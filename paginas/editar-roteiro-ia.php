@@ -1,5 +1,4 @@
 <?php
-// paginas/editar-roteiro-ia.php
 if (session_status() !== PHP_SESSION_ACTIVE) { session_start(); }
 require_once '../includes/config.php';
 
@@ -222,5 +221,48 @@ header('Pragma: no-cache');
   <div class="row"><strong>csrf_publish (sessão):</strong> <code><?= h($_SESSION['csrf_publish']) ?></code></div>
 </div>
 <?php endif; ?>
+
+
+<div id="loading-overlay" class="loading-overlay" aria-hidden="true">
+  <div class="loading-box" role="status" aria-live="assertive">
+    <div class="spinner" aria-hidden="true"></div>
+    <p>Refinando seu roteiro com IA...</p>
+  </div>
+</div>
+
+
+<script>
+  (function () {
+    const form = document.querySelector('form[action="../processos/refinar-roteiro-ia.php"]');
+    const overlay = document.getElementById('loading-overlay');
+    const submitBtn = form?.querySelector('button[type="submit"]');
+
+    if (!form || !overlay) return;
+
+    form.addEventListener('submit', function () {
+      if (!form.checkValidity()) return;
+
+      overlay.classList.add('is-active');
+      document.body.classList.add('loading');
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.dataset.originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Gerando...';
+      }
+    });
+
+    window.addEventListener('pageshow', function (e) {
+      if (e.persisted) {
+        overlay.classList.remove('is-active');
+        document.body.classList.remove('loading');
+        if (submitBtn && submitBtn.dataset.originalText) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = submitBtn.dataset.originalText;
+        }
+      }
+    });
+  })();
+</script>
 </body>
 </html>

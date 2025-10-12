@@ -280,33 +280,6 @@ $googleLink = "https://www.google.com/search?q=" . urlencode($cidade['nome'] . "
       </div>
     </section>
   </main>
-
-  <!-- Overlay de carregamento IA -->
-<div class="loading-overlay" id="iaLoading" aria-hidden="true" role="dialog" aria-labelledby="iaLoadingTitle" aria-modal="true">
-  <div class="loading-card">
-    <div class="loading-head">
-      <div class="spinner" aria-hidden="true"></div>
-      <div>
-        <div class="loading-title" id="iaLoadingTitle">Gerando seu rascunho com IA…</div>
-        <div class="loading-sub" id="iaLoadingSub">Isso pode levar alguns segundos.</div>
-      </div>
-    </div>
-
-    <div class="progress" aria-hidden="true"><i></i></div>
-
-    <div class="steps" id="iaSteps">
-      <div class="step is-active"><span class="dot"></span><span>Entendendo seu pedido</span></div>
-      <div class="step"><span class="dot"></span><span>Montando paradas e descrição</span></div>
-      <div class="step"><span class="dot"></span><span>Buscando coordenadas no mapa</span></div>
-      <div class="step"><span class="dot"></span><span>Procurando imagens dos pontos</span></div>
-      <div class="step"><span class="dot"></span><span>Quase lá… preparando o rascunho</span></div>
-    </div>
-
-    <p class="sr-only" aria-live="polite" id="iaLive">Iniciando geração…</p>
-  </div>
-</div>
-
-
   <?php include __DIR__ . '/../includes/footer.php'; ?>
 </body>
 </html>
