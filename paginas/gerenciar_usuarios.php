@@ -113,31 +113,149 @@ $ocultarImagemHeader = true;
     </div>
 
     <div class="modal" id="modalUsuario" aria-hidden="true">
-        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="tituloModal">
+        <div class="modal-content usuario-detalhes" role="dialog" aria-modal="true" aria-labelledby="tituloModal">
             <div class="modal-header">
-                <h2 id="tituloModal">Editar Usuário</h2>
                 <span class="close" id="fecharModal" role="button" aria-label="Fechar">&times;</span>
             </div>
 
-            <div id="fotoPerfil" class="foto-perfil-grande" style="background-image: url('../assets/img/imagem-padrao.png');"></div>
+            
+            <h2 class="titulo-modal">Gerenciar Usuário</h2>
 
-            <p id="infoUsuario"></p>
-            <p>Email: <span id="emailUsuario"></span></p>
-            <p>Nível: <span id="nivelUsuario"></span></p>
+            <div class="geral">
+                <!-- ESQUERDA -->
+                <div class="content_esquerda">
 
-            <div style="display:flex; gap:10px; margin-top:10px;">
-                <button id="btnExcluir">Excluir Usuário</button>
-                <button id="btnRedefinir">Redefinir Senha</button>
-            </div>
+                    <div class="usuario-header">
+                        <div class="foto-wrapper">
+                            <div id="fotoPerfil" class="foto-perfil-grande" style="background-image: url('../assets/img/imagem-padrao.png');"></div>
+                        </div>
 
-            <p style="margin-top:15px;">Status da conta: 
-                <select id="statusConta">
-                    <option value="ativa">Ativa</option>
-                    <option value="inativa">Inativa</option>
-                </select>
-            </p>
+                        <div class="infoUsuario">
+                            <h3 id="nomeUsuario"><span id="infoUsuario"></span></h3>
+                            <p id="emailUsuario"></p>
+                            <br>
+                            <br>
+                            
+                            
+                        </div>
+                    </div>
 
-            <button class="btn-salvar" id="btnSalvar">Salvar</button>
+                
+
+                    <select id="nivelUsuarioSelect">
+                                <option value="" id="nivelUsuario"></option>
+                            <option value="usuario">Usuário comum</option>
+                            <option value="admin">Administrador</option>
+                    </select>
+
+                    <div class="usuario-coluna-esquerda">
+                        <h4>Informações administrativas</h4>
+
+                        <div class="info-admin">
+                        <div>
+                            <p><strong>Total de rotas criadas</strong></p>
+                            <p id="rotasCriadas">3 (2 ativas)</p>
+                        </div>
+                        <div>
+                            <p><strong>Total de rotas inscritas</strong></p>
+                            <p id="rotasInscritas">7</p>
+                        </div>
+                        </div>
+
+                        <div class="botoes-admin">
+                        <button id="btnExcluir">Excluir usuário</button>
+                        <button id="btnRedefinir">Resetar senha</button>
+                        </div>
+
+                        <div class="status-conta">
+                        <label for="statusConta">Status da conta</label>
+                        <select id="statusConta">
+                            <option value="ativa">Ativa</option>
+                            <option value="inativa">Inativa</option>
+                        </select>
+                        </div>
+
+                        <div class="datas-conta">
+                        <p><strong>Data de cadastro:</strong> 10 de Julho de 2024</p>
+                        <p><strong>Último acesso:</strong> 24 de Maio de 2025</p>
+                        </div>
+                    </div>
+
+                    <button class="btn-salvar" id="btnSalvar">Salvar</button>
+
+                </div>
+
+                <!-- DIREITA -->
+                <div class="content_direita">
+
+                        <div class="usuario-coluna-direita">
+                            <div class="rotas-section">
+                            <h4>Rotas Criadas</h4>
+                            <div id="rotasCriadasList" class="rotas-lista">
+                                <div class="rota-item">
+                                <img src="../assets/img/igreja.jpg" alt="Rota">
+                                <div class="rota-info">
+                                    <p class="rota-titulo">Rota da Igreja - Porangabinha</p>
+                                    <p class="rota-data">16 de Janeiro de 2025</p>
+                                </div>
+                                <span class="status-label ativa">Ativa</span>
+                                </div>
+
+                                <div class="rota-item">
+                                <img src="../assets/img/porangaba.jpg" alt="Rota">
+                                <div class="rota-info">
+                                    <p class="rota-titulo">Passeio em Porangaba</p>
+                                    <p class="rota-data">21 de Fevereiro de 2025</p>
+                                </div>
+                                <span class="status-label inativa">Inativa</span>
+                                </div>
+
+                                <div class="rota-item">
+                                <img src="../assets/img/zoologico.jpg" alt="Rota">
+                                <div class="rota-info">
+                                    <p class="rota-titulo">Passeio Animalia Park</p>
+                                    <p class="rota-data">29 de Abril de 2025</p>
+                                </div>
+                                <span class="status-label ativa">Ativa</span>
+                                </div>
+                            </div>
+                            </div>
+
+                            <div class="rotas-section">
+                            <h4>Rotas Inscritas</h4>
+                            <div id="rotasInscritasList" class="rotas-lista">
+                                <div class="rota-item">
+                                <img src="../assets/img/tatui.jpg" alt="Rota">
+                                <div class="rota-info">
+                                    <p class="rota-titulo">Passeio cultural em Tatuí</p>
+                                    <p class="rota-data">16 de Janeiro de 2025</p>
+                                </div>
+                                </div>
+
+                                <div class="rota-item">
+                                <img src="../assets/img/itu.jpg" alt="Rota">
+                                <div class="rota-info">
+                                    <p class="rota-titulo">Rolê Gastronômico em Itu</p>
+                                    <p class="rota-data">14 de Maio de 2025</p>
+                                </div>
+                                </div>
+
+                                <div class="rota-item">
+                                <img src="../assets/img/boituva.jpg" alt="Rota">
+                                <div class="rota-info">
+                                    <p class="rota-titulo">Paraquedismo em Boituva</p>
+                                    <p class="rota-data">29 de Abril de 2025</p>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
         </div>
     </div>
 

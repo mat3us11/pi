@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const nivel = botao.dataset.nivel || '';
             const foto = botao.dataset.foto || './assets/img/imagem-padrao.png';
 
-            infoUsuario.textContent = `Nome: ${nome}`;
+            infoUsuario.textContent = `${nome}`;
             emailUsuario.textContent = email;
             nivelUsuario.textContent = nivel;
 
