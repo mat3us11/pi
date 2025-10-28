@@ -44,14 +44,14 @@ $meusRoteiros = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <h2>Área do Administrador</h2>
         <ul>
           <div class="opcoes-cima">
-            <li><a href="#">Criar Rota</a></li>
+            <li><a href="./criar-roteiro.php">Criar Rota</a></li>
             <li><a href="./adicionar_local.php">Adicionar local</a></li>
             <li><a href="#">Emitir Certificados</a></li>
           </div>
           <div class="opcoes-baixo">
             <li><a href="#">Gerenciar Inscrições</a></li>
             <li><a href="gerenciar_usuarios.php">Gerenciar Usuários</a></li>
-            <li><a href="#">Gerenciar Publicações</a></li>
+            <li><a href="./gerenciar_publicacao.php">Gerenciar Publicações</a></li>
           </div>
         </ul>
       </div>
