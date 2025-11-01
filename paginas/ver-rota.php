@@ -62,10 +62,27 @@ $csrf_delete = $_SESSION['csrf_delete'];
 <link rel="stylesheet" href="../assets/css/header.css">
 <link rel="stylesheet" href="../assets/css/footer.css">
 <link rel="stylesheet" href="../assets/css/ver-rota.css">
+<link rel="stylesheet" href="../assets/css/flash.css">
 <script defer src="../assets/js/modal.js"></script>
 </head>
 <body>
 <?php include '../includes/header.php'; ?>
+
+<?php
+if (empty($_SESSION['csrf_subscribe'])) {
+    $_SESSION['csrf_subscribe'] = bin2hex(random_bytes(16));
+}
+$csrf_subscribe = $_SESSION['csrf_subscribe'];
+
+$jaInscrito = false;
+if ($usuarioLogadoId && !$ehDono) {
+    $stmtInscrito = $conn->prepare('SELECT 1 FROM rota_inscricao WHERE rota_id = ? AND usuario_id = ? LIMIT 1');
+    $stmtInscrito->execute([$id_rota, $usuarioLogadoId]);
+    $jaInscrito = (bool) $stmtInscrito->fetchColumn();
+}
+?>
+
+<?php include '../includes/flash.php'; ?>
 
 <main class="vr-container">
   <nav class="vr-breadcrumb">
@@ -103,6 +120,20 @@ $csrf_delete = $_SESSION['csrf_delete'];
             <input type="hidden" name="csrf" value="<?= htmlspecialchars($csrf_delete) ?>">
             <button type="submit" class="btn btn--danger">🗑️ Excluir</button>
           </form>
+        <?php else: ?>
+          <?php if ($usuarioLogadoId): ?>
+            <?php if ($jaInscrito): ?>
+              <button type="button" class="btn btn--primary" disabled style="opacity:.75; cursor:not-allowed;">✔ Você está inscrito</button>
+            <?php else: ?>
+              <form class="inline" action="../processos/inscrever-rota.php" method="POST">
+                <input type="hidden" name="rota_id" value="<?= (int)$rota['id'] ?>">
+                <input type="hidden" name="csrf" value="<?= htmlspecialchars($csrf_subscribe) ?>">
+                <button type="submit" class="btn btn--primary">Inscrever-se</button>
+              </form>
+            <?php endif; ?>
+          <?php else: ?>
+            <a class="btn btn--primary" href="login.php">Entre para se inscrever</a>
+          <?php endif; ?>
         <?php endif; ?>
       </div>
     </div>

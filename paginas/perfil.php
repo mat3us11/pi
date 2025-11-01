@@ -21,6 +21,18 @@ $stmt = $conn->prepare($sql);
 $stmt->bindValue(':uid', $usuarioId, PDO::PARAM_INT);
 $stmt->execute();
 $meusRoteiros = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+/* ===== Carrega os roteiros em que o usuário está inscrito ===== */
+$stmt = $conn->prepare(
+    "SELECT r.id, r.nome, r.descricao, r.categorias, r.capa, r.criado_em, ri.criado_em AS inscrito_em
+     FROM rota_inscricao ri
+     JOIN rota r ON ri.rota_id = r.id
+     WHERE ri.usuario_id = :uid
+     ORDER BY ri.criado_em DESC"
+);
+$stmt->bindValue(':uid', $usuarioId, PDO::PARAM_INT);
+$stmt->execute();
+$rotasInscritas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -31,11 +43,14 @@ $meusRoteiros = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <link rel="stylesheet" href="../assets/css/header_perfil.css">
   <link rel="stylesheet" href="../assets/css/footer.css">
   <link rel="stylesheet" href="../assets/css/perfil.css">
+  <link rel="stylesheet" href="../assets/css/flash.css">
   <script defer src="../assets/js/modal.js"></script>
   <title>Perfil</title>
 </head>
 <body>
   <?php include '../includes/header-perfil.php'; ?>
+
+  <?php include '../includes/flash.php'; ?>
 
   <?php if ($nivel === 'admin'): ?>
     <br><br>
@@ -138,6 +153,60 @@ $meusRoteiros = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <a class="item" href="criar-roteiro.php" style="position:relative; display:flex; align-items:center; justify-content:center; text-decoration:none;">
           <i class="ph ph-plus"></i>
         </a>
+      </div>
+    <?php endif; ?>
+  </div>
+
+  <div class="favoritos">
+    <h2>Roteiros Inscritos</h2>
+    <h3>Você participa</h3>
+
+    <?php if (!empty($rotasInscritas)): ?>
+      <div class="blocos2">
+        <?php foreach ($rotasInscritas as $inscrito): ?>
+          <a
+            class="item"
+            href="ver-rota.php?id=<?= (int) $inscrito['id'] ?>"
+            title="<?= htmlspecialchars($inscrito['nome']) ?>"
+            style="
+              position: relative;
+              display: block;
+              background:
+                linear-gradient(to top, rgba(0,0,0,.45), rgba(0,0,0,0)) ,
+                url('<?= htmlspecialchars($inscrito['capa'] ?: '../assets/img/placeholder.jpg') ?>') center/cover no-repeat;
+              overflow: hidden;
+              border-radius: 6px;
+            "
+          >
+            <div
+              style="
+                position: absolute;
+                left: 10px; right: 10px; bottom: 10px;
+                color: #fff;
+                font-weight: 600;
+                line-height: 1.2;
+                text-shadow: 0 1px 2px rgba(0,0,0,.35);
+              "
+            >
+              <div style="font-size:16px; display:flex; align-items:center; gap:6px;">
+                <i class="ph ph-check-circle" aria-hidden="true"></i>
+                <?= htmlspecialchars($inscrito['nome']) ?>
+              </div>
+              <div style="font-size:12px; opacity:.9; margin-top:2px;">
+                <?= htmlspecialchars($inscrito['categorias'] ?: 'Sem categoria') ?>
+                <?php if (!empty($inscrito['inscrito_em'])): ?>
+                  • Inscrito em <?= date('d/m/Y', strtotime($inscrito['inscrito_em'])) ?>
+                <?php endif; ?>
+              </div>
+            </div>
+          </a>
+        <?php endforeach; ?>
+      </div>
+    <?php else: ?>
+      <div class="blocos2">
+        <div class="item" style="display:flex; align-items:center; justify-content:center; color:#374151; padding:12px; text-align:center;">
+          Você ainda não está inscrito em nenhum roteiro.
+        </div>
       </div>
     <?php endif; ?>
   </div>

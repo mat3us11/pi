@@ -135,6 +135,19 @@ INSERT INTO `rota` (`id`, `usuario_id`, `nome`, `descricao`, `categorias`, `pont
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `rota_inscricao`
+--
+
+CREATE TABLE `rota_inscricao` (
+  `id` int(11) NOT NULL,
+  `rota_id` int(11) NOT NULL,
+  `usuario_id` int(11) NOT NULL,
+  `criado_em` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `usuario`
 --
 
@@ -208,6 +221,14 @@ ALTER TABLE `rota`
   ADD KEY `idx_rota_cidade` (`cidade_id`);
 
 --
+-- Índices de tabela `rota_inscricao`
+--
+ALTER TABLE `rota_inscricao`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uk_ri_rota_usuario` (`rota_id`,`usuario_id`),
+  ADD KEY `idx_ri_usuario` (`usuario_id`);
+
+--
 -- Índices de tabela `usuario`
 --
 ALTER TABLE `usuario`
@@ -242,6 +263,12 @@ ALTER TABLE `rota`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
+-- AUTO_INCREMENT de tabela `rota_inscricao`
+--
+ALTER TABLE `rota_inscricao`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `usuario`
 --
 ALTER TABLE `usuario`
@@ -263,6 +290,13 @@ ALTER TABLE `passeios`
 ALTER TABLE `rota`
   ADD CONSTRAINT `fk_rota_cidade` FOREIGN KEY (`cidade_id`) REFERENCES `cidade` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `rota_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE;
+
+--
+-- Restrições para tabelas `rota_inscricao`
+--
+ALTER TABLE `rota_inscricao`
+  ADD CONSTRAINT `fk_ri_rota` FOREIGN KEY (`rota_id`) REFERENCES `rota` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_ri_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,0 +1,67 @@
+.flash {
+  width: min(1100px, 92%);
+  margin: 18px auto;
+  padding: 14px 18px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid transparent;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Arial, sans-serif;
+}
+
+.flash__icon {
+  font-size: 22px;
+}
+
+.flash__content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.flash__message {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.flash__details {
+  font-size: 13px;
+  color: rgba(15, 23, 42, 0.75);
+}
+
+.flash--success {
+  background: #dcfce7;
+  border-color: #bbf7d0;
+  color: #166534;
+}
+.flash--success .flash__details { color: rgba(22, 101, 52, 0.75); }
+
+.flash--error {
+  background: #fee2e2;
+  border-color: #fecaca;
+  color: #991b1b;
+}
+.flash--error .flash__details { color: rgba(153, 27, 27, 0.75); }
+
+.flash--warning {
+  background: #fef3c7;
+  border-color: #fde68a;
+  color: #92400e;
+}
+.flash--warning .flash__details { color: rgba(146, 64, 14, 0.75); }
+
+.flash--info {
+  background: #dbeafe;
+  border-color: #bfdbfe;
+  color: #1d4ed8;
+}
+.flash--info .flash__details { color: rgba(29, 78, 216, 0.75); }
+
+@media (max-width: 680px) {
+  .flash {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
