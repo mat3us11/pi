@@ -38,6 +38,7 @@ if (!empty($rota['paradas'])) {
 
 $usuarioLogadoId = $_SESSION['usuario_id'] ?? null;
 $ehDono = $usuarioLogadoId && ((int)$usuarioLogadoId === (int)$rota['usuario_id']);
+$ehAdmin = isset($_SESSION['nivel']) && $_SESSION['nivel'] === 'admin';
 
 $capa = !empty($rota['capa']) ? $rota['capa'] : '../assets/img/placeholder_rosseio.png';
 
@@ -120,6 +121,9 @@ if ($usuarioLogadoId && !$ehDono) {
             <input type="hidden" name="csrf" value="<?= htmlspecialchars($csrf_delete) ?>">
             <button type="submit" class="btn btn--danger">🗑️ Excluir</button>
           </form>
+          <a class="btn btn--secondary" href="gerenciar-inscricoes.php?rota=<?= (int)$rota['id'] ?>">👥 Gerenciar inscrições</a>
+        <?php elseif ($ehAdmin): ?>
+          <a class="btn btn--secondary" href="gerenciar-inscricoes.php?rota=<?= (int)$rota['id'] ?>">👥 Gerenciar inscrições</a>
         <?php else: ?>
           <?php if ($usuarioLogadoId): ?>
             <?php if ($jaInscrito): ?>
