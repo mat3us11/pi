@@ -39,6 +39,23 @@ if (!empty($rota['paradas'])) {
 $usuarioLogadoId = $_SESSION['usuario_id'] ?? null;
 $ehDono = $usuarioLogadoId && ((int)$usuarioLogadoId === (int)$rota['usuario_id']);
 
+/* Estado de inscrição */
+$inscricaoSucesso = $_SESSION['flash_inscricao_sucesso'] ?? null;
+$inscricaoErro    = $_SESSION['flash_inscricao_erro'] ?? null;
+unset($_SESSION['flash_inscricao_sucesso'], $_SESSION['flash_inscricao_erro']);
+
+$estaInscrito = false;
+if ($usuarioLogadoId && !$ehDono) {
+  $stmt = $conn->prepare('SELECT 1 FROM rota_inscricao WHERE rota_id = ? AND usuario_id = ?');
+  $stmt->execute([$id_rota, $usuarioLogadoId]);
+  $estaInscrito = (bool) $stmt->fetchColumn();
+}
+
+if (empty($_SESSION['csrf_inscricao'])) {
+  $_SESSION['csrf_inscricao'] = bin2hex(random_bytes(16));
+}
+$csrf_inscricao = $_SESSION['csrf_inscricao'];
+
 $capa = !empty($rota['capa']) ? $rota['capa'] : '../assets/img/placeholder_rosseio.png';
 
 $chipsCategorias = [];
@@ -72,6 +89,14 @@ $csrf_delete = $_SESSION['csrf_delete'];
     <a href="roteiro.php" class="vr-link">← Voltar</a>
   </nav>
 
+  <?php if (!empty($inscricaoSucesso)): ?>
+    <div class="vr-alert vr-alert--success"><?= htmlspecialchars($inscricaoSucesso) ?></div>
+  <?php endif; ?>
+
+  <?php if (!empty($inscricaoErro)): ?>
+    <div class="vr-alert vr-alert--error"><?= htmlspecialchars($inscricaoErro) ?></div>
+  <?php endif; ?>
+
   <!-- HERO -->
   <section class="vr-hero">
     <div class="vr-hero__media">
@@ -103,6 +128,17 @@ $csrf_delete = $_SESSION['csrf_delete'];
             <input type="hidden" name="csrf" value="<?= htmlspecialchars($csrf_delete) ?>">
             <button type="submit" class="btn btn--danger">🗑️ Excluir</button>
           </form>
+        <?php elseif ($usuarioLogadoId): ?>
+          <form class="inline" action="../processos/inscrever-rota.php" method="POST">
+            <input type="hidden" name="id_rota" value="<?= (int)$rota['id'] ?>">
+            <input type="hidden" name="csrf" value="<?= htmlspecialchars($csrf_inscricao) ?>">
+            <input type="hidden" name="action" value="<?= $estaInscrito ? 'cancelar' : 'inscrever' ?>">
+            <button type="submit" class="btn <?= $estaInscrito ? 'btn--ghost' : 'btn--primary' ?>">
+              <?= $estaInscrito ? 'Cancelar inscrição' : 'Inscrever-se' ?>
+            </button>
+          </form>
+        <?php else: ?>
+          <a class="btn btn--primary" href="login.php">Faça login para se inscrever</a>
         <?php endif; ?>
       </div>
     </div>

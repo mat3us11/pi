@@ -61,9 +61,30 @@
 }
 .btn--primary { background: #0b6aa3; color: #fff; }
 .btn--primary:hover { filter: brightness(1.05); }
+.btn--ghost { background: #f3f9ff; border-color: #d7e9ff; color: #0b6aa3; }
+.btn--ghost:hover { background: #e9f4ff; }
 .btn--danger { background: #ef4444; color: #fff; }
 .btn--danger:hover { filter: brightness(1.05); }
 .inline { display: inline; }
+
+/* Alertas */
+.vr-alert {
+  margin: 12px 0;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+.vr-alert--success {
+  background: #ecfdf5;
+  color: #047857;
+  border-color: #a7f3d0;
+}
+.vr-alert--error {
+  background: #fef2f2;
+  color: #b91c1c;
+  border-color: #fecaca;
+}
 
 /* ===== CARDS / INFO ===== */
 .vr-cards { display: grid; gap: 16px; margin: 16px 0; }
