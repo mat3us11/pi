@@ -100,10 +100,10 @@ $redirectAtual = $_SERVER['REQUEST_URI'] ?? 'gerenciar-inscricoes.php';
   <?php include '../includes/header-perfil.php'; ?>
 
   <main class="gi-container">
-    <div class="gi-header">
+    <section class="gi-hero">
       <div>
         <h1>Gerenciar inscrições</h1>
-        <p class="gi-subtitle">Visualize quem está participando das suas rotas e remova inscrições se necessário.</p>
+        <p class="gi-subtitle">Visualize quem está participando das suas rotas e mantenha o controle das inscrições.</p>
       </div>
 
       <?php if ($nivel === 'admin' || count($rotasDisponiveis) > 1): ?>
@@ -125,22 +125,26 @@ $redirectAtual = $_SERVER['REQUEST_URI'] ?? 'gerenciar-inscricoes.php';
           <?php endif; ?>
         </form>
       <?php endif; ?>
-    </div>
+    </section>
 
     <?php if (!$temPermissao && $nivel !== 'admin'): ?>
       <p class="gi-empty">Você ainda não criou nenhuma rota para gerenciar inscrições.</p>
     <?php elseif (empty($rotasAgrupadas)): ?>
       <p class="gi-empty">Nenhuma rota encontrada para os filtros aplicados.</p>
     <?php else: ?>
-      <?php foreach ($rotasAgrupadas as $rota): ?>
+      <?php foreach ($rotasAgrupadas as $rota):
+        $capaRota = $rota['capa'] ?: '../assets/img/placeholder.jpg';
+      ?>
         <section class="gi-card">
           <header class="gi-card__header">
-            <div>
+            <div class="gi-card__cover" style="background-image: url('<?= htmlspecialchars($capaRota) ?>');"></div>
+            <div class="gi-card__headline">
               <h2><?= htmlspecialchars($rota['nome']) ?></h2>
               <p class="gi-card__meta">
                 <?= htmlspecialchars($rota['categorias'] ?: 'Sem categoria definida') ?> ·
                 <?= count($rota['inscritos']) ?> inscrito(s)
               </p>
+              <p class="gi-card__creator">Criada por <?= htmlspecialchars($rota['criador']) ?></p>
             </div>
             <div class="gi-card__actions">
               <a class="gi-btn gi-btn--outline" href="ver-rota.php?id=<?= (int) $rota['id'] ?>">Ver rota</a>

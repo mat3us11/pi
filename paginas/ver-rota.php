@@ -62,7 +62,7 @@ try {
   // Em caso de falha na consulta, mantemos os valores padrão.
 }
 
-$capa = !empty($rota['capa']) ? $rota['capa'] : '../assets/img/placeholder_rosseio.png';
+$capa = !empty($rota['capa']) ? $rota['capa'] : '../assets/img/placeholder.jpg';
 
 $chipsCategorias = [];
 if (!empty($rota['categorias'])) {
@@ -91,6 +91,13 @@ $csrf_delete = $_SESSION['csrf_delete'];
 <?php include '../includes/header.php'; ?>
 
 <main class="vr-container">
+  <?php if (!empty($_SESSION['flash_sucesso'])): ?>
+    <div class="vr-alert vr-alert--success">
+      <?= htmlspecialchars($_SESSION['flash_sucesso']) ?>
+    </div>
+    <?php unset($_SESSION['flash_sucesso']); ?>
+  <?php endif; ?>
+
   <nav class="vr-breadcrumb">
     <a href="roteiro.php" class="vr-link">← Voltar</a>
   </nav>

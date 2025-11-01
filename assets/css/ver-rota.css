@@ -6,6 +6,21 @@
   color: #0f172a;
 }
 
+.vr-alert {
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  border: 1px solid transparent;
+  box-shadow: 0 10px 24px rgba(15, 118, 110, 0.15);
+}
+
+.vr-alert--success {
+  background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+  border-color: #6ee7b7;
+  color: #047857;
+}
+
 .vr-link {
   color: #0b6aa3;
   text-decoration: none;

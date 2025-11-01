@@ -13,6 +13,8 @@ if (!isset($_SESSION['usuario_id'])) {
 $usuarioId = (int) $_SESSION['usuario_id'];
 $nivel = $_SESSION['nivel'] ?? 'usuario';
 
+unset($_SESSION['flash_sucesso']);
+
 $rotaId = isset($_POST['rota_id']) ? (int) $_POST['rota_id'] : 0;
 $acao = $_POST['acao'] ?? '';
 $alvoUsuarioId = isset($_POST['usuario_id']) ? (int) $_POST['usuario_id'] : $usuarioId;
@@ -23,7 +25,7 @@ if (!$rotaId || !in_array($acao, ['inscrever', 'cancelar', 'remover'], true)) {
 }
 
 try {
-    $stmt = $conn->prepare('SELECT id, usuario_id FROM rota WHERE id = :rota');
+    $stmt = $conn->prepare('SELECT id, usuario_id, nome FROM rota WHERE id = :rota');
     $stmt->bindValue(':rota', $rotaId, PDO::PARAM_INT);
     $stmt->execute();
     $rota = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -46,6 +48,9 @@ try {
                 ':rota' => $rotaId,
                 ':usuario' => $usuarioId,
             ]);
+            if (!empty($rota['nome'])) {
+                $_SESSION['flash_sucesso'] = 'Parabéns! Você se inscreveu na rota "' . $rota['nome'] . '"';
+            }
             break;
 
         case 'cancelar':
