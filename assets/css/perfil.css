@@ -47,6 +47,29 @@ body{
     font-size: 24px;
 }
 
+.favoritos-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.favoritos-header h2 {
+    margin: 0;
+}
+
+.favoritos-link {
+    font-size: 14px;
+    color: #0b6aa3;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.favoritos-link:hover {
+    text-decoration: underline;
+}
+
 .favoritos h3 {
     font-size: 20px;
 }

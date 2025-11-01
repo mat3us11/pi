@@ -21,6 +21,21 @@ $stmt = $conn->prepare($sql);
 $stmt->bindValue(':uid', $usuarioId, PDO::PARAM_INT);
 $stmt->execute();
 $meusRoteiros = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+/* ===== Carrega as rotas em que o usuário está inscrito ===== */
+$sqlInscricoes = "SELECT r.id, r.nome, r.descricao, r.categorias, r.capa, r.criado_em,
+                         u.nome AS criador, ri.criado_em AS inscrito_em
+                  FROM rota_inscricao ri
+                  JOIN rota r ON ri.rota_id = r.id
+                  JOIN usuario u ON r.usuario_id = u.id
+                  WHERE ri.usuario_id = :uid
+                  ORDER BY ri.criado_em DESC";
+$stmtInscricoes = $conn->prepare($sqlInscricoes);
+$stmtInscricoes->bindValue(':uid', $usuarioId, PDO::PARAM_INT);
+$stmtInscricoes->execute();
+$rotasInscritas = $stmtInscricoes->fetchAll(PDO::FETCH_ASSOC);
+
+$temRoteirosCriados = !empty($meusRoteiros);
 ?>
 
 <!DOCTYPE html>
@@ -49,7 +64,7 @@ $meusRoteiros = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <li><a href="#">Emitir Certificados</a></li>
           </div>
           <div class="opcoes-baixo">
-            <li><a href="#">Gerenciar Inscrições</a></li>
+            <li><a href="gerenciar-inscricoes.php">Gerenciar Inscrições</a></li>
             <li><a href="gerenciar_usuarios.php">Gerenciar Usuários</a></li>
             <li><a href="./gerenciar_publicacao.php">Gerenciar Publicações</a></li>
           </div>
@@ -82,9 +97,59 @@ $meusRoteiros = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
   </div>
 
+  <div class="favoritos">
+    <div class="favoritos-header">
+      <h2>Rotas Inscritas</h2>
+    </div>
+
+    <?php if (!empty($rotasInscritas)): ?>
+      <div class="blocos2">
+        <?php foreach ($rotasInscritas as $rota): ?>
+          <a
+            class="item"
+            href="ver-rota.php?id=<?= (int) $rota['id'] ?>"
+            title="<?= htmlspecialchars($rota['nome']) ?>"
+            style="
+              position: relative;
+              display: block;
+              background:
+                linear-gradient(to top, rgba(0,0,0,.45), rgba(0,0,0,0)) ,
+                url('<?= htmlspecialchars($rota['capa'] ?: '../assets/img/placeholder_rosseio.png') ?>') center/cover no-repeat;
+              overflow: hidden;
+              border-radius: 6px;
+            "
+          >
+            <div class="overlay">
+              <div class="titulo"><?= htmlspecialchars($rota['nome']) ?></div>
+              <div class="meta">
+                <?= htmlspecialchars($rota['categorias'] ?: 'Sem categoria') ?>
+                <?php if (!empty($rota['inscrito_em'])): ?>
+                  • Inscrito em <?= date('d/m/Y', strtotime($rota['inscrito_em'])) ?>
+                <?php endif; ?>
+                <br>
+                Criado por <?= htmlspecialchars($rota['criador']) ?>
+              </div>
+            </div>
+          </a>
+        <?php endforeach; ?>
+      </div>
+    <?php else: ?>
+      <div class="blocos2">
+        <div class="item" style="display:flex; align-items:center; justify-content:center; color:#374151; padding:12px; text-align:center;">
+          Você ainda não se inscreveu em nenhuma rota.
+        </div>
+      </div>
+    <?php endif; ?>
+  </div>
+
   <!-- ===== Meus Roteiros (estilizado com perfil.css) ===== -->
   <div class="favoritos">
-    <h2>Meus Roteiros</h2>
+    <div class="favoritos-header">
+      <h2>Meus Roteiros</h2>
+      <?php if ($nivel === 'admin' || $temRoteirosCriados): ?>
+        <a class="favoritos-link" href="gerenciar-inscricoes.php">Gerenciar inscrições</a>
+      <?php endif; ?>
+    </div>
     <h3>Você criou</h3>
 
     <?php if (!empty($meusRoteiros)): ?>
@@ -99,7 +164,7 @@ $meusRoteiros = $stmt->fetchAll(PDO::FETCH_ASSOC);
               display: block;
               background:
                 linear-gradient(to top, rgba(0,0,0,.45), rgba(0,0,0,0)) ,
-                url('<?= htmlspecialchars($rota['capa'] ?: '../assets/img/placeholder.jpg') ?>') center/cover no-repeat;
+                url('<?= htmlspecialchars($rota['capa'] ?: '../assets/img/placeholder_rosseio.png') ?>') center/cover no-repeat;
               overflow: hidden;
               border-radius: 6px;
             "

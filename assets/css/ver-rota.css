@@ -61,6 +61,8 @@
 }
 .btn--primary { background: #0b6aa3; color: #fff; }
 .btn--primary:hover { filter: brightness(1.05); }
+.btn--outline { border-color: #0b6aa3; color: #0b6aa3; background: #fff; }
+.btn--outline:hover { background: #0b6aa3; color: #fff; }
 .btn--danger { background: #ef4444; color: #fff; }
 .btn--danger:hover { filter: brightness(1.05); }
 .inline { display: inline; }

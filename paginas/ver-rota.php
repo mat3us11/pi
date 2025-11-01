@@ -38,6 +38,29 @@ if (!empty($rota['paradas'])) {
 
 $usuarioLogadoId = $_SESSION['usuario_id'] ?? null;
 $ehDono = $usuarioLogadoId && ((int)$usuarioLogadoId === (int)$rota['usuario_id']);
+$nivelUsuario = $_SESSION['nivel'] ?? 'usuario';
+
+$inscrito = false;
+$totalInscritos = 0;
+
+try {
+  $stmtInscritos = $conn->prepare('SELECT COUNT(*) FROM rota_inscricao WHERE rota_id = :rota');
+  $stmtInscritos->execute([':rota' => $id_rota]);
+  $totalInscritos = (int) $stmtInscritos->fetchColumn();
+
+  if ($usuarioLogadoId) {
+    $stmtInscrito = $conn->prepare(
+      'SELECT 1 FROM rota_inscricao WHERE rota_id = :rota AND usuario_id = :usuario LIMIT 1'
+    );
+    $stmtInscrito->execute([
+      ':rota' => $id_rota,
+      ':usuario' => $usuarioLogadoId,
+    ]);
+    $inscrito = (bool) $stmtInscrito->fetchColumn();
+  }
+} catch (PDOException $e) {
+  // Em caso de falha na consulta, mantemos os valores padrão.
+}
 
 $capa = !empty($rota['capa']) ? $rota['capa'] : '../assets/img/placeholder_rosseio.png';
 
@@ -85,6 +108,8 @@ $csrf_delete = $_SESSION['csrf_delete'];
           <span class="vr-meta__dot">•</span>
           <span class="vr-meta__item"><?= date('d/m/Y', strtotime($rota['criado_em'])) ?></span>
         <?php endif; ?>
+        <span class="vr-meta__dot">•</span>
+        <span class="vr-meta__item"><strong>Inscritos:</strong> <?= $totalInscritos ?></span>
       </div>
 
       <?php if (!empty($chipsCategorias)): ?>
@@ -103,6 +128,32 @@ $csrf_delete = $_SESSION['csrf_delete'];
             <input type="hidden" name="csrf" value="<?= htmlspecialchars($csrf_delete) ?>">
             <button type="submit" class="btn btn--danger">🗑️ Excluir</button>
           </form>
+        <?php endif; ?>
+
+        <?php if ($ehDono || $nivelUsuario === 'admin'): ?>
+          <a class="btn btn--outline" href="gerenciar-inscricoes.php?rota=<?= (int)$rota['id'] ?>">👥 Gerenciar inscrições</a>
+        <?php endif; ?>
+
+        <?php if (!$ehDono): ?>
+          <?php if ($usuarioLogadoId): ?>
+            <?php if ($inscrito): ?>
+              <form class="inline" action="../processos/inscricao-rota.php" method="POST">
+                <input type="hidden" name="acao" value="cancelar">
+                <input type="hidden" name="rota_id" value="<?= (int)$rota['id'] ?>">
+                <input type="hidden" name="redirect" value="<?= htmlspecialchars($_SERVER['REQUEST_URI'] ?? 'ver-rota.php?id=' . (int)$rota['id']) ?>">
+                <button type="submit" class="btn btn--danger">Cancelar inscrição</button>
+              </form>
+            <?php else: ?>
+              <form class="inline" action="../processos/inscricao-rota.php" method="POST">
+                <input type="hidden" name="acao" value="inscrever">
+                <input type="hidden" name="rota_id" value="<?= (int)$rota['id'] ?>">
+                <input type="hidden" name="redirect" value="<?= htmlspecialchars($_SERVER['REQUEST_URI'] ?? 'ver-rota.php?id=' . (int)$rota['id']) ?>">
+                <button type="submit" class="btn btn--primary">Quero participar</button>
+              </form>
+            <?php endif; ?>
+          <?php else: ?>
+            <a class="btn btn--primary" href="login.php">Faça login para se inscrever</a>
+          <?php endif; ?>
         <?php endif; ?>
       </div>
     </div>
