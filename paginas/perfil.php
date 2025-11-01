@@ -52,26 +52,48 @@ $temRoteirosCriados = !empty($meusRoteiros);
 <body>
   <?php include '../includes/header-perfil.php'; ?>
 
-  <?php if ($nivel === 'admin'): ?>
-    <br><br>
-    <div class="admin">
-      <div class="admin-opcoes">
-        <h2>Área do Administrador</h2>
-        <ul>
-          <div class="opcoes-cima">
-            <li><a href="./criar-roteiro.php">Criar Rota</a></li>
-            <li><a href="./adicionar_local.php">Adicionar local</a></li>
-            <li><a href="#">Emitir Certificados</a></li>
-          </div>
-          <div class="opcoes-baixo">
-            <li><a href="gerenciar-inscricoes.php">Gerenciar Inscrições</a></li>
-            <li><a href="gerenciar_usuarios.php">Gerenciar Usuários</a></li>
-            <li><a href="./gerenciar_publicacao.php">Gerenciar Publicações</a></li>
-          </div>
-        </ul>
+<?php if ($nivel === 'admin'): ?>
+  <section class="admin-panel">
+    <header class="admin-panel__header">
+      <div>
+        <h2>Área do administrador</h2>
+        <p>Use os atalhos abaixo para criar conteúdos, organizar inscrições e manter a comunidade em ordem.</p>
       </div>
+    </header>
+    <div class="admin-panel__grid">
+      <a class="admin-card" href="./criar-roteiro.php">
+        <i class="ph ph-map-trifold"></i>
+        <span class="admin-card__title">Criar rota</span>
+        <span class="admin-card__description">Publique novos caminhos e experiências no Campvia.</span>
+      </a>
+      <a class="admin-card" href="./adicionar_local.php">
+        <i class="ph ph-map-pin"></i>
+        <span class="admin-card__title">Adicionar local</span>
+        <span class="admin-card__description">Cadastre pontos de interesse para enriquecer as rotas.</span>
+      </a>
+      <a class="admin-card" href="gerenciar-inscricoes.php">
+        <i class="ph ph-users-three"></i>
+        <span class="admin-card__title">Gerenciar inscrições</span>
+        <span class="admin-card__description">Acompanhe participantes e aprove ou remova inscrições.</span>
+      </a>
+      <a class="admin-card" href="gerenciar_usuarios.php">
+        <i class="ph ph-identification-card"></i>
+        <span class="admin-card__title">Gerenciar usuários</span>
+        <span class="admin-card__description">Atualize permissões e mantenha a base de usuários segura.</span>
+      </a>
+      <a class="admin-card" href="./gerenciar_publicacao.php">
+        <i class="ph ph-megaphone"></i>
+        <span class="admin-card__title">Gerenciar publicações</span>
+        <span class="admin-card__description">Modere conteúdos enviados pela comunidade.</span>
+      </a>
+      <a class="admin-card" href="#">
+        <i class="ph ph-certificate"></i>
+        <span class="admin-card__title">Emitir certificados</span>
+        <span class="admin-card__description">Disponibilize certificados para participantes elegíveis.</span>
+      </a>
     </div>
-  <?php endif; ?>
+  </section>
+<?php endif; ?>
 
   <br><br>
 
@@ -97,56 +119,54 @@ $temRoteirosCriados = !empty($meusRoteiros);
     </div>
   </div>
 
-  <div class="favoritos">
-    <div class="favoritos-header">
-      <h2>Rotas Inscritas</h2>
-    </div>
+  <?php if ($nivel !== 'admin'): ?>
+    <div class="favoritos">
+      <div class="favoritos-header">
+        <h2>Rotas inscritas</h2>
+      </div>
 
-    <?php if (!empty($rotasInscritas)): ?>
-      <div class="blocos2">
-        <?php foreach ($rotasInscritas as $rota): ?>
-          <a
-            class="item"
-            href="ver-rota.php?id=<?= (int) $rota['id'] ?>"
-            title="<?= htmlspecialchars($rota['nome']) ?>"
-            style="
-              position: relative;
-              display: block;
-              background:
-                linear-gradient(to top, rgba(0,0,0,.45), rgba(0,0,0,0)) ,
-                url('<?= htmlspecialchars($rota['capa'] ?: '../assets/img/placeholder_rosseio.png') ?>') center/cover no-repeat;
-              overflow: hidden;
-              border-radius: 6px;
-            "
-          >
-            <div class="overlay">
-              <div class="titulo"><?= htmlspecialchars($rota['nome']) ?></div>
-              <div class="meta">
-                <?= htmlspecialchars($rota['categorias'] ?: 'Sem categoria') ?>
-                <?php if (!empty($rota['inscrito_em'])): ?>
-                  • Inscrito em <?= date('d/m/Y', strtotime($rota['inscrito_em'])) ?>
-                <?php endif; ?>
-                <br>
-                Criado por <?= htmlspecialchars($rota['criador']) ?>
+      <?php if (!empty($rotasInscritas)): ?>
+        <div class="blocos2">
+          <?php foreach ($rotasInscritas as $rota): ?>
+            <a
+              class="item rota-card"
+              href="ver-rota.php?id=<?= (int) $rota['id'] ?>"
+              title="<?= htmlspecialchars($rota['nome']) ?>"
+              style="
+                background:
+                  linear-gradient(to top, rgba(17,24,39,.72), rgba(17,24,39,.15)) ,
+                  url('<?= htmlspecialchars($rota['capa'] ?: '../assets/img/placeholder_rosseio.png') ?>') center/cover no-repeat;
+              "
+            >
+              <div class="overlay">
+                <div class="titulo"><?= htmlspecialchars($rota['nome']) ?></div>
+                <div class="meta">
+                  <?= htmlspecialchars($rota['categorias'] ?: 'Sem categoria') ?>
+                  <?php if (!empty($rota['inscrito_em'])): ?>
+                    • Inscrito em <?= date('d/m/Y', strtotime($rota['inscrito_em'])) ?>
+                  <?php endif; ?>
+                  <br>
+                  Criado por <?= htmlspecialchars($rota['criador']) ?>
+                </div>
               </div>
-            </div>
-          </a>
-        <?php endforeach; ?>
-      </div>
-    <?php else: ?>
-      <div class="blocos2">
-        <div class="item" style="display:flex; align-items:center; justify-content:center; color:#374151; padding:12px; text-align:center;">
-          Você ainda não se inscreveu em nenhuma rota.
+            </a>
+          <?php endforeach; ?>
         </div>
-      </div>
-    <?php endif; ?>
-  </div>
+      <?php else: ?>
+        <div class="blocos2">
+          <div class="item rota-card rota-card--placeholder">
+            <p>Você ainda não se inscreveu em nenhuma rota.</p>
+          </div>
+        </div>
+      <?php endif; ?>
+    </div>
+  <?php endif; ?>
 
   <!-- ===== Meus Roteiros (estilizado com perfil.css) ===== -->
   <div class="favoritos">
     <div class="favoritos-header">
       <h2>Meus Roteiros</h2>
-      <?php if ($nivel === 'admin' || $temRoteirosCriados): ?>
+      <?php if ($nivel !== 'admin' && $temRoteirosCriados): ?>
         <a class="favoritos-link" href="gerenciar-inscricoes.php">Gerenciar inscrições</a>
       <?php endif; ?>
     </div>
@@ -191,17 +211,19 @@ $temRoteirosCriados = !empty($meusRoteiros);
         <?php endforeach; ?>
 
         <!-- bloco para criar novo roteiro -->
-        <a class="item" href="criar-roteiro.php" style="position:relative; display:flex; align-items:center; justify-content:center; text-decoration:none;">
+        <a class="item create-card" href="criar-roteiro.php">
           <i class="ph ph-plus"></i>
+          <span>Novo roteiro</span>
         </a>
       </div>
     <?php else: ?>
       <div class="blocos2">
-        <div class="item" style="display:flex; align-items:center; justify-content:center; color:#374151; padding:12px; text-align:center;">
-          Você ainda não criou nenhum roteiro.
+        <div class="item rota-card rota-card--placeholder">
+          <p>Você ainda não criou nenhum roteiro.</p>
         </div>
-        <a class="item" href="criar-roteiro.php" style="position:relative; display:flex; align-items:center; justify-content:center; text-decoration:none;">
+        <a class="item create-card" href="criar-roteiro.php">
           <i class="ph ph-plus"></i>
+          <span>Criar agora</span>
         </a>
       </div>
     <?php endif; ?>
